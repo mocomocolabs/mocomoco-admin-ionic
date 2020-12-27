@@ -1,0 +1,7 @@
+{
+  "name": "cloudseed",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react"
+}
