@@ -1,6 +1,6 @@
-# MOCOMOCO-APP
+# MOCOMOCO-ADMIN
 
-모코모코 앱입니다. 🐳
+모코모코 어드민 페이지
 
 ## 📱 주요 기술스택
 
