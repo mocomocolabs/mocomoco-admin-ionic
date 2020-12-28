@@ -25,16 +25,19 @@ yarn dev
 ### 컴포넌트 컨벤션
 
 1. 구조
-   atmoic design pattern을 따른다.
+   atmoic design pattern을 따른다.<br>
    https://www.rithmschool.com/courses/intermediate-react/react-design-patterns
 
 ![atomic](docs/img/atomic.png)
 
-- atoms : Text와 같은 가장 작은 단위
-- molecules : atom 컴포넌트가 모인 단위, http 통신 불가
-- organisms : molecules가 모인 단위, http 통신 가능
-- modals : 모달 컴포넌트
+|구분|설명|
+|:--:|:--|
+|atoms(원자)|Text와 같은 가장 작은 단위|
+|molecules(분자)|atom 컴포넌트가 모인 단위, http 통신 불가|
+|organisms(생물)|molecules가 모인 단위, http 통신 가능
+|modals(팝업)|모달 컴포넌트
 
+<br>
 2. 네이밍
 
 - 이름 끝에 접미사로 `Component`를 붙인다.

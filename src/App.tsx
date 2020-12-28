@@ -1,12 +1,11 @@
-import { IonApp, IonIcon, IonRouterOutlet, IonTabBar, IonTabButton, IonTabs } from '@ionic/react'
+import { IonApp, IonRouterOutlet } from '@ionic/react'
 import { IonReactRouter } from '@ionic/react-router'
-import { basket, beer, home, paperPlane, personCircle } from 'ionicons/icons'
 import { useObserver } from 'mobx-react-lite'
 import React, { useEffect } from 'react'
 import { Redirect, Route } from 'react-router-dom'
 import './App.scss'
 import { Alert } from './components/molecules/AlertComponent'
-import { Sidebar } from './components/Sidebar'
+import { Sidebar } from './components/organisms/SidebarComponent'
 import './global.scss'
 import { useStore } from './hooks/use-store'
 import { Chat } from './pages/Chat'
@@ -20,6 +19,7 @@ import { ProfileDetail } from './pages/ProfileDetail'
 import { ProfileUpdate } from './pages/ProfileUpdate'
 import { Settings } from './pages/Settings'
 import { Trade } from './pages/Trade'
+import { UserList } from './pages/UserList'
 import { route } from './route'
 
 export const App: React.FC = () => {
@@ -36,9 +36,10 @@ export const App: React.FC = () => {
     <IonApp>
       <IonReactRouter history={route.history}>
         <Sidebar />
-        <IonTabs>
+        {/* <IonTabs> */}
           <IonRouterOutlet id='main'>
             <Route path='/home' component={Home} exact />
+            <Route path='/userList' component={UserList} exact />
             <Route path='/feed' component={Feed} exact />
             <Route path='/feed/:id' component={FeedDetail} exact />
             <Route path='/feed-write' component={FeedWrite} exact />
@@ -51,7 +52,7 @@ export const App: React.FC = () => {
             <Route path='/users/:id/edit' component={ProfileUpdate} exact />
             <Redirect from='/' to='/home' exact />
           </IonRouterOutlet>
-          <IonTabBar slot='bottom' hidden={!$ui.isBottomTab}>
+          {/* <IonTabBar slot='bottom' hidden={!$ui.isBottomTab}>
             <IonTabButton tab='home' href='/home'>
               <IonIcon icon={home} />
             </IonTabButton>
@@ -68,8 +69,8 @@ export const App: React.FC = () => {
             <IonTabButton tab='my-page' href='/my-page'>
               <IonIcon icon={personCircle} />
             </IonTabButton>
-          </IonTabBar>
-        </IonTabs>
+          </IonTabBar> */}
+        {/* </IonTabs> */}
       </IonReactRouter>
 
       <Alert></Alert>
