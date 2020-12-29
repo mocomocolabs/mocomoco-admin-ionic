@@ -1,19 +1,22 @@
 import { IonItem, IonLabel, IonSelect, IonSelectOption } from '@ionic/react';
-import React, { useState } from 'react';
+import React from 'react';
 
 interface Props {
+    selectTit: string;
     List: IList[];
+    onChange?: (v: string) => void
 }
 interface IList {
     name: string;
 }
-export const InputSelect: React.FC<Props> = ({List}) => {
-    const [name, setName] = useState<string>();
-
+export const InputSelect: React.FC<Props> = ({selectTit, List, onChange}) => {
     return (
         <IonItem>
-            <IonLabel>마을씨 이름</IonLabel>
-            <IonSelect value={name} placeholder="Select One" onIonChange={e => setName(e.detail.value)}>
+            <IonLabel>{selectTit && selectTit}</IonLabel>
+            <IonSelect 
+                placeholder="Select One" 
+                onIonChange={(e) => onChange && onChange(e.detail.value!)}
+            >
                 {List.map((a, i) => {
                     return (
                     <IonSelectOption key={i} value={a.name}>{a.name}</IonSelectOption>
