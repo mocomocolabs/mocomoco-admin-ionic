@@ -85,28 +85,26 @@ export const Sidebar: React.FC = () => {
       <IonContent>
         <IonList id='inbox-list'>
           {appPages.map((appPage, index) => {
-            if(appPage.level === 1) {
-              return (<IonListHeader key={appPage.title + index}>{appPage.title}</IonListHeader>)
+            if (appPage.level === 1) {
+              return (<IonListHeader key={index}>{appPage.title}</IonListHeader>)
             } else return (
-              <>
-                <IonMenuToggle key={appPage.title + index} autoHide={false}>
-                  <IonItem
-                    className={
-                      location.pathname === appPage.url ? 'selected' : ''
-                    }
-                    routerLink={appPage.url}
-                    routerDirection='none'
-                    lines='none'
-                    detail={false}>
-                    <IonIcon
-                      slot='start'
-                      ios={appPage.iosIcon}
-                      md={appPage.mdIcon}
-                    />
-                    <IonLabel>{appPage.title}</IonLabel>
-                  </IonItem>
-                </IonMenuToggle>
-              </>
+              <IonMenuToggle key={index} autoHide={false}>
+                <IonItem
+                  className={
+                    location.pathname === appPage.url ? 'selected' : ''
+                  }
+                  routerLink={appPage.url}
+                  routerDirection='none'
+                  lines='none'
+                  detail={false}>
+                  <IonIcon
+                    slot='start'
+                    ios={appPage.iosIcon}
+                    md={appPage.mdIcon}
+                  />
+                  <IonLabel>{appPage.title}</IonLabel>
+                </IonItem>
+              </IonMenuToggle>
             );
           })}
         </IonList>
