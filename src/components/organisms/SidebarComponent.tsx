@@ -1,5 +1,18 @@
 import { IonContent, IonIcon, IonItem, IonLabel, IonList, IonListHeader, IonMenu, IonMenuToggle } from '@ionic/react';
-import { helpCircle, helpCircleOutline, home, homeOutline, informationCircle, informationCircleOutline, settings, settingsOutline, shirt, shirtOutline, trophy, trophyOutline } from 'ionicons/icons';
+import {
+  helpCircle,
+  helpCircleOutline,
+  home,
+  homeOutline,
+  informationCircle,
+  informationCircleOutline,
+  settings,
+  settingsOutline,
+  shirt,
+  shirtOutline,
+  trophy,
+  trophyOutline
+} from 'ionicons/icons';
 import React from 'react';
 import { useLocation } from 'react-router-dom';
 
