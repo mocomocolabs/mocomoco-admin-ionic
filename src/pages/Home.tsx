@@ -50,6 +50,7 @@ export const Home: React.FC = () => {
     {name: '이지혜', checked: false, email: "isaworld@naver.com", reqDate: "2021-01-01"},   
     {name: '이지혜', checked: false, email: "isaworld@naver.com", reqDate: "2021-01-01"},   
     {name: '이지혜', checked: false, email: "isaworld@naver.com", reqDate: "2021-01-01"},   
+    {name: '이지혜', checked: false, email: "isaworld@naver.com", reqDate: "2021-01-01"},   
   ]
   return (
     <IonPage>
@@ -74,7 +75,7 @@ export const Home: React.FC = () => {
           <div style={{marginTop: "20px"}} className="apv-wrap">
             <header>
               <h4 style={{ display: "inline"}}><strong>가입승인을 기다려요</strong></h4>
-              <span> 5 / 100</span>
+              <span> {apvList.length} / 100</span>
               <IonButton style={{ marginLeft:"60px", transform: "translateY(-10px)" }} size="small" color="dark">승인</IonButton>
             </header>
             <div className="apv-list-wrap" style={{marginLeft:"-5px"}}>
