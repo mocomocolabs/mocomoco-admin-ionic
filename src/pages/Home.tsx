@@ -75,7 +75,7 @@ export const Home: React.FC = () => {
           <div style={{marginTop: "20px"}} className="apv-wrap">
             <header>
               <h4 style={{ display: "inline"}}><strong>가입승인을 기다려요</strong></h4>
-              <span> {apvList.length} / 100</span>
+              <span>{apvList.length} / 100</span>
               <IonButton style={{ marginLeft:"60px", transform: "translateY(-10px)" }} size="small" color="dark">승인</IonButton>
             </header>
             <div className="apv-list-wrap" style={{marginLeft:"-5px"}}>
