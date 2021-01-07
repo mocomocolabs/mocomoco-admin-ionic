@@ -4,8 +4,6 @@ import {
   helpCircleOutline,
   home,
   homeOutline,
-  informationCircle,
-  informationCircleOutline,
   settings,
   settingsOutline,
   shirt,
@@ -15,6 +13,7 @@ import {
 } from 'ionicons/icons';
 import React from 'react';
 import { useLocation } from 'react-router-dom';
+import { XDivider } from '../atoms/XDividerComponent';
 
 interface AppPage {
   url: string;
@@ -23,6 +22,9 @@ interface AppPage {
   title: string;
   menuGrp: string;
   level?: number;
+  author: string;
+  menuId: number;
+  upMenuId: number;
 }
 
 const appPages: AppPage[] = [
@@ -31,23 +33,54 @@ const appPages: AppPage[] = [
     url: '/home',
     iosIcon: homeOutline,
     mdIcon: home,
-    menuGrp: 'home'
+    menuGrp: 'home',
+    author: 'ADMIN',
+    menuId: 10,
+    upMenuId: 0
   },
   {
-    title: '마을씨 관리',
+    title: '우리마을관리',
     url: '',
     iosIcon: '',
     mdIcon: '',
     menuGrp: 'townMng',
-    level: 1
+    level: 1,
+    author: 'ADMIN',
+    menuId: 20,
+    upMenuId: 0
   },
   {
-    title: '마을씨 조회',
+    title: '우리마을정보',
+    url: '/townInf',
+    iosIcon: shirtOutline,
+    mdIcon: shirt,
+    menuGrp: 'user',
+    level: 2,
+    author: 'ADMIN',
+    menuId: 21,
+    upMenuId: 20
+  },
+  {
+    title: '우리마을사람들',
     url: '/userList',
     iosIcon: shirtOutline,
     mdIcon: shirt,
     menuGrp: 'user',
-    level: 2
+    level: 2,
+    author: 'ADMIN',
+    menuId: 22,
+    upMenuId: 20
+  },
+  {
+    title: '우리마을일정',
+    url: '/townEvent',
+    iosIcon: shirtOutline,
+    mdIcon: shirt,
+    menuGrp: 'user',
+    level: 2,
+    author: 'ADMIN',
+    menuId: 23,
+    upMenuId: 20
   },
   {
     title: '시스템 관리',
@@ -55,39 +88,70 @@ const appPages: AppPage[] = [
     iosIcon: trophyOutline,
     mdIcon: trophy,
     menuGrp: 'sys',
-    level: 1
+    level: 1,
+    author: 'SYS',
+    menuId: 30,
+    upMenuId: 0
   },
   {
-    title: 'System',
-    url: '/system',
+    title: '메뉴관리',
+    url: '/menu',
     iosIcon: trophyOutline,
     mdIcon: trophy,
     menuGrp: 'sys',
-    level: 2
+    level: 2,
+    author: 'SYS',
+    menuId: 31,
+    upMenuId: 30
   },
+  // {
+  //   title: 'About',
+  //   url: '/about',
+  //   iosIcon: informationCircleOutline,
+  //   mdIcon: informationCircle,
+  //   menuGrp: 'sys',
+  //   level: 2
+  // },
   {
-    title: 'About',
-    url: '/about',
-    iosIcon: informationCircleOutline,
-    mdIcon: informationCircle,
+    title: '기타',
+    url: '/',
+    iosIcon: settingsOutline,
+    mdIcon: settings,
     menuGrp: 'sys',
-    level: 2
+    level: 1,
+    author: 'ADMIN',
+    menuId: 40,
+    upMenuId: 0
   },
   {
-    title: 'Settings',
+    title: '앱 설정',
     url: '/settings',
     iosIcon: settingsOutline,
     mdIcon: settings,
     menuGrp: 'sys',
-    level: 2
+    level: 2,
+    author: 'ADMIN',
+    menuId: 41,
+    upMenuId: 40
   },
+  // {
+  //   title: 'Help',
+  //   url: '/help',
+  //   iosIcon: helpCircleOutline,
+  //   mdIcon: helpCircle,
+  //   menuGrp: 'sys',
+  //   level: 2
+  // },
   {
-    title: 'Help',
-    url: '/help',
+    title: '예시 코드',
+    url: '/example',
     iosIcon: helpCircleOutline,
     mdIcon: helpCircle,
-    menuGrp: 'sys',
-    level: 2
+    menuGrp: 'exsample',
+    level: 2,
+    author: 'ADMIN',
+    menuId: 42,
+    upMenuId: 40
   },
 ]
 export const Sidebar: React.FC = () => {
@@ -97,25 +161,33 @@ export const Sidebar: React.FC = () => {
     <IonMenu contentId="main" type='overlay' menuId='leftSidebar'>
       <IonContent>
         <IonList id='inbox-list'>
-          {appPages.map((appPage, index) => {
-            if (appPage.level === 1) {
-              return (<IonListHeader key={index}>{appPage.title}</IonListHeader>)
+          {appPages.map((page, index) => {
+            if(page.author === 'SYS') return;
+            if (page.level === 1) {
+              return (
+                <>
+                  <XDivider />
+                  <IonListHeader key={index}>
+                    {page.title}
+                  </IonListHeader>
+                </>
+              )
             } else return (
               <IonMenuToggle key={index} autoHide={false}>
                 <IonItem
                   className={
-                    location.pathname === appPage.url ? 'selected' : ''
+                    location.pathname === page.url ? 'selected' : ''
                   }
-                  routerLink={appPage.url}
+                  routerLink={page.url}
                   routerDirection='none'
                   lines='none'
-                  detail={false}>
+                  detail={true}>
                   <IonIcon
                     slot='start'
-                    ios={appPage.iosIcon}
-                    md={appPage.mdIcon}
+                    ios={page.iosIcon}
+                    md={page.mdIcon}
                   />
-                  <IonLabel>{appPage.title}</IonLabel>
+                  <IonLabel>{page.title}</IonLabel>
                 </IonItem>
               </IonMenuToggle>
             );

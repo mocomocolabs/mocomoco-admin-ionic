@@ -10,10 +10,12 @@ import './global.scss'
 import { useStore } from './hooks/use-store'
 import { Chat } from './pages/Chat'
 import { ChatRoom } from './pages/ChatRoom'
+import { Example } from './pages/Example'
 import { Feed } from './pages/Feed'
 import { FeedDetail } from './pages/FeedDetail'
 import { FeedWrite } from './pages/FeedWrite'
 import { Home } from './pages/Home'
+import { MyInf } from './pages/MyInf'
 import { MyPage } from './pages/MyPage'
 import { ProfileDetail } from './pages/ProfileDetail'
 import { ProfileUpdate } from './pages/ProfileUpdate'
@@ -21,7 +23,6 @@ import { Settings } from './pages/Settings'
 import { Trade } from './pages/Trade'
 import { UserList } from './pages/UserList'
 import { route } from './route'
-
 export const App: React.FC = () => {
   const { $community, $ui, $chat } = useStore()
 
@@ -50,6 +51,8 @@ export const App: React.FC = () => {
             <Route path='/settings' component={Settings} exact />
             <Route path='/users/:id' component={ProfileDetail} exact />
             <Route path='/users/:id/edit' component={ProfileUpdate} exact />
+            <Route path='/example' component={Example} exact />
+            <Route path='/my' component={MyInf} exact />
             <Redirect from='/' to='/home' exact />
           </IonRouterOutlet>
           {/* <IonTabBar slot='bottom' hidden={!$ui.isBottomTab}>

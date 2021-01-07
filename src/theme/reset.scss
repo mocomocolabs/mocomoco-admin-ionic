@@ -32,3 +32,195 @@ li {
 ul {
   margin: 0;
 }
+
+// from 알리
+*,
+// :after,
+// :before {
+//   margin: 0;
+//   padding: 0;
+//   border: 0;
+//   box-sizing: border-box;
+// }
+body,
+div,
+dl,
+dt,
+dd,
+ul,
+ol,
+li,
+section,
+aside,
+article,
+header,
+footer,
+a,
+span,
+strong,
+main,
+pre,
+code,
+form,
+fieldset,
+legend,
+textarea,
+p,
+blockquote,
+th,
+td,
+input,
+select,
+button,
+label {
+  font-family: 'Dotum', 'Malgun Gothic', Arial, Helvetica, sans-serif;
+  // font-size: 12px;
+  // letter-spacing: -0.38px;
+  // word-break: keep-all;
+  // word-wrap: break-word;
+  // white-space: normal;
+}
+fieldset,
+img {
+  border: none;
+}
+dl,
+ul,
+ol {
+  list-style: none;
+}
+ul {
+  margin: 0;
+}
+blockquote,
+q {
+  quotes: none;
+}
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+  content: '';
+  content: none;
+}
+input,
+button,
+span,
+strong,
+a,
+em,
+i {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+}
+body {
+  overflow: auto;
+  -webkit-text-size-adjust: none;
+}
+table {
+  width: 100%;
+  table-layout: fixed;
+  border: 0;
+  border-spacing: 0;
+  border-collapse: collapse;
+} //table-layout:fixed; >> td:width사파리 크기 제어
+button,
+input,
+select,
+textarea {
+  font-size: 12px;
+  color: #666;
+  line-height: 16px;
+  border-radius: 0;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+input[type='file'],
+input[type='submit'],
+input[type='reset'],
+input[type='button'] {
+  overflow: visible;
+  cursor: pointer;
+  border: 0;
+  background: transparent;
+}
+// input[type=checkbox]{-webkit-appearance:none;}
+input[type='checkbox'],
+input[type='radio'] {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+// input:checked[type=checkbox]{-webkit-appearance:none;}
+input[type='reset'],
+input[type='file'] {
+  -webkit-appearnace: button;
+  border-radius: 0;
+}
+input[type='search']::-webkit-search-cancel-button {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+input[type='number'] {
+  -moz-appearance: textfield;
+} //파폭
+input[type='number']::-webkit-outer-spin-button,
+input[type='number']::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+input::-webkit-credentials-auto-fill-button {
+  visibility: hidden;
+  display: none !important;
+  pointer-events: none;
+  position: absolute;
+  left: 0;
+  z-index: -1;
+}
+
+a,
+a:active,
+a:hover {
+  text-decoration: none;
+}
+address,
+cite,
+code,
+dfn,
+em,
+var,
+i {
+  font-style: normal;
+  font-weight: normal;
+}
+button::-moz-focus-inner {
+  padding: 0;
+  border: 0;
+}
+hr {
+  display: none;
+}
+
+table caption,
+form legend,
+.hide {
+  visibility: hidden;
+  width: 0 !important;
+  height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  line-height: 0 !important;
+  font-size: 0 !important;
+  opacity: 0 !important;
+}

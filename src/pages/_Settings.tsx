@@ -1,14 +1,13 @@
 import {
+  IonButton,
 
-  IonButtons,
   IonContent,
   IonHeader,
-
+  IonIcon,
   IonItem,
   IonItemGroup,
   IonLabel,
   IonList,
-  IonMenuButton,
   IonPage,
   IonSelect,
   IonSelectOption,
@@ -16,9 +15,9 @@ import {
   IonToggle,
   IonToolbar
 } from '@ionic/react'
+import { home } from 'ionicons/icons'
 import React, { useState } from 'react'
 import { XDivider } from '../components/atoms/XDividerComponent'
-import { PageTopHomeAndMyPageBtn } from '../components/organisms/PageTopHomeAndMyPageBtn'
 
 export const Settings: React.FC = () => {
   const [alarmSound, setAlarmSound] = useState<string>('구름씨 랄라~')
@@ -28,11 +27,19 @@ export const Settings: React.FC = () => {
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonButtons slot="start">
-            <IonMenuButton autoHide={false} color="dark"></IonMenuButton>
-          </IonButtons>
-          <IonTitle slot='start'>앱 설정</IonTitle>
-          <PageTopHomeAndMyPageBtn />
+        <IonButton slot='end' color='dark' routerLink='/home'>
+          <IonIcon
+            slot='end'
+            ios={home}
+            md={home}
+            icon={home}
+            size="default"
+          />
+        </IonButton>
+          {/* <IonButtons slot='start'>
+            <IonBackButton text='' color='dark' defaultHref='/my-page' />
+          </IonButtons> */}
+          <IonTitle slot='start'>마이페이지</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent>

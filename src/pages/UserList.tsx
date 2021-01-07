@@ -3,6 +3,7 @@ import {
   IonButtons,
   IonContent,
   IonHeader,
+
   IonImg,
   IonItem,
   IonLabel,
@@ -17,6 +18,7 @@ import * as _ from 'lodash';
 import React, { useState } from 'react';
 import { Input } from '../components/atoms/InputComponent';
 import { InputSelect } from '../components/molecules/InputSelectComponent';
+import { PageTopHomeAndMyPageBtn } from '../components/organisms/PageTopHomeAndMyPageBtn';
 
 interface ITownList {
     name: string;
@@ -140,7 +142,8 @@ export const UserList: React.FC = () => {
             <IonButtons slot="start">
               <IonMenuButton autoHide={false}></IonMenuButton>
             </IonButtons>
-            <IonTitle>마을씨 조회</IonTitle>
+            <IonTitle>우리마을사람들</IonTitle>
+            <PageTopHomeAndMyPageBtn />
           </IonToolbar>
         </IonHeader>
         <IonContent>
