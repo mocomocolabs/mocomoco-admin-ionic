@@ -1,24 +1,21 @@
 import {
-
-  IonButtons,
   IonContent,
-  IonHeader,
+
 
   IonItem,
   IonItemGroup,
   IonLabel,
   IonList,
-  IonMenuButton,
+
   IonPage,
   IonSelect,
   IonSelectOption,
-  IonTitle,
-  IonToggle,
-  IonToolbar
+
+  IonToggle
 } from '@ionic/react'
 import React, { useState } from 'react'
 import { XDivider } from '../components/atoms/XDividerComponent'
-import { PageTopHomeAndMyPageBtn } from '../components/organisms/PageTopHomeAndMyPageBtn'
+import { PageHeader } from '../components/molecules/PageHeaderComponent'
 
 export const Settings: React.FC = () => {
   const [alarmSound, setAlarmSound] = useState<string>('구름씨 랄라~')
@@ -26,15 +23,7 @@ export const Settings: React.FC = () => {
 
   return (
     <IonPage>
-      <IonHeader>
-        <IonToolbar>
-          <IonButtons slot="start">
-            <IonMenuButton autoHide={false} color="dark"></IonMenuButton>
-          </IonButtons>
-          <IonTitle slot='start'>앱 설정</IonTitle>
-          <PageTopHomeAndMyPageBtn />
-        </IonToolbar>
-      </IonHeader>
+      <PageHeader pageTitle="앱 설정" menuBtn={false} settingBtn={true} homeBtn={true} userBtn={true}/>
       <IonContent>
         <div className='px-container my-4'>
           <IonList lines='none'>

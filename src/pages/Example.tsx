@@ -1,14 +1,11 @@
 import {
-  IonButtons,
   IonContent,
-  IonHeader,
-  IonMenuButton,
-  IonPage,
-  IonTitle,
-  IonToolbar
+
+
+  IonPage
 } from '@ionic/react';
 import React from 'react';
-import { PageTopHomeAndMyPageBtn } from '../components/organisms/PageTopHomeAndMyPageBtn';
+import { PageHeader } from '../components/molecules/PageHeaderComponent';
 import './Example.scoped.scss';
 interface IEvent {
   eventNm?: string;
@@ -35,15 +32,8 @@ export const Example: React.FC = () => {
   return (
     <>
       <IonPage>
-        <IonHeader>
-          <IonToolbar>
-            <IonButtons slot="start">
-              <IonMenuButton autoHide={false}></IonMenuButton>
-            </IonButtons>
-            <IonTitle>예시 코드</IonTitle>
-            <PageTopHomeAndMyPageBtn />
-          </IonToolbar>
-        </IonHeader>
+        <PageHeader pageTitle="예시코드" menuBtn={true} homeBtn={true} userBtn={true} />
+        
         <IonContent>
           {/* 스위치 박스 */}
           <div className="switch-box">

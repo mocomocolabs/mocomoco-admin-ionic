@@ -1,5 +1,7 @@
-import { IonContent, IonIcon, IonItem, IonLabel, IonList, IonListHeader, IonMenu, IonMenuToggle } from '@ionic/react';
+import { menuController } from '@ionic/core';
+import { IonButton, IonButtons, IonContent, IonIcon, IonItem, IonLabel, IonList, IonListHeader, IonMenu, IonMenuToggle } from '@ionic/react';
 import {
+  closeOutline,
   helpCircle,
   helpCircleOutline,
   home,
@@ -14,7 +16,6 @@ import {
 import React from 'react';
 import { useLocation } from 'react-router-dom';
 import { XDivider } from '../atoms/XDividerComponent';
-
 interface AppPage {
   url: string;
   iosIcon: string;
@@ -156,11 +157,21 @@ const appPages: AppPage[] = [
 ]
 export const Sidebar: React.FC = () => {
   const location = useLocation();
-
   return (
-    <IonMenu contentId="main" type='overlay' menuId='leftSidebar'>
+    <IonMenu contentId="main" type='overlay' menuId='leftSidebar' color="dark">
       <IonContent>
         <IonList id='inbox-list'>
+          <div className="menu-close" style={{display:'flex'}}>
+            <IonButtons slot='end' style={{marginLeft: 'auto'}}>
+              <IonButton slot='end' color='dark' routerLink='/home' onClick={() => menuController.close()}>
+                <IonIcon 
+                  slot='icon-only' 
+                  icon={closeOutline} 
+                  size='default'
+                />
+              </IonButton>
+            </IonButtons>
+          </div>
           {appPages.map((page, index) => {
             if(page.author === 'SYS') return;
             if (page.level === 1) {

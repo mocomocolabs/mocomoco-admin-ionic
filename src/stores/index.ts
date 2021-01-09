@@ -5,6 +5,8 @@ import { Community } from './community-store'
 import { News } from './example/news-store'
 import { TodoList } from './example/todo-list-store'
 import { Feed } from './feed-store'
+import { Home } from './home-store'
+import { MyInf } from './myInf-store'
 import { Stuff, Talent } from './trade-store'
 import { Ui } from './ui-store'
 import { User } from './user-store'
@@ -20,10 +22,14 @@ export class RootStore {
   $chat: Chat
   $ui: Ui
   $user: User
-
+  
   // example
   todoList: TodoList
   news: News
+  
+  // isa 추가
+  $home: Home
+  $myInf: MyInf
 
   constructor() {
     this.$community = new Community()
@@ -34,6 +40,10 @@ export class RootStore {
     this.$stuff = new Stuff()
     this.$talent = new Talent()
     this.$chat = new Chat()
+
+    // isa 추가
+    this.$home = new Home()
+    this.$myInf = new MyInf()
 
     // example
     this.todoList = new TodoList()

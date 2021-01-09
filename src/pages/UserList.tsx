@@ -1,24 +1,23 @@
 import {
+  IonAvatar,
   IonButton,
-  IonButtons,
+
   IonContent,
-  IonHeader,
+
 
   IonImg,
   IonItem,
   IonLabel,
   IonList,
-  IonMenuButton,
-  IonPage,
-  IonThumbnail,
-  IonTitle,
-  IonToolbar
+
+  IonPage
 } from '@ionic/react';
 import * as _ from 'lodash';
+import { useObserver } from 'mobx-react-lite';
 import React, { useState } from 'react';
 import { Input } from '../components/atoms/InputComponent';
 import { InputSelect } from '../components/molecules/InputSelectComponent';
-import { PageTopHomeAndMyPageBtn } from '../components/organisms/PageTopHomeAndMyPageBtn';
+import { PageHeader } from '../components/molecules/PageHeaderComponent';
 
 interface ITownList {
     name: string;
@@ -134,18 +133,10 @@ export const UserList: React.FC = () => {
       setResultList(filteredList)
     }
   }
-  return (
+  return useObserver(() => 
     <>
       <IonPage>
-        <IonHeader>
-          <IonToolbar>
-            <IonButtons slot="start">
-              <IonMenuButton autoHide={false}></IonMenuButton>
-            </IonButtons>
-            <IonTitle>우리마을사람들</IonTitle>
-            <PageTopHomeAndMyPageBtn />
-          </IonToolbar>
-        </IonHeader>
+        <PageHeader pageTitle="우리마을사람들" menuBtn={true} homeBtn={true} userBtn={true}/>
         <IonContent>
           <div className='search-area-wrap'>
             <div className='search-area-input'>
@@ -174,9 +165,9 @@ export const UserList: React.FC = () => {
               {initResultList !== undefined && initResultList.map((a, index) => { 
                 return (
                   <IonItem key={index}>
-                    <IonThumbnail slot="start">
+                    <IonAvatar slot="start">
                       <IonImg src={a.imgSrc} />
-                    </IonThumbnail>
+                    </IonAvatar>
                     <IonLabel position="stacked">
                       {index + 1}.<h2 style={{display:"inline"}}>{a.name}</h2> | <h6 style={{display:"inline"}}>{a.townNm}</h6>
                       <h5>{a.email}</h5>

@@ -73,7 +73,8 @@ input,
 select,
 button,
 label {
-  font-family: 'Dotum', 'Malgun Gothic', Arial, Helvetica, sans-serif;
+  // font-family: 'Dotum', 'Malgun Gothic', Arial, Helvetica, sans-serif;
+  font-family: 'Noto Sans KR';
   // font-size: 12px;
   // letter-spacing: -0.38px;
   // word-break: keep-all;
@@ -89,9 +90,9 @@ ul,
 ol {
   list-style: none;
 }
-ul {
-  margin: 0;
-}
+// ul {
+//   margin: 0;
+// }
 blockquote,
 q {
   quotes: none;

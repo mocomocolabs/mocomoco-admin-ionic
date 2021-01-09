@@ -52,7 +52,7 @@ export const App: React.FC = () => {
             <Route path='/users/:id' component={ProfileDetail} exact />
             <Route path='/users/:id/edit' component={ProfileUpdate} exact />
             <Route path='/example' component={Example} exact />
-            <Route path='/my' component={MyInf} exact />
+            <Route path='/myInf' component={MyInf} exact />
             <Redirect from='/' to='/home' exact />
           </IonRouterOutlet>
           {/* <IonTabBar slot='bottom' hidden={!$ui.isBottomTab}>
