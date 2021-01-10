@@ -45,7 +45,7 @@ export const PageHeader: FC<IPageHeader>= ({ pageTitle, menuBtn, backBtn, settin
               <IonMenuButton autoHide={false} color="dark"></IonMenuButton>
             </IonButtons>
           )}
-          <IonTitle style={{alignItems: 'center'}}>
+          <IonTitle>
             <span>{pageTitle}</span>
           </IonTitle>
           <IonButtons slot="end">

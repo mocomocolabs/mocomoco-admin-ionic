@@ -20,8 +20,10 @@ import { MyPage } from './pages/MyPage'
 import { ProfileDetail } from './pages/ProfileDetail'
 import { ProfileUpdate } from './pages/ProfileUpdate'
 import { Settings } from './pages/Settings'
+import { TownEvent } from './pages/TownEvent'
+import { TownInf } from './pages/TownInf'
 import { Trade } from './pages/Trade'
-import { UserList } from './pages/UserList'
+import { UserSearch } from './pages/UserSearch'
 import { route } from './route'
 export const App: React.FC = () => {
   const { $community, $ui, $chat } = useStore()
@@ -40,7 +42,7 @@ export const App: React.FC = () => {
         {/* <IonTabs> */}
           <IonRouterOutlet id='main'>
             <Route path='/home' component={Home} exact />
-            <Route path='/userList' component={UserList} exact />
+            <Route path='/userList' component={UserSearch} exact />
             <Route path='/feed' component={Feed} exact />
             <Route path='/feed/:id' component={FeedDetail} exact />
             <Route path='/feed-write' component={FeedWrite} exact />
@@ -53,6 +55,8 @@ export const App: React.FC = () => {
             <Route path='/users/:id/edit' component={ProfileUpdate} exact />
             <Route path='/example' component={Example} exact />
             <Route path='/myInf' component={MyInf} exact />
+            <Route path='/townInf' component={TownInf} exact />
+            <Route path='/townEvent' component={TownEvent} exact />
             <Redirect from='/' to='/home' exact />
           </IonRouterOutlet>
           {/* <IonTabBar slot='bottom' hidden={!$ui.isBottomTab}>

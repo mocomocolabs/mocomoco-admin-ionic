@@ -7,9 +7,11 @@ import { TodoList } from './example/todo-list-store'
 import { Feed } from './feed-store'
 import { Home } from './home-store'
 import { MyInf } from './myInf-store'
+import { TownInf } from './townInf-store'
 import { Stuff, Talent } from './trade-store'
 import { Ui } from './ui-store'
 import { User } from './user-store'
+import { UserSearch } from './userSearch-store'
 
 configure({ enforceActions: 'observed' }) // action 밖에서 state 수정 비허용
 
@@ -30,6 +32,8 @@ export class RootStore {
   // isa 추가
   $home: Home
   $myInf: MyInf
+  $userSearch: UserSearch
+  $townInf: TownInf
 
   constructor() {
     this.$community = new Community()
@@ -44,6 +48,8 @@ export class RootStore {
     // isa 추가
     this.$home = new Home()
     this.$myInf = new MyInf()
+    this.$userSearch = new UserSearch()
+    this.$townInf = new TownInf()
 
     // example
     this.todoList = new TodoList()

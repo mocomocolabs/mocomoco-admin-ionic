@@ -4,6 +4,7 @@
 // created: 2021-01-10, 이지혜
 import {
   IonAvatar,
+  IonButton,
   IonContent,
   IonIcon,
   IonImg,
@@ -15,7 +16,6 @@ import React from 'react'
 import { TextLg } from '../components/atoms/TextLgComponent'
 import { PageHeader } from '../components/molecules/PageHeaderComponent'
 import { useStore } from '../hooks/use-store'
-
 
 export const MyInf: React.FC = () => {
   const { $myInf } = useStore()
@@ -35,35 +35,48 @@ export const MyInf: React.FC = () => {
           </div>
           <div className="basic-inf">
             <TextLg className='text-bold block'>기본정보</TextLg>
-            <div className="block">
-              &nbsp;<TextLg>ID</TextLg>&nbsp;&nbsp;&nbsp;<TextLg>{$myInf.getUserInfo.id}</TextLg>
+            <div className="block flex">
+              &nbsp;<TextLg>ID</TextLg>
+              <TextLg className="ml-auto mr-8">{$myInf.getUserInfo.id}</TextLg>
             </div>
-            <div className="block">
-              &nbsp;<TextLg>이메일</TextLg>&nbsp;&nbsp;&nbsp;<TextLg>{$myInf.getUserInfo.email}</TextLg>
+            <div className="block flex" >
+              &nbsp;<TextLg>이메일</TextLg>
+              <TextLg className="ml-auto">{$myInf.getUserInfo.email}</TextLg>
+              <IonIcon className="ml-4 mt-2" icon={chevronForward}/>
             </div>
-            <div className="block">
-              &nbsp;<TextLg>핸드폰</TextLg>&nbsp;&nbsp;&nbsp;<TextLg>{$myInf.getUserInfo.mobile}</TextLg>
+            <div className="block flex">
+              &nbsp;<TextLg>핸드폰</TextLg>
+              <TextLg className="ml-auto">{$myInf.getUserInfo.mobile}</TextLg>
+              <IonIcon className="ml-4 mt-2" icon={chevronForward}/>
             </div>
           </div>
           <div className="town-inf">
             <TextLg className='text-bold block'>관리마을정보</TextLg>
-            <div className="block">
-              &nbsp;<TextLg>권한</TextLg>&nbsp;&nbsp;&nbsp;<TextLg>ADMIN</TextLg>
+            <div className="block flex">
+              &nbsp;<TextLg>권한</TextLg>
+              <TextLg className="ml-auto mr-8">ADMIN</TextLg>
             </div>
-            <div className="block">
-              &nbsp;<TextLg>관리마을이름</TextLg>&nbsp;&nbsp;&nbsp;<TextLg>{$myInf.getUserInfo.community}</TextLg>
+            <div className="block flex">
+              &nbsp;<TextLg>관리마을이름</TextLg>
+              <TextLg className="ml-auto mr-8">{$myInf.getUserInfo.community}</TextLg>
             </div>
           </div>
           <div className="lang-set">
-            <div className="block">
-              &nbsp;<TextLg>언어</TextLg>&nbsp;&nbsp;&nbsp;한국어<IonIcon icon={chevronForward}></IonIcon>
+            <div className="block flex">
+              &nbsp;<TextLg>언어</TextLg>
+              <TextLg className="ml-auto">한국어</TextLg>
+              <IonIcon className="ml-4 mt-2" icon={chevronForward}/>
             </div>
           </div>
           <div className="chg-pwd">
-            <div className="block">
-              &nbsp;<TextLg>비밀번호 변경</TextLg>&nbsp;&nbsp;&nbsp;
-              <IonIcon icon={chevronForward}></IonIcon>
+            <div className="block flex">
+              &nbsp;<TextLg>비밀번호 변경</TextLg>
+              <IonIcon className="ml-auto mt-2" icon={chevronForward}/>
             </div>
+          </div>
+          <div className="mt-5">
+            <IonButton expand="full" color="dark">로그아웃</IonButton>
+            <div className="version flex-center">버전: 0.0.1</div>
           </div>
           {/* <MypageProfile />
           <XDivider />

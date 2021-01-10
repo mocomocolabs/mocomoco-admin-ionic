@@ -161,8 +161,8 @@ export const Sidebar: React.FC = () => {
     <IonMenu contentId="main" type='overlay' menuId='leftSidebar' color="dark">
       <IonContent>
         <IonList id='inbox-list'>
-          <div className="menu-close" style={{display:'flex'}}>
-            <IonButtons slot='end' style={{marginLeft: 'auto'}}>
+          <div className="menu-close flex">
+            <IonButtons className="ml-auto mt-1" slot='end'>
               <IonButton slot='end' color='dark' routerLink='/home' onClick={() => menuController.close()}>
                 <IonIcon 
                   slot='icon-only' 
