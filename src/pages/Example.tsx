@@ -1,7 +1,5 @@
 import {
   IonContent,
-
-
   IonPage
 } from '@ionic/react';
 import React from 'react';
@@ -33,7 +31,7 @@ export const Example: React.FC = () => {
     <>
       <IonPage>
         <PageHeader pageTitle="예시코드" menuBtn={true} homeBtn={true} userBtn={true} />
-        
+
         <IonContent>
           {/* 스위치 박스 */}
           <div className="switch-box">
@@ -68,6 +66,7 @@ export const Example: React.FC = () => {
               ))}
             </ul>
           </div>
+          <hr className="gray-bar" />
         </IonContent>
       </IonPage>
     </>

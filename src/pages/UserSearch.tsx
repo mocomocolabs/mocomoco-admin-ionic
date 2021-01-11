@@ -27,22 +27,22 @@ export const UserSearch: React.FC = () => {
   const onSearchList = () => {
     $userSearch.initSearchObj()
     $userSearch.initResultList()
-    
-    if(!_.isEmpty($userSearch.getSearchObj.name) && _.isEmpty($userSearch.getSearchObj.email) ) {
+
+    if (!_.isEmpty($userSearch.getSearchObj.name) && _.isEmpty($userSearch.getSearchObj.email)) {
       $userSearch.setResultList($userSearch.getResultList.filter(a => a.name === $userSearch.getSearchObj.name))
-    } else if(_.isEmpty($userSearch.getSearchObj.name) && !_.isEmpty($userSearch.getSearchObj.email)) {
+    } else if (_.isEmpty($userSearch.getSearchObj.name) && !_.isEmpty($userSearch.getSearchObj.email)) {
       $userSearch.setResultList($userSearch.getResultList.filter(a => a.email === $userSearch.getSearchObj.email))
-    } else if(_.isEmpty($userSearch.getSearchObj.name) && _.isEmpty($userSearch.getSearchObj.email)) {
+    } else if (_.isEmpty($userSearch.getSearchObj.name) && _.isEmpty($userSearch.getSearchObj.email)) {
       $userSearch.setResultList($userSearch.getResultList)
     } else {
       const filteredList = $userSearch.getResultList.filter(a => a.name === $userSearch.getSearchObj.name && a.email === $userSearch.getSearchObj.email)
       $userSearch.setResultList(filteredList)
     }
   }
-  return useObserver(() => 
+  return useObserver(() =>
     <>
       <IonPage>
-        <PageHeader pageTitle="우리마을사람들" menuBtn={true} homeBtn={true} userBtn={true}/>
+        <PageHeader pageTitle="우리마을사람들" menuBtn={true} homeBtn={true} userBtn={true} />
         <IonContent>
           <div className='search-area-wrap'>
             <div className='search-area-input'>
@@ -58,7 +58,7 @@ export const UserSearch: React.FC = () => {
                   label='이름'
                   onChange={(name) => $userSearch.setSearchName(name)}
                 />
-                <Input 
+                <Input
                   value={$userSearch.getSearchObj.email}
                   placeholder='이메일'
                   label='이메일'
@@ -66,24 +66,31 @@ export const UserSearch: React.FC = () => {
                 />
               </IonList>
             </div>
-            <div className="search-area-bottom-btn" style={{marginTop: '-4px'}}>
+            <div className="search-area-bottom-btn" style={{ marginTop: '-4px' }}>
               <IonButton expand="full" color="dark" onClick={onSearchList}>검색</IonButton>
             </div>
+            <hr className="gray-bar" />
           </div>
           <div className="result-list-wrap">
             <IonList className="mb-8">
-              {$userSearch.getResultList !== undefined && $userSearch.getResultList.length > 0 ? 
-                <div className="total ml-5 mt-5 mb-1">total: {$userSearch.getResultList.length}</div>
-                : <div className="flex-center mt-5">결과가 없습니다.</div>
+              {$userSearch.getResultList !== undefined && $userSearch.getResultList.length > 0 ?
+                (<>
+                  <div className="total ml-5 mb-3">total: {$userSearch.getResultList.length}</div>
+                  <hr className="gray-bar" />
+                </>)
+                : (<>
+                  <div className="flex-center">결과가 없습니다.</div>
+                  <hr className="gray-bar" />
+                </>)
               }
-              {$userSearch.getResultList !== undefined && $userSearch.getResultList.map((a, index) => { 
+              {$userSearch.getResultList !== undefined && $userSearch.getResultList.map((a, index) => {
                 return (
                   <IonItem key={index}>
                     <IonAvatar slot="start">
                       <IonImg src={a.profileUrl} />
                     </IonAvatar>
-                    <IonLabel> 
-                    {/* position="stacked" */}
+                    <IonLabel>
+                      {/* position="stacked" */}
                       <TextLg>{a.name}</TextLg>
                       <h6 className="gray inline ml-3">(ID:{a.id})</h6>
                       <h5>{a.email}</h5>
