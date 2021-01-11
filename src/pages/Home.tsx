@@ -49,6 +49,7 @@ export const Home: React.FC = () => {
             </div>
           </div>
           <br />
+          <hr className="gray-bar" />
           <div className="month-event-wrap">
             <header style={{ marginBottom: "-30px" }}>
               <TextXxl className='text-bold'>이번달 우리마을 일정</TextXxl>

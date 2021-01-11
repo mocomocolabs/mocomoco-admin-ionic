@@ -69,17 +69,16 @@ export const UserSearch: React.FC = () => {
             <div className="search-area-bottom-btn" style={{ marginTop: '-4px' }}>
               <IonButton expand="full" color="dark" onClick={onSearchList}>검색</IonButton>
             </div>
-            <hr className="gray-bar" />
           </div>
           <div className="result-list-wrap">
             <IonList className="mb-8">
               {$userSearch.getResultList !== undefined && $userSearch.getResultList.length > 0 ?
                 (<>
-                  <div className="total ml-5 mb-3">total: {$userSearch.getResultList.length}</div>
+                  <div className="total ml-5 mt-3 mb-3">total: {$userSearch.getResultList.length}</div>
                   <hr className="gray-bar" />
                 </>)
                 : (<>
-                  <div className="flex-center">결과가 없습니다.</div>
+                  <div className="flex-center mt-3 mb-3">결과가 없습니다.</div>
                   <hr className="gray-bar" />
                 </>)
               }
