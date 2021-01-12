@@ -15,7 +15,9 @@ import {
 } from 'ionicons/icons';
 import React from 'react';
 import { useLocation } from 'react-router-dom';
+import { useStore } from '../../hooks/use-store';
 import { XDivider } from '../atoms/XDividerComponent';
+import './Sidebar.scoped.scss';
 interface AppPage {
   url: string;
   iosIcon: string;
@@ -157,11 +159,14 @@ const appPages: AppPage[] = [
 ]
 export const Sidebar: React.FC = () => {
   const location = useLocation();
+  const { $myInf } = useStore()
+
   return (
     <IonMenu contentId="main" type='overlay' menuId='leftSidebar' color="dark">
       <IonContent>
         <IonList id='inbox-list'>
-          <div className="menu-close flex">
+          <div className="menu-close flex" style={{backgroundColor:'lightGray'}}>
+            <IonLabel className="ml-5 mt-3 mb-2">안녕하세요, {$myInf.getUserInfo.name}님!</IonLabel>
             <IonButtons className="ml-auto mt-1" slot='end'>
               <IonButton slot='end' color='dark' routerLink='/home' onClick={() => menuController.close()}>
                 <IonIcon 
@@ -184,10 +189,11 @@ export const Sidebar: React.FC = () => {
                 </>
               )
             } else return (
-              <IonMenuToggle key={index} autoHide={false}>
+              <IonMenuToggle key={index} autoHide={false}> 
                 <IonItem
                   className={
-                    location.pathname === page.url ? 'selected' : ''
+                    location.pathname === page.url ? 'selected' : '' 
+                    && index === 0 ? 'mt-8' : '' 
                   }
                   routerLink={page.url}
                   routerDirection='none'
