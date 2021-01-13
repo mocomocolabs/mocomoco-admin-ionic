@@ -18,31 +18,31 @@ export const Home: React.FC = () => {
     // $home.getApvList
   })
 
-  return useObserver(() => 
+  return useObserver(() =>
     <IonPage>
-      <PageHeader pageTitle="마을씨앗 ADMIN" menuBtn={true} userBtn={true}/>
+      <PageHeader pageTitle="마을씨앗 ADMIN" menuBtn={true} userBtn={true} />
       <IonContent>
         <div className='px-container'>
           <div style={{ marginTop: "20px" }} className="apv-wrap">
-            <header style={{display:'flex'}}>
+            <div className="box">
               <TextXxl className='text-bold'>가입승인을 기다려요</TextXxl>
-              <span> {$home.getApvList.length} / 100</span>
-              <IonButton style={{ marginLeft: "auto"}} size="small" color="dark">승인</IonButton>
-            </header>
+              <strong className="badge">{$home.getApvList.length}</strong>
+              <IonButton style={{ marginLeft: "auto" }} size="small" color="dark">승인</IonButton>
+            </div>
             <div className="apv-list-wrap" style={{ marginLeft: "-5px" }}>
               <IonGrid>
                 <IonCol>
                   <IonCol size="1"></IonCol>
-                  <IonCol size="2">이름</IonCol>
-                  <IonCol size="5">이메일</IonCol>
-                  <IonCol size="4">가입신청일</IonCol>
+                  <IonCol size="2"></IonCol>
+                  <IonCol size="5"></IonCol>
+                  <IonCol size="4"></IonCol>
                 </IonCol>
-                {$home.getApvList.map( (a , i) => (
+                {$home.getApvList.map((a, i) => (
                   <IonRow key={i}>
                     <IonCol size="1" style={{ maxWidth: "28px", width: "28px" }}><IonCheckbox style={{ width: "23px", height: "23px" }} checked={a.checked} color="dark" /></IonCol>
                     <IonCol size="2" style={{ fontSize: "13px" }}>{a.name}</IonCol>
                     <IonCol size="5" style={{ fontSize: "13px" }}>{a.email}</IonCol>
-                    <IonCol size="4" style={{ fontSize: "13px" }}>{a.reqDate}</IonCol>
+                    <IonCol size="4" style={{ fontSize: "13px" }}>{a.reqDate} 신청</IonCol>
                   </IonRow>
                 ))}
               </IonGrid>
