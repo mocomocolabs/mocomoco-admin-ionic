@@ -8,6 +8,7 @@ import { Alert } from './components/molecules/AlertComponent'
 import { Sidebar } from './components/organisms/SidebarComponent'
 import './global.scss'
 import { useStore } from './hooks/use-store'
+import { ChangePwd } from './pages/ChangePwd'
 import { Chat } from './pages/Chat'
 import { ChatRoom } from './pages/ChatRoom'
 import { Example } from './pages/Example'
@@ -57,6 +58,7 @@ export const App: React.FC = () => {
             <Route path='/myInf' component={MyInf} exact />
             <Route path='/townInf' component={TownInf} exact />
             <Route path='/townEvent' component={TownEvent} exact />
+            <Route path='/changePwd' component={ChangePwd} exact />
             <Redirect from='/' to='/home' exact />
           </IonRouterOutlet>
           {/* <IonTabBar slot='bottom' hidden={!$ui.isBottomTab}>

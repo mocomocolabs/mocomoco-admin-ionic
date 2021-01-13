@@ -19,9 +19,11 @@ import {
 import { chevronForward } from 'ionicons/icons'
 import { useObserver } from 'mobx-react-lite'
 import { default as React, useState } from 'react'
+import { Link } from 'react-router-dom'
 import { TextXl } from '../components/atoms/TextXlComponent'
 import { PageHeader } from '../components/molecules/PageHeaderComponent'
 import { useStore } from '../hooks/use-store'
+
 
 export const MyInf: React.FC = () => {
   const [language, setLanguage] = useState<string>('한국어')
@@ -79,10 +81,12 @@ export const MyInf: React.FC = () => {
                     <IonSelectOption value="Jp">日本</IonSelectOption>
                   </IonSelect>
               </IonItem>
-                <IonItem className="block flex">
-                <IonLabel>비밀번호 변경</IonLabel>
-                  <IonIcon className="inline ml-2 mt-2" icon={chevronForward}/>
-              </IonItem>
+                <IonItem className="block flex" routerLink='/changePwd'>
+                  <Link to="/changePwd" className='no-underline black'>
+                    <IonLabel>비밀번호 변경</IonLabel>
+                    {/* <IonIcon className="inline ml-2 mt-2" /> */}
+                  </Link>
+                </IonItem>
             </IonItemGroup>
             <IonItemGroup className="mt-5">
               <IonLabel>관리마을정보</IonLabel>
