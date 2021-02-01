@@ -11,6 +11,7 @@ import { useStore } from './hooks/use-store'
 import { ChangePwd } from './pages/ChangePwd'
 import { Chat } from './pages/Chat'
 import { ChatRoom } from './pages/ChatRoom'
+import { ConfirmPwd } from './pages/ConfirmPwd'
 import { Example } from './pages/Example'
 import { Feed } from './pages/Feed'
 import { FeedDetail } from './pages/FeedDetail'
@@ -58,6 +59,7 @@ export const App: React.FC = () => {
             <Route path='/myInf' component={MyInf} exact />
             <Route path='/townInf' component={TownInf} exact />
             <Route path='/townEvent' component={TownEvent} exact />
+            <Route path='/confirmPwd' component={ConfirmPwd} exact />
             <Route path='/changePwd' component={ChangePwd} exact />
             <Redirect from='/' to='/home' exact />
           </IonRouterOutlet>

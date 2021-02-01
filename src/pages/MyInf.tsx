@@ -81,8 +81,8 @@ export const MyInf: React.FC = () => {
                     <IonSelectOption value="Jp">日本</IonSelectOption>
                   </IonSelect>
               </IonItem>
-                <IonItem className="block flex" routerLink='/changePwd'>
-                  <Link to="/changePwd" className='no-underline black'>
+                <IonItem className="block flex" routerLink='/confirmPwd'>
+                  <Link to="/confirmPwd" className='no-underline black'>
                     <IonLabel>비밀번호 변경</IonLabel>
                     {/* <IonIcon className="inline ml-2 mt-2" /> */}
                   </Link>

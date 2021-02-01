@@ -20,7 +20,7 @@ export const Home: React.FC = () => {
 
   return useObserver(() =>
     <IonPage>
-      <PageHeader pageTitle="마을씨앗 ADMIN" menuBtn={true} userBtn={true} />
+      <PageHeader pageTitle="하마 ADMIN" menuBtn={true} userBtn={true} />
       <IonContent>
         <div className='px-container'>
           <div style={{ marginTop: "20px" }} className="apv-wrap">
