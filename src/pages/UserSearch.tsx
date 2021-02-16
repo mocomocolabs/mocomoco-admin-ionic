@@ -13,7 +13,6 @@ import * as _ from 'lodash';
 import { useObserver } from 'mobx-react-lite';
 import React from 'react';
 import { Input } from '../components/atoms/InputComponent';
-import { TextLg } from '../components/atoms/TextLgComponent';
 import { PageHeader } from '../components/molecules/PageHeaderComponent';
 import { useStore } from '../hooks/use-store';
 
@@ -90,7 +89,7 @@ export const UserSearch: React.FC = () => {
                     </IonAvatar>
                     <IonLabel>
                       {/* position="stacked" */}
-                      <TextLg>{a.name}</TextLg>
+                      <span>{a.name}</span>
                       <h6 className="gray inline ml-3">(ID:{a.id})</h6>
                       <h5>{a.email}</h5>
                       <h5>{a.regiDt} 가입</h5>

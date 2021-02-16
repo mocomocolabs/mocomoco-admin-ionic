@@ -1,7 +1,7 @@
 // description: 홈 화면 store
 // fileName: home-store.ts
 // created: 2021-01-09, 이지혜
-import { computed, observable } from 'mobx'
+import { action, computed, observable } from 'mobx'
 import { IApvLIst, IEvent } from '../models/home'
 
 const initState = {
@@ -30,12 +30,17 @@ const initState = {
     { eventNm: '상철이생일', date: "2020-01-26" },
     { eventNm: '상철이생일', date: "2020-01-26" },
   ],
+  searchObj: {
+    staDt: "",
+    endDt: "",
+    eventNm: ""
+  }
 }
 
 export class Home {
   @observable.ref apvList: IApvLIst[] = initState.apvList
   @observable.ref curMonEventList: IEvent[] = initState.curMonEventList
-
+  @observable.ref searchObj = initState.searchObj
   // 승인 리스트
   // @task
   // getApvList = (async () => {
@@ -45,6 +50,17 @@ export class Home {
   //     })
   //   )
   // }) as Task
+
+  @action
+  setStaDt(param: any) {
+    this.searchObj.staDt = param
+  }
+
+  @action
+  setEndDt(param: any) {
+    this.searchObj.endDt = param
+  }
+
   @computed
   get getApvList() {
     return this.apvList

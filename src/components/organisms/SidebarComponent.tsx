@@ -165,20 +165,20 @@ export const Sidebar: React.FC = () => {
     <IonMenu contentId="main" type='overlay' menuId='leftSidebar' color="dark">
       <IonContent>
         <IonList id='inbox-list'>
-          <div className="menu-close flex" style={{backgroundColor:'lightGray'}}>
+          <div className="menu-close flex" style={{ backgroundColor: 'lightGray' }}>
             <IonLabel className="ml-5 mt-3 mb-2">안녕하세요, {$myInf.getUserInfo.name}님!</IonLabel>
             <IonButtons className="ml-auto mt-1" slot='end'>
-              <IonButton slot='end' color='dark' routerLink='/home' onClick={() => menuController.close()}>
-                <IonIcon 
-                  slot='icon-only' 
-                  icon={closeOutline} 
+              <IonButton slot='end' color='dark' onClick={() => menuController.close()}>
+                <IonIcon
+                  slot='icon-only'
+                  icon={closeOutline}
                   size='default'
                 />
               </IonButton>
             </IonButtons>
           </div>
           {appPages.map((page, index) => {
-            if(page.author === 'SYS') return;
+            if (page.author === 'SYS') return;
             if (page.level === 1) {
               return (
                 <>
@@ -189,11 +189,11 @@ export const Sidebar: React.FC = () => {
                 </>
               )
             } else return (
-              <IonMenuToggle key={index} autoHide={false}> 
+              <IonMenuToggle key={index} autoHide={false}>
                 <IonItem
                   className={
-                    location.pathname === page.url ? 'selected' : '' 
-                    && index === 0 ? 'mt-8' : '' 
+                    location.pathname === page.url ? 'selected' : ''
+                      && index === 0 ? 'mt-8' : ''
                   }
                   routerLink={page.url}
                   routerDirection='none'
