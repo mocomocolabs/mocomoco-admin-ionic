@@ -12,13 +12,26 @@ interface IPageHeader {
   backBtn?: boolean,
   homeBtn?: boolean,
   userBtn?: boolean,
-  settingBtn?: boolean,
+  closeLeftBtn?: boolean,
+  closeRightBtn?: boolean,
+  backRouterUrl?: string
+  closeRightBtnUrl?: string
 }
-export const PageHeader: FC<IPageHeader>= ({ pageTitle, menuBtn, backBtn, settingBtn, homeBtn, userBtn }) => {
+export const PageHeader: FC<IPageHeader>= ({ 
+    pageTitle, 
+    menuBtn,
+    backBtn,
+    closeLeftBtn,
+    homeBtn,
+    userBtn,
+    closeRightBtn,
+    backRouterUrl,
+    closeRightBtnUrl
+  }) => {
   return useObserver(() => (
     <IonHeader>
         <IonToolbar>
-          {settingBtn && (
+          {closeLeftBtn && (
             <IonButtons slot='start'>
               <IonButton slot='end' color='dark' routerLink='/home'>
                 <IonIcon 
@@ -31,9 +44,9 @@ export const PageHeader: FC<IPageHeader>= ({ pageTitle, menuBtn, backBtn, settin
           )}
           {backBtn && (
             <IonButtons slot='start'>
-              <IonButton slot='end' color='dark' routerLink='/home'>
+              <IonButton slot='end' color='dark' routerLink={backRouterUrl ? backRouterUrl : '/home'}>
                 <IonIcon 
-                  slot='icon-only' 
+                  slot="icon-only"
                   icon={chevronBack} 
                   size='default' 
                 />
@@ -69,6 +82,17 @@ export const PageHeader: FC<IPageHeader>= ({ pageTitle, menuBtn, backBtn, settin
                   size="default"
                 />
               </IonButton>
+            )}
+            {closeRightBtn && (
+              <IonButtons slot='end'>
+                <IonButton slot='end' color='dark' routerLink={closeRightBtnUrl ? closeRightBtnUrl : '/home'}>
+                  <IonIcon 
+                    slot='icon-only' 
+                    icon={closeOutline} 
+                    size='default' 
+                  />
+                </IonButton>
+              </IonButtons>
             )}
           </IonButtons>
         </IonToolbar>

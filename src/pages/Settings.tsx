@@ -23,7 +23,7 @@ export const Settings: React.FC = () => {
 
   return (
     <IonPage>
-      <PageHeader pageTitle="앱 설정" menuBtn={false} settingBtn={true} homeBtn={true} userBtn={true}/>
+      <PageHeader pageTitle="앱 설정" menuBtn={false} closeLeftBtn={true} homeBtn={true} userBtn={true}/>
       <IonContent>
         <div className='px-container my-4'>
           <IonList lines='none'>
