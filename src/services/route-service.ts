@@ -1,6 +1,6 @@
 import { createBrowserHistory, History } from 'history'
 
-class Route {
+class RouteService {
   private _history: History
 
   constructor() {
@@ -10,6 +10,30 @@ class Route {
   goBack() {
     // TODO: modal의 open 상태를 store로 관리하여. hardware back 버튼을 제어할 필요가 있음
     this.history.goBack()
+  }
+
+  home() {
+    this.history.push('/home')
+  }
+
+  signIn() {
+    this.history.push('/sign-in')
+  }
+
+  signUp() {
+    this.history.push('/sign-up')
+  }
+
+  signUpForm() {
+    this.history.push('/sign-up/form')
+  }
+
+  signUpEmail() {
+    this.history.push('/sign-up/email')
+  }
+
+  signUpCommunity() {
+    this.history.push('/sign-up/community')
   }
 
   feed() {
@@ -40,9 +64,29 @@ class Route {
     this.history.push(`/chat/${roomId}`)
   }
 
+  // 내가 만든 것
+  myInf() {
+    this.history.push('myInf')
+  }
+  settings() {
+    this.history.push('settings')
+  }
+  townInf() {
+    this.history.push('townInf')
+  }
+  townEvent() {
+    this.history.push('townEvent')
+  }
+  confirmPwd() {
+    this.history.push('confirmPwd')
+  }
+  changePwd() {
+    this.history.push('changePwd')
+  }
+
   get history() {
     return this._history
   }
 }
 
-export const route = new Route()
+export const route = new RouteService()

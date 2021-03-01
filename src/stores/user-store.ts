@@ -57,7 +57,7 @@ export class User {
     )
   }) as GetUserTask
 
-  @task.resolved
+  @task.resolved // resolved를 쓰면 처음에 pending상태가 아니라 resolved 상태로 시작함.
   setUser = (async (newUser: IUser) => {
     this.user = newUser
   }) as SetUserTask

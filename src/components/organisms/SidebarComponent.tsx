@@ -165,11 +165,7 @@ export const Sidebar: React.FC = () => {
     <IonMenu contentId="main" type='overlay' menuId='leftSidebar' color="dark">
       <IonContent>
         <IonList id='inbox-list'>
-<<<<<<< HEAD
-          <div className="menu-close flex" style={{ backgroundColor: 'lightGray' }}>
-=======
           <div className="menu-close flex">
->>>>>>> 879f2f5e65e8b5c84a88c062a588255dbe6f2bc8
             <IonLabel className="ml-5 mt-3 mb-2">안녕하세요, {$myInf.getUserInfo.name}님!</IonLabel>
             <IonButtons className="ml-auto mt-1" slot='end'>
               <IonButton slot='end' color='dark' onClick={() => menuController.close()}>

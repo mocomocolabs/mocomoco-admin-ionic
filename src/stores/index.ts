@@ -1,4 +1,5 @@
 import { configure } from 'mobx'
+import { Auth } from './auth-store'
 import { Chat } from './chat-store'
 import { Comment } from './comment-store'
 import { Community } from './community-store'
@@ -24,16 +25,17 @@ export class RootStore {
   $chat: Chat
   $ui: Ui
   $user: User
-  
+
   // example
   todoList: TodoList
   news: News
-  
+
   // isa 추가
   $home: Home
   $myInf: MyInf
   $userSearch: UserSearch
   $townInf: TownInf
+  $auth: Auth
 
   constructor() {
     this.$community = new Community()
@@ -50,6 +52,7 @@ export class RootStore {
     this.$myInf = new MyInf()
     this.$userSearch = new UserSearch()
     this.$townInf = new TownInf()
+    this.$auth = new Auth()
 
     // example
     this.todoList = new TodoList()

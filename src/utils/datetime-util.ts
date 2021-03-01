@@ -7,6 +7,7 @@ export enum DT_FORMAT {
   HM = 'HH:mm',
 }
 
-export const ymd = (value?: string) => dayjs(value).format(DT_FORMAT.YMD)
-export const hm = (value?: string) => dayjs(value).format(DT_FORMAT.HM)
 export const ymdhm = (value?: string) => dayjs(value).format(DT_FORMAT.YMDHM)
+export const ymd = (value?: string) => dayjs(value).format(DT_FORMAT.YMD)
+export const y = (value?: string) => dayjs(value).format(DT_FORMAT.Y)
+export const hm = (value?: string) => dayjs(value).format(DT_FORMAT.HM)
