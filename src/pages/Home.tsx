@@ -24,7 +24,7 @@ import { useStore } from '../hooks/use-store'
 import './Home.scoped.scss'
 
 export const Home: React.FC = () => {
-  const { $home } = useStore()
+  const { $home, $user } = useStore()
 
   useIonViewWillEnter(() => {
     // $home.getCurMonEventList
@@ -32,6 +32,9 @@ export const Home: React.FC = () => {
   })
 
   const asdf = () => {
+    // $user.getUser(0)
+    // test
+    $user.getUsers()
     console.log(123)
   }
 

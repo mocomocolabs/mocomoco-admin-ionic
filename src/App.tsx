@@ -32,12 +32,7 @@ export const App: React.FC = () => {
 
   const init = async () => {
     // 로그인
-    await Promise.all([
-      //
-      $auth.signInWithToken(),
-      $community.getCommunities(),
-      $user.getUser(1),
-    ])
+    await Promise.all([$auth.signInWithToken(), $community.getCommunities()])
 
     // $auth.setIsLogin()
 

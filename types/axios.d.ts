@@ -1,4 +1,4 @@
-import 'axios'
+import 'axios';
 
 interface IResponse {
   [key: string]: string
