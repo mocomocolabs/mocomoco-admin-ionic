@@ -75,10 +75,11 @@ export const TownEvent: React.FC = () => {
                     max={todayDate}
                   ></IonDatetime>
                 </IonItem>
+                <IonLabel>행사명</IonLabel>
                 <Input
+                  className='border-border px-3'
                   // value={$userSearch.getSearchObj.email}
                   placeholder='행사명'
-                  label='행사명'
                   // onChange={(email) => $userSearch.setSearchEmail(email)}
                 />
               </IonList>

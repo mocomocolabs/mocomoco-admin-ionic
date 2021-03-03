@@ -9,7 +9,6 @@ class StorageService {
 
   async getAccessToken(): Promise<string> {
     const token = await this.getObject(this.ACCESS_TOKEN)
-    console.log('이건모야', this.getObject(this.ACCESS_TOKEN))
 
     if (!token) {
       return ''
