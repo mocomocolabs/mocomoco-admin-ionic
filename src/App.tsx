@@ -8,6 +8,7 @@ import './App.scss'
 import { Alert } from './components/molecules/AlertComponent'
 import { Sidebar } from './components/organisms/SidebarComponent'
 import './global.scss'
+import { GuardRoute } from './GuardRoute'
 import { useStore } from './hooks/use-store'
 import { ChangePwd } from './pages/ChangePwd'
 import { ConfirmPwd } from './pages/ConfirmPwd'
@@ -16,9 +17,11 @@ import { Home } from './pages/Home'
 import { MyInf } from './pages/MyInf'
 import { MyPage } from './pages/MyPage'
 import { Settings } from './pages/Settings'
+import { SignIn } from './pages/SignIn'
 import { TownEvent } from './pages/TownEvent'
 import { TownInf } from './pages/TownInf'
 import { UserSearch } from './pages/UserSearch'
+
 export const App: React.FC = () => {
   const { $community, $ui, $chat, $auth, $user } = useStore()
 
@@ -32,7 +35,11 @@ export const App: React.FC = () => {
 
   const init = async () => {
     // 로그인
-    await Promise.all([$auth.signInWithToken(), $community.getCommunities()])
+    await Promise.all([
+      $auth.signInWithToken(),
+      $community.getCommunities(),
+      $auth.showLoginPage(), // 테스트용. 나중에 삭제
+    ])
 
     // $auth.setIsLogin()
 
@@ -46,25 +53,26 @@ export const App: React.FC = () => {
         <Sidebar />
         {/* <IonTabs> */}
         <IonRouterOutlet id='main'>
-          <Route path='/home' component={Home} exact />
-          <Route path='/userList' component={UserSearch} exact />
+          <Route path='/sign-in' component={SignIn} exact />
+          <GuardRoute path='/home' component={Home} exact />
+          <GuardRoute path='/userList' component={UserSearch} exact />
+          <GuardRoute path='/my-page' component={MyPage} exact />
+          <GuardRoute path='/settings' component={Settings} exact />
+          <GuardRoute path='/example' component={Example} exact />
+          <GuardRoute path='/myInf' component={MyInf} exact />
+          <GuardRoute path='/townInf' component={TownInf} exact />
+          <GuardRoute path='/townEvent' component={TownEvent} exact />
+          <GuardRoute path='/confirmPwd' component={ConfirmPwd} exact />
+          <GuardRoute path='/changePwd' component={ChangePwd} exact />
+          <Redirect from='/' to='/home' exact />
           {/* <Route path='/feed' component={Feed} exact />
             <Route path='/feed/:id' component={FeedDetail} exact />
             <Route path='/feed-write' component={FeedWrite} exact />
             <Route path='/trade' component={Trade} exact />
             <Route path='/chat' component={Chat} exact />
             <Route path='/chat/:id' component={ChatRoom} exact /> */}
-          <Route path='/my-page' component={MyPage} exact />
-          <Route path='/settings' component={Settings} exact />
           {/* <Route path='/users/:id' component={ProfileDetail} exact />
             <Route path='/users/:id/edit' component={ProfileUpdate} exact /> */}
-          <Route path='/example' component={Example} exact />
-          <Route path='/myInf' component={MyInf} exact />
-          <Route path='/townInf' component={TownInf} exact />
-          <Route path='/townEvent' component={TownEvent} exact />
-          <Route path='/confirmPwd' component={ConfirmPwd} exact />
-          <Route path='/changePwd' component={ChangePwd} exact />
-          <Redirect from='/' to='/home' exact />
         </IonRouterOutlet>
         {/* <IonTabBar slot='bottom' hidden={!$ui.isBottomTab}>
             <IonTabButton tab='home' href='/home'>

@@ -24,11 +24,12 @@ import { useStore } from '../hooks/use-store'
 import './Home.scoped.scss'
 
 export const Home: React.FC = () => {
-  const { $home, $user } = useStore()
+  const { $home, $user, $ui } = useStore()
 
   useIonViewWillEnter(() => {
     // $home.getCurMonEventList
     // $home.getApvList
+    $ui.setIsHeaderBar(true)
   })
 
   const asdf = () => {

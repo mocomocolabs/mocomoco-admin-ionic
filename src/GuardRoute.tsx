@@ -13,7 +13,7 @@ export interface IGuardRoute {
 
 export const GuardRoute: FC<IGuardRoute> = ({ component, path, exact }: IGuardRoute) => {
   const { $auth } = useStore()
-
+  console.log('GuardRout')
   return useObserver(() =>
     $auth.isLogin === true ? (
       <Route path={path} exact={exact} component={component} />

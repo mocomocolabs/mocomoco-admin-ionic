@@ -4,7 +4,7 @@ import { BackButton } from '../components/molecules/BackButtonComponent'
 import { SignInEmail } from '../components/organisms/SignInEmailComponent'
 import { useStore } from '../hooks/use-store'
 
-export const LoginPage: React.FC = () => {
+export const SignIn: React.FC = () => {
   const { $ui } = useStore()
 
   useIonViewWillEnter(() => {

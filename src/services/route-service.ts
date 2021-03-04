@@ -20,6 +20,25 @@ class RouteService {
     this.history.push('/sign-in')
   }
 
+  myInf() {
+    this.history.push('myInf')
+  }
+  settings() {
+    this.history.push('settings')
+  }
+  townInf() {
+    this.history.push('townInf')
+  }
+  townEvent() {
+    this.history.push('townEvent')
+  }
+  confirmPwd() {
+    this.history.push('confirmPwd')
+  }
+  changePwd() {
+    this.history.push('changePwd')
+  }
+  //
   signUp() {
     this.history.push('/sign-up')
   }
@@ -62,26 +81,6 @@ class RouteService {
 
   chatRoom(roomId: number) {
     this.history.push(`/chat/${roomId}`)
-  }
-
-  // 내가 만든 것
-  myInf() {
-    this.history.push('myInf')
-  }
-  settings() {
-    this.history.push('settings')
-  }
-  townInf() {
-    this.history.push('townInf')
-  }
-  townEvent() {
-    this.history.push('townEvent')
-  }
-  confirmPwd() {
-    this.history.push('confirmPwd')
-  }
-  changePwd() {
-    this.history.push('changePwd')
   }
 
   get history() {

@@ -29,6 +29,11 @@ export class Auth {
   setIsLogin() {
     this.isLogin = true
   }
+  @action
+  showLoginPage() {
+    console.log('showLoginPage')
+    this.isLogin = false
+  }
 
   @action
   setSignUpForm(form: Partial<ISignUpForm>) {
