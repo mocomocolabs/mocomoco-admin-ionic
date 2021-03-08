@@ -78,3 +78,13 @@ return $ui.getIsHeaderBar ? <div className='m-red'>{message}</div> : <></
   - 어드민은 sign-up이 없다.
   : 관리자 페이지이기 때문에 마을에서 관리자인 사람들은 별도의 채널로 mocomoco팀에게 contact 하여 아이디를 만들고 초기 비밀번호를 설정해준 걸 알려준다.
   : 그 이후 본인이 로그인해서 비밀번호를 바꾸는 식으로 운영한다.
+
+
+
+
+# postman
+## 서버 개발자가 정의해놓은 json들을 import 해서 실행한다.
+- sign-in 시 발급되는 accessToken을 붙여 넣어서 모든 요청에 붙여 넣어야 함.(Authorization > token)
+- 데이터를 수정하고 싶으면 실데이터를 수정하고 revert 하면 됨.
+# gradle
+> gradle 이 없으면 ./gradlew 를 붙여서 JAVA springboot 에 내장되어있는 gradle을 쓸 수도 있다.
