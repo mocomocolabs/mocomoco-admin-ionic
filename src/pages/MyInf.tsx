@@ -18,7 +18,7 @@ import {
 } from '@ionic/react'
 import { chevronForward } from 'ionicons/icons'
 import { useObserver } from 'mobx-react-lite'
-import { default as React, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { TextXl } from '../components/atoms/TextXlComponent'
 import { PageHeader } from '../components/molecules/PageHeaderComponent'
@@ -26,8 +26,10 @@ import { useStore } from '../hooks/use-store'
 
 export const MyInf: React.FC = () => {
   const [language, setLanguage] = useState<string>('한국어')
-  const { $myInf, $auth } = useStore()
-
+  const { $myInf, $auth, $user } = useStore()
+  useEffect(() => {
+    console.log('안나와 =>', $user.getUserByIsa())
+  })
   return useObserver(() => (
     <IonPage>
       <PageHeader pageTitle='내 정보' backBtn={true} />

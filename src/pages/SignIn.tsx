@@ -1,6 +1,5 @@
-import { IonContent, IonHeader, IonPage, IonToolbar, useIonViewWillEnter } from '@ionic/react'
+import { IonContent, IonHeader, IonPage, useIonViewWillEnter } from '@ionic/react'
 import React from 'react'
-import { BackButton } from '../components/molecules/BackButtonComponent'
 import { SignInEmail } from '../components/organisms/SignInEmailComponent'
 import { useStore } from '../hooks/use-store'
 
@@ -14,11 +13,12 @@ export const SignIn: React.FC = () => {
   return (
     <IonPage>
       <IonHeader>
-        <IonToolbar>
+        HAMA ADMIN
+        {/* <IonToolbar>
           <div slot='start'>
             <BackButton></BackButton>
           </div>
-        </IonToolbar>
+        </IonToolbar> */}
       </IonHeader>
       <IonContent>
         <SignInEmail></SignInEmail>

@@ -25,6 +25,8 @@ export class User {
 
   @task
   getCurrentUserId = (async () => {
+    console.log('이건 emfdjd', this.currentUserId)
+
     if (this.currentUserId != null) {
       return
     }
@@ -39,6 +41,8 @@ export class User {
 
   @action
   setCurrentUserId = (userId: number) => {
+    console.log('들어오냐', userId)
+
     this.currentUserId = userId
   }
 
@@ -56,7 +60,16 @@ export class User {
       })
     )
   }
+  @task //이건 왜 안되는거지???
+  getUserByIsa = async () => {
+    // TODO: CORS 에러 발생. 이유를 찾아보장.
 
+    await http.get(`/auth/user`).then(
+      action((userData) => {
+        return console.log(userData)
+      })
+    )
+  }
   @task
   getUser = (async (userId: number) => {
     await http.get<IUser>(`/sys/users/${userId}`).then(
