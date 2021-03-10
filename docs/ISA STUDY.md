@@ -41,7 +41,7 @@ const { $ui, $user } = useStore()
 
 > 실제 보여질지 말지 하는 컴포넌트에서는 요런식으로
 ```
-return $ui.getIsHeaderBar ? <div className='m-red'>{message}</div> : <></
+return $ui.getIsHeaderBar ? <div className='m-red'>{message}</div> : <></>
 ```
 
 
@@ -65,26 +65,39 @@ return $ui.getIsHeaderBar ? <div className='m-red'>{message}</div> : <></
 ## 로그인 순서
 - GuardRoute로 씌워져있는 Route들은 로그인 한 사람만 볼 수 있도록 되어있음. ($auth.isLogin을 바라보다가 false가 되는 순간 /sign-in 페이지로 라우팅함.)
 - App.tsx에서 useEffect 시점에 init()을 호출하고 그 안에서 await Promice.all로 $auth.signInWithToken으로 사용자를 검증함.
+- 새로고침을 할 때마다 $auth.siginInWithToken으로 accessToken을 확인한 후, 로그인 상태를 유지시킬 것인지를 판단함. 에러가 catch되면 refreshToken으로 다시 권한을 셋.
 
 
 # 사용자 관련
 ## 누가 어드민인가
-  - USERS 테이블에 보면 ROLES라는 필드가 있음. (일반 사용자, 어드민을 구분해주는듯)
+  - USERS 테이블에 보면 ROLES라는 필드가 있음. ('SYSTEM', 'ADMIN', '일반' 일듯)
 
 
 
 # 어드민 운영
 ## 기능 관련
   - 어드민은 sign-up이 없다.
-  : 관리자 페이지이기 때문에 마을에서 관리자인 사람들은 별도의 채널로 mocomoco팀에게 contact 하여 아이디를 만들고 초기 비밀번호를 설정해준 걸 알려준다.
-  : 그 이후 본인이 로그인해서 비밀번호를 바꾸는 식으로 운영한다.
+  : 일단 App과 같은 user db를 사용한다. users컬럼에 roles에 보면 'ADMIN'인지 일반사용자인지, 'SYSTEM'인지를 구분할 수 있다. 일단 그걸로 사용한다.
+  : 일반 사용자들은 AdMIN에 로그인을 할 수 있지만 roles가 'ADMIN'이상이 아니면 접근할 수 있는 데이터가 없도록 코딩하면 된다.
 
 
 
 
-# postman
-## 서버 개발자가 정의해놓은 json들을 import 해서 실행한다.
-- sign-in 시 발급되는 accessToken을 붙여 넣어서 모든 요청에 붙여 넣어야 함.(Authorization > token)
-- 데이터를 수정하고 싶으면 실데이터를 수정하고 revert 하면 됨.
-# gradle
-> gradle 이 없으면 ./gradlew 를 붙여서 JAVA springboot 에 내장되어있는 gradle을 쓸 수도 있다.
+# 프론트에서의 암/복호화
+## inko
+- https://www.npmjs.com/package/inko/v/1.0.6?activeTab=readme
+- 비밀번호의 경우, 한글로 입력한 input에 대하여 영문화를 진행한다.
+```
+import Inko from 'inko'
+const inko = new Inko()
+inkop.ko2en(password) // 한국어를 영어로 변환.
+```
+
+
+
+# DB
+## postman
+- 개발 단계에서는 서버를 올렸다가 내리면 DB가 cleansing 되게 해 놨다.
+- postman으로 DB에 데이터를 넣을 수 있다.
+- 회원가입 테스트를 하려면 communities 테이블에 community를 먼저 추가해야 user를 등록할 수 있다.
+- gradle bootRun을 하지 않으면 DB를 볼 수 없다.
