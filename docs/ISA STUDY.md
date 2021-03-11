@@ -101,3 +101,11 @@ inkop.ko2en(password) // 한국어를 영어로 변환.
 - postman으로 DB에 데이터를 넣을 수 있다.
 - 회원가입 테스트를 하려면 communities 테이블에 community를 먼저 추가해야 user를 등록할 수 있다.
 - gradle bootRun을 하지 않으면 DB를 볼 수 없다.
+
+
+
+
+# 하마 어드민 개발노트
+## 스토어의 분리
+- auth 스토어: 로그인 한 사람에 대한 스토어
+- user 스토어: 로그인 한 사람 이외의 모든 사람을 대상으로 하는 스토어

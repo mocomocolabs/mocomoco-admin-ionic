@@ -1,5 +1,16 @@
-import { menuController } from '@ionic/core';
-import { IonButton, IonButtons, IonContent, IonIcon, IonItem, IonLabel, IonList, IonListHeader, IonMenu, IonMenuToggle } from '@ionic/react';
+import { menuController } from '@ionic/core'
+import {
+  IonButton,
+  IonButtons,
+  IonContent,
+  IonIcon,
+  IonItem,
+  IonLabel,
+  IonList,
+  IonListHeader,
+  IonMenu,
+  IonMenuToggle
+} from '@ionic/react'
 import {
   closeOutline,
   helpCircle,
@@ -12,22 +23,22 @@ import {
   shirtOutline,
   trophy,
   trophyOutline
-} from 'ionicons/icons';
-import React from 'react';
-import { useLocation } from 'react-router-dom';
-import { useStore } from '../../hooks/use-store';
-import { XDivider } from '../atoms/XDividerComponent';
-import './Sidebar.scoped.scss';
+} from 'ionicons/icons'
+import React from 'react'
+import { useLocation } from 'react-router-dom'
+import { useStore } from '../../hooks/use-store'
+import { XDivider } from '../atoms/XDividerComponent'
+import './Sidebar.scoped.scss'
 interface AppPage {
-  url: string;
-  iosIcon: string;
-  mdIcon: string;
-  title: string;
-  menuGrp: string;
-  level?: number;
-  author: string;
-  menuId: number;
-  upMenuId: number;
+  url: string
+  iosIcon: string
+  mdIcon: string
+  title: string
+  menuGrp: string
+  level?: number
+  author: string
+  menuId: number
+  upMenuId: number
 }
 
 const appPages: AppPage[] = [
@@ -39,7 +50,7 @@ const appPages: AppPage[] = [
     menuGrp: 'home',
     author: 'ADMIN',
     menuId: 10,
-    upMenuId: 0
+    upMenuId: 0,
   },
   {
     title: '우리마을관리',
@@ -50,7 +61,7 @@ const appPages: AppPage[] = [
     level: 1,
     author: 'ADMIN',
     menuId: 20,
-    upMenuId: 0
+    upMenuId: 0,
   },
   {
     title: '우리마을정보',
@@ -61,7 +72,7 @@ const appPages: AppPage[] = [
     level: 2,
     author: 'ADMIN',
     menuId: 21,
-    upMenuId: 20
+    upMenuId: 20,
   },
   {
     title: '우리마을사람들',
@@ -72,7 +83,7 @@ const appPages: AppPage[] = [
     level: 2,
     author: 'ADMIN',
     menuId: 22,
-    upMenuId: 20
+    upMenuId: 20,
   },
   {
     title: '우리마을일정',
@@ -83,7 +94,7 @@ const appPages: AppPage[] = [
     level: 2,
     author: 'ADMIN',
     menuId: 23,
-    upMenuId: 20
+    upMenuId: 20,
   },
   {
     title: '시스템 관리',
@@ -94,7 +105,7 @@ const appPages: AppPage[] = [
     level: 1,
     author: 'SYS',
     menuId: 30,
-    upMenuId: 0
+    upMenuId: 0,
   },
   {
     title: '메뉴관리',
@@ -105,7 +116,7 @@ const appPages: AppPage[] = [
     level: 2,
     author: 'SYS',
     menuId: 31,
-    upMenuId: 30
+    upMenuId: 30,
   },
   // {
   //   title: 'About',
@@ -124,7 +135,7 @@ const appPages: AppPage[] = [
     level: 1,
     author: 'ADMIN',
     menuId: 40,
-    upMenuId: 0
+    upMenuId: 0,
   },
   {
     title: '앱 설정',
@@ -135,7 +146,7 @@ const appPages: AppPage[] = [
     level: 2,
     author: 'ADMIN',
     menuId: 41,
-    upMenuId: 40
+    upMenuId: 40,
   },
   // {
   //   title: 'Help',
@@ -154,31 +165,29 @@ const appPages: AppPage[] = [
     level: 2,
     author: 'ADMIN',
     menuId: 42,
-    upMenuId: 40
+    upMenuId: 40,
   },
 ]
 export const Sidebar: React.FC = () => {
-  const location = useLocation();
-  const { $myInf } = useStore()
+  const location = useLocation()
+  const { $auth } = useStore()
 
   return (
-    <IonMenu contentId="main" type='overlay' menuId='leftSidebar' color="dark">
+    <IonMenu contentId='main' type='overlay' menuId='leftSidebar' color='dark'>
       <IonContent>
         <IonList id='inbox-list'>
-          <div className="menu-close flex">
-            <IonLabel className="ml-5 mt-3 mb-2">안녕하세요, {$myInf.getUserInfo.name}님!</IonLabel>
-            <IonButtons className="ml-auto mt-1" slot='end'>
+          <div className='menu-close flex'>
+            <IonLabel className='ml-5 mt-3 mb-2'>
+              안녕하세요, {$auth.getAuthInfo && $auth.getAuthInfo.name}님!
+            </IonLabel>
+            <IonButtons className='ml-auto mt-1' slot='end'>
               <IonButton slot='end' color='dark' onClick={() => menuController.close()}>
-                <IonIcon
-                  slot='icon-only'
-                  icon={closeOutline}
-                  size='default'
-                />
+                <IonIcon slot='icon-only' icon={closeOutline} size='default' />
               </IonButton>
             </IonButtons>
           </div>
           {appPages.map((page, index) => {
-            if (page.author === 'SYS') return;
+            if (page.author === 'SYS') return
             if (page.level === 1) {
               return (
                 <>
@@ -188,26 +197,21 @@ export const Sidebar: React.FC = () => {
                   </IonListHeader>
                 </>
               )
-            } else return (
-              <IonMenuToggle key={index} autoHide={false}>
-                <IonItem
-                  className={
-                    location.pathname === page.url ? 'selected' : ''
-                      && index === 0 ? 'mt-8' : ''
-                  }
-                  routerLink={page.url}
-                  routerDirection='none'
-                  lines='none'
-                  detail={false}>
-                  <IonIcon
-                    slot='start'
-                    ios={page.iosIcon}
-                    md={page.mdIcon}
-                  />
-                  <IonLabel>{page.title}</IonLabel>
-                </IonItem>
-              </IonMenuToggle>
-            );
+            } else
+              return (
+                <IonMenuToggle key={index} autoHide={false}>
+                  <IonItem
+                    className={location.pathname === page.url ? 'selected' : '' && index === 0 ? 'mt-8' : ''}
+                    routerLink={page.url}
+                    routerDirection='none'
+                    lines='none'
+                    detail={false}
+                  >
+                    <IonIcon slot='start' ios={page.iosIcon} md={page.mdIcon} />
+                    <IonLabel>{page.title}</IonLabel>
+                  </IonItem>
+                </IonMenuToggle>
+              )
           })}
         </IonList>
       </IonContent>

@@ -22,6 +22,8 @@ export interface IAuthUserDto {
     }
   ]
   isUse: boolean
+  locale: string
+  roles: string
 }
 
 // TODO: 추후 IUser와 통합하는게 좋을지 논의 필요
@@ -32,6 +34,8 @@ export interface IAuthUser {
   communities: ICommunity[]
   email: string
   profileUrl: string
+  locale: string
+  roles: string
 
   // TODO: 추가 필요
   // signUpStatus: string

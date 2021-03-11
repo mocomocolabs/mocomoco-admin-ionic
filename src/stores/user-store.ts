@@ -1,3 +1,4 @@
+// 로그인 한 사람을 포함한 모든 사람에 대한 정보를 모아두는 스토어.
 import { action, observable } from 'mobx'
 import { task } from 'mobx-task'
 import { IUser } from '../models/user'
@@ -25,8 +26,6 @@ export class User {
 
   @task
   getCurrentUserId = (async () => {
-    console.log('이건 emfdjd', this.currentUserId)
-
     if (this.currentUserId != null) {
       return
     }
@@ -57,16 +56,6 @@ export class User {
     await http.get(`/sys/users`).then(
       action((r) => {
         console.log(r)
-      })
-    )
-  }
-  @task //이건 왜 안되는거지???
-  getUserByIsa = async () => {
-    // TODO: CORS 에러 발생. 이유를 찾아보장.
-
-    await http.get(`/auth/user`).then(
-      action((userData) => {
-        return console.log(userData)
       })
     )
   }

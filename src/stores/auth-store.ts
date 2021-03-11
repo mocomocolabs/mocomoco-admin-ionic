@@ -1,5 +1,6 @@
+// 로그인을 한 사람에 대한 정보를 모아두는 스토어.
 import Inko from 'inko'
-import { action, observable } from 'mobx'
+import { action, computed, observable } from 'mobx'
 import { task } from 'mobx-task'
 import { ISignUpForm } from '../models/sign-up'
 import { api } from '../services/api-service'
@@ -128,7 +129,7 @@ export class Auth {
   // 유저셋: 로그인에 성공하고 나서 user 정보를 this.user에 담고 로그인 상태 = true로 바꾼다.
   @action
   setUser(user: IAuthUserDto) {
-    const { id, email, name, nickname, profileUrl, communities } = user
+    const { id, email, name, nickname, profileUrl, communities, locale, roles } = user
     console.log('유저셋 $auth.setUser', user)
 
     this.user = {
@@ -144,6 +145,8 @@ export class Auth {
         // count: v.count,
         bannerUrl: v.atchFiles?.slice(-1)?.pop()?.url,
       })),
+      locale,
+      roles,
     }
 
     this.setIsLogin()
@@ -176,4 +179,12 @@ export class Auth {
       console.log(r)
     })
   }) as SignUpTask
+
+  @computed
+  get getAuthInfo() {
+    const hasToken = storage.getAccessToken()
+
+    if (!hasToken) return
+    else return this.user
+  }
 }

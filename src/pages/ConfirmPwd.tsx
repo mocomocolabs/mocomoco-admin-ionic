@@ -12,7 +12,7 @@ import { useStore } from '../hooks/use-store'
 
 export const ConfirmPwd: React.FC = () => {
   const [language, setLanguage] = useState<string>('한국어')
-  const { $myInf } = useStore()
+  const { $auth } = useStore()
   return useObserver(() => (
     <IonPage>
       <PageHeader pageTitle='비밀번호 확인' closeRightBtn={true} closeRightBtnUrl='/MyInf' />
@@ -25,7 +25,7 @@ export const ConfirmPwd: React.FC = () => {
               </IonItem>
               <Input
                 // value={$userSearch.getSearchObj.name}
-                placeholder={'isaworld@naver.com'}
+                placeholder={$auth.getAuthInfo && $auth.getAuthInfo.email}
                 // disabled={true}
               />
               <Input

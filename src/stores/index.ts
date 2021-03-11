@@ -7,7 +7,6 @@ import { News } from './example/news-store'
 import { TodoList } from './example/todo-list-store'
 import { Feed } from './feed-store'
 import { Home } from './home-store'
-import { MyInf } from './myInf-store'
 import { TownInf } from './townInf-store'
 import { Stuff, Talent } from './trade-store'
 import { Ui } from './ui-store'
@@ -32,7 +31,6 @@ export class RootStore {
 
   // isa 추가
   $home: Home
-  $myInf: MyInf
   $userSearch: UserSearch
   $townInf: TownInf
   $auth: Auth
@@ -49,7 +47,6 @@ export class RootStore {
 
     // isa 추가
     this.$home = new Home()
-    this.$myInf = new MyInf()
     this.$userSearch = new UserSearch()
     this.$townInf = new TownInf()
     this.$auth = new Auth()
