@@ -18,12 +18,6 @@ class StorageService {
   }
 
   setAccessToken(accessToken: string): Promise<void> {
-    console.log('storage setAccessToken', accessToken)
-    console.log(
-      '암호화해서 저장',
-      this.setObject(this.ACCESS_TOKEN, encrypt(accessToken, config.KEY.ENCRYPT_SECRET))
-    )
-
     return this.setObject(this.ACCESS_TOKEN, encrypt(accessToken, config.KEY.ENCRYPT_SECRET))
   }
 

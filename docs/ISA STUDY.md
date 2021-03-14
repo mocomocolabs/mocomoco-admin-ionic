@@ -68,10 +68,6 @@ return $ui.getIsHeaderBar ? <div className='m-red'>{message}</div> : <></>
 - 새로고침을 할 때마다 $auth.siginInWithToken으로 accessToken을 확인한 후, 로그인 상태를 유지시킬 것인지를 판단함. 에러가 catch되면 refreshToken으로 다시 권한을 셋.
 
 
-# 사용자 관련
-## 누가 어드민인가
-  - USERS 테이블에 보면 ROLES라는 필드가 있음. ('SYSTEM', 'ADMIN', '일반' 일듯)
-
 
 
 # 어드민 운영
@@ -109,3 +105,26 @@ inkop.ko2en(password) // 한국어를 영어로 변환.
 ## 스토어의 분리
 - auth 스토어: 로그인 한 사람에 대한 스토어
 - user 스토어: 로그인 한 사람 이외의 모든 사람을 대상으로 하는 스토어
+
+
+# 메모
+## fcmToken
+- 모바일에 푸쉬할 때 필요한 토큰. (알림 같은 거)
+
+## community Id가 2인 커뮤니티의 정보를 가져온다.
+> url
+http://localhost:8080/api/v1/communities/1
+> return value
+이 커뮤니티에 가입한 userCount랑 users리스트도 가져온다.
+
+
+## 누가 어드민인가
+- USER 테이블에 roles는 서버에서 체크하는 필드이므로 화면에서 볼 필요 없음.
+> 참고
+ROLE_SYS,ROLE_ADMIN,ROLE_USER => 시스템 관리자
+ROLE_ADMIN,ROLE_USER => 커뮤니티관리자
+ROLE_USER => 일반 사용자
+
+- COMMUNITIES 테이블에서 ADMIN_USER_ID만 보면 됨.
+>일단 관리자는 1명이라고 생각하고 개발.
+> SYS 계정은 차후에 개발.

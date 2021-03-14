@@ -4,17 +4,16 @@
 // created: 2021-01-10, 이지혜
 import { IonButton, IonContent, IonItem, IonItemGroup, IonList, IonPage } from '@ionic/react'
 import { useObserver } from 'mobx-react-lite'
-import { default as React, useState } from 'react'
+import { default as React } from 'react'
 import { Link } from 'react-router-dom'
-import { Input } from '../components/atoms/InputComponent'
 import { InputPassword } from '../components/atoms/InputPasswordComponent'
 import { Alert } from '../components/molecules/AlertComponent'
 import { PageHeader } from '../components/molecules/PageHeaderComponent'
 import { useStore } from '../hooks/use-store'
+import { route } from '../services/route-service'
 
 export const ChangePwd: React.FC = () => {
   const { $ui } = useStore()
-  const [asdf, setAsdf] = useState<boolean>(true)
 
   const showConfirmModal = () => {
     $ui.showAlert({
@@ -28,7 +27,10 @@ export const ChangePwd: React.FC = () => {
             isOpen: true,
             header: '확인',
             message: '성공적으로 저장 되었습니다.',
-            onSuccess: () => $ui.hideAlert(),
+            onSuccess: () => {
+              $ui.hideAlert()
+              route.home()
+            },
             onFail: () => $ui.hideAlert(),
           })
         }, 500)
@@ -73,7 +75,7 @@ export const ChangePwd: React.FC = () => {
           <IonList lines='none'>
             <IonItemGroup>
               <IonItem className='mb-5'>새로운 비밀번호를 입력해주세요.</IonItem>
-              <Input
+              <InputPassword
                 // value={$userSearch.getSearchObj.name}
                 placeholder={'비밀번호(8자리 이상)'}
               />

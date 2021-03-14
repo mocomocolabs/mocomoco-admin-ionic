@@ -23,6 +23,10 @@ class RouteService {
   myInf() {
     this.history.push('myInf')
   }
+  changePwd() {
+    this.history.push('changePwd')
+  }
+
   settings() {
     this.history.push('settings')
   }
@@ -35,9 +39,7 @@ class RouteService {
   confirmPwd() {
     this.history.push('confirmPwd')
   }
-  changePwd() {
-    this.history.push('changePwd')
-  }
+
   //
   signUp() {
     this.history.push('/sign-up')

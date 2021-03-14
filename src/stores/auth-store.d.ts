@@ -9,21 +9,24 @@ export interface IAuthUserDto {
   accessToken: string
   refreshToken: string
   id: number
-  email: string
   name: string
   nickname: string
+  email: string
   profileUrl: string
+  status: string
   communities: [
     {
       id: number
       name: string
+      adminUsers: number[]
+      users: []
       atchFiles: IFileDto[]
       isUse: boolean
     }
   ]
-  isUse: boolean
   locale: string
   roles: string
+  isUse: boolean
 }
 
 // TODO: 추후 IUser와 통합하는게 좋을지 논의 필요
@@ -31,11 +34,13 @@ export interface IAuthUser {
   id: number
   name: string
   nickname: string
-  communities: ICommunity[]
   email: string
   profileUrl: string
+  status: string
+  communities: ICommunity[]
   locale: string
   roles: string
+  isUse: boolean
 
   // TODO: 추가 필요
   // signUpStatus: string

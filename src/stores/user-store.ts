@@ -40,8 +40,6 @@ export class User {
 
   @action
   setCurrentUserId = (userId: number) => {
-    console.log('들어오냐', userId)
-
     this.currentUserId = userId
   }
 
@@ -51,14 +49,15 @@ export class User {
     this.getUser(this.currentUserId!)
   }) as Task
 
-  @task // 첫 성공!
-  getUsers = async () => {
+  // 모든 가입자들 가져오는 api
+  @task
+  getUsers = (async () => {
     await http.get(`/sys/users`).then(
-      action((r) => {
-        console.log(r)
+      action((data) => {
+        console.log('data', data)
       })
     )
-  }
+  }) as Task
   @task
   getUser = (async (userId: number) => {
     await http.get<IUser>(`/sys/users/${userId}`).then(

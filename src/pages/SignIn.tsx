@@ -1,3 +1,7 @@
+// description: SignIn
+// path: /signIn
+// fileName: SignIn.tsx
+// created: 2021-03-10, 이지혜
 import { IonContent, IonHeader, IonPage, useIonViewWillEnter } from '@ionic/react'
 import React from 'react'
 import { SignInEmail } from '../components/organisms/SignInEmailComponent'
@@ -12,16 +16,9 @@ export const SignIn: React.FC = () => {
 
   return (
     <IonPage>
-      <IonHeader>
-        HAMA ADMIN
-        {/* <IonToolbar>
-          <div slot='start'>
-            <BackButton></BackButton>
-          </div>
-        </IonToolbar> */}
-      </IonHeader>
+      <IonHeader>HAMA ADMIN</IonHeader>
       <IonContent>
-        <SignInEmail></SignInEmail>
+        <SignInEmail useIn='signIn'></SignInEmail>
       </IonContent>
     </IonPage>
   )

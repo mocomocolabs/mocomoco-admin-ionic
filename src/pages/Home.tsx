@@ -30,15 +30,11 @@ export const Home: React.FC = () => {
     // $home.getCurMonEventList
     // $home.getApvList
     $ui.setIsHeaderBar(true)
-  })
-
-  const asdf = () => {
-    // $user.getUser(0)
-    // test
     $user.getUsers()
-    console.log(123)
-  }
-
+    // console.log($user.getUsers())
+  })
+  // USERS > STATUS = 'APPROVAL'(승인) or 'PENDING'(미승인)으로 구분.
+  // `http://localhost:8080/api/v1/communities-users/${id}`
   return useObserver(() => (
     <IonPage>
       <PageHeader pageTitle='하마 ADMIN' menuBtn={true} userBtn={true} />
@@ -48,7 +44,7 @@ export const Home: React.FC = () => {
             <div className='box'>
               <TextXxl className='text-bold'>가입승인을 기다려요</TextXxl>
               <strong className='badge'>{$home.getApvList.length}</strong>
-              <IonButton style={{ marginLeft: 'auto' }} size='small' color='dark' onClick={asdf}>
+              <IonButton style={{ marginLeft: 'auto' }} size='small' color='dark'>
                 승인
               </IonButton>
             </div>

@@ -26,7 +26,7 @@ import { PageHeader } from '../components/molecules/PageHeaderComponent'
 import { useStore } from '../hooks/use-store'
 
 export const MyInf: React.FC = () => {
-  const [language, setLanguage] = useState<string>('한국어')
+  const [language, setLanguage] = useState<string>('ko_KR')
   const { $auth } = useStore()
 
   useIonViewWillEnter(() => {
@@ -122,7 +122,7 @@ export const MyInf: React.FC = () => {
                 <IonLabel>관리마을이름</IonLabel>
                 <span>
                   <IonLabel className='ml-auto'>
-                    {$auth.getAuthInfo && $auth.getAuthInfo.communities[0]}
+                    {$auth.getAuthInfo && $auth.getAuthInfo.communities[0].name}
                   </IonLabel>
                 </span>
               </IonItem>

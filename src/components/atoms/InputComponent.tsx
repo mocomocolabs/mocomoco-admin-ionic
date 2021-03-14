@@ -39,6 +39,7 @@ export interface IInput {
   onChange?: (v: string) => void
   // eslint-disable-next-line
   register?: any
+  disabled?: boolean
 }
 
 export const Input: FC<IInput> = ({
@@ -50,6 +51,7 @@ export const Input: FC<IInput> = ({
   placeholder,
   onChange,
   register,
+  disabled,
 }) => {
   return (
     <input
@@ -61,6 +63,7 @@ export const Input: FC<IInput> = ({
       placeholder={placeholder}
       onChange={(e) => onChange && onChange(e.target.value!)}
       ref={register}
+      disabled={disabled}
     ></input>
   )
 }

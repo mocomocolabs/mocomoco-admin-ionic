@@ -97,7 +97,7 @@ export class Auth {
     }
   }
 
-  // 로그인 페이지에서 사용. 이메일과 비번을 보내면 user 정보를 보내줌.
+  // 로그인 페이지에서 사용. 이메일과 비번을 보내면 인증정보와 개인 정보를 저장.
   @task.resolved
   signIn = (async (email: string, password: string) => {
     console.log('$auth.signIn', email, password, inko.ko2en(password))
@@ -129,7 +129,7 @@ export class Auth {
   // 유저셋: 로그인에 성공하고 나서 user 정보를 this.user에 담고 로그인 상태 = true로 바꾼다.
   @action
   setUser(user: IAuthUserDto) {
-    const { id, email, name, nickname, profileUrl, communities, locale, roles } = user
+    const { id, email, name, status, nickname, profileUrl, communities, locale, roles, isUse } = user
     console.log('유저셋 $auth.setUser', user)
 
     this.user = {
@@ -138,15 +138,20 @@ export class Auth {
       name,
       nickname,
       profileUrl,
+      status,
       communities: communities.map((v) => ({
         id: v.id,
         name: v.name,
-        // TODO: 추가필요
+        adminUsers: v.adminUsers,
+        users: v.users,
+        atchFiles: v.atchFiles,
+        isUse: v.isUse,
         // count: v.count,
-        bannerUrl: v.atchFiles?.slice(-1)?.pop()?.url,
+        // bannerUrl: v.atchFiles?.slice(-1)?.pop()?.url,
       })),
       locale,
       roles,
+      isUse,
     }
 
     this.setIsLogin()
@@ -182,9 +187,10 @@ export class Auth {
 
   @computed
   get getAuthInfo() {
-    const hasToken = storage.getAccessToken()
+    // const hasToken = storage.getAccessToken()
 
-    if (!hasToken) return
-    else return this.user
+    // if (!hasToken) return
+    // else return this.user
+    return this.user
   }
 }
