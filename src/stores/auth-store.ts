@@ -7,7 +7,7 @@ import { api } from '../services/api-service'
 import { route } from '../services/route-service'
 import { storage } from '../services/storage-service'
 import { http } from '../utils/http-util'
-import { IAuthUser, IAuthUserDto, SignInTask, SignUpTask } from './auth-store.d'
+import { IAuthUser, IAuthUserDto, ICommunityInfoDto, SignInTask, SignUpTask } from './auth-store.d'
 import { TaskByString } from './task'
 
 const inko = new Inko()
@@ -109,13 +109,34 @@ export class Auth {
         password: inko.ko2en(password),
       })
       .then((user: IAuthUserDto) => {
+        this.checkAdmin(user)
         this.setAuth(user)
         this.setUser(user)
       })
   }) as SignInTask
 
-  // 권한 셋: 로그인에 성공하고 나서 권한을 셋한다.
-  // user의 access token과 refresh token을 set한다.
+  // 어드민 체크
+  @task.resolved
+  checkAdmin = async (user: IAuthUserDto) => {
+    const { communities, id } = user
+    await http
+      .get<ICommunityInfoDto>(`http://localhost:8080/api/v1/communities/${communities[0].id}`, {})
+      .then((communityInfo: ICommunityInfoDto) => {
+        if (communityInfo.adminUsers[0].id !== id) {
+          console.log('어드민이 아님.')
+          // TODO: admin YN같은 걸로 sign-in 화면에서 얼럿창을 호출해야 함.
+          // $ui.showAlert({
+          // isOpen: true,
+          // header: '확인',
+          // message: '비밀번호를 변경하시겠습니까?' })
+          this.setIsNotLogin()
+          route.signIn()
+          return
+        }
+      })
+  }
+
+  // 권한 셋: 로그인에 성공하고 나서 권한(accessToken, refreshToken)을 셋한다.
   @action
   setAuth(user: IAuthUserDto) {
     const { accessToken, refreshToken } = user

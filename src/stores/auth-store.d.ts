@@ -46,3 +46,58 @@ export interface IAuthUser {
   // signUpStatus: string
   // showsEmail: boolean
 }
+
+//
+interface IAdminUsers {
+  id: number
+  email: string
+  name: string
+  nickname: string
+  fcmToken: string
+  profileUrl: string
+  status: string
+  isPublicMobile: boolean
+  isPublicEmail: boolean
+  communities: ICommunity[]
+  locale: string
+  roles: string
+  isUse: boolean
+  createdAt: string
+  updatedAt: string
+  createdBy: string
+  updatedBy: string
+}
+
+interface ICommunityUsers {
+  id: number
+  email: string
+  name: string
+  nickname: string
+  fcmToken: string
+  profileUrl: string
+  status: string
+  isPublicMobile: boolean
+  isPublicEmail: boolean
+  communities: ICommunity[]
+  locale: string
+  roles: string
+  isUse: boolean
+  createdAt: string
+  updatedAt: string
+  createdBy: string
+  updatedBy: string
+}
+export interface ICommunityInfoDto {
+  id: number
+  name: string
+  locale: string
+  userCount: number
+  adminUsers: IAdminUsers[]
+  users: ICommunityUsers[]
+  atchFiles: IFileDto[]
+  isUse: boolean
+  createdAt: string
+  updatedAt: string
+  createdBy: string
+  updatedBy: string
+}
