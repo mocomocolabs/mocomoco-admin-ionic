@@ -20,12 +20,20 @@ export const SignInEmail: FC<IEmailComponent> = ({ useIn }) => {
   const password = useRef({})
   password.current = watch('password', '')
 
-  const { $auth } = useStore()
+  const { $auth, $ui } = useStore()
 
   const onSubmit = handleSubmit((form) => {
     if (useIn === 'signIn') {
       $auth.signIn(form.email, form.password).then(() => {
-        route.home()
+        if (!$auth.getIsAdmin) {
+          route.signIn()
+          $ui.showAlert({
+            isOpen: true,
+            header: '확인',
+            message: '어드민 유저가 아닙니다.',
+            oneBtn: true,
+          })
+        } else route.home()
       })
     } else {
       $auth.signIn($auth.getAuthInfo.email, form.password).then(() => {

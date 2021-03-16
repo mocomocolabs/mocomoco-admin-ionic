@@ -12,17 +12,26 @@ export const Alert: FC = () => {
       onDidDismiss={() => $ui.hideAlert()}
       header={$ui.alert.header}
       message={$ui.alert.message}
-      buttons={[
-        {
-          text: '취소',
-          role: 'cancel',
-          handler: $ui.alert.onFail,
-        },
-        {
-          text: '확인',
-          handler: $ui.alert.onSuccess,
-        },
-      ]}
+      buttons={
+        $ui.alert.oneBtn
+          ? [
+              {
+                text: '확인',
+                handler: $ui.alert.onSuccess,
+              },
+            ]
+          : [
+              {
+                text: '취소',
+                role: 'cancel',
+                handler: $ui.alert.onFail,
+              },
+              {
+                text: '확인',
+                handler: $ui.alert.onSuccess,
+              },
+            ]
+      }
     ></IonAlert>
   ))
 }

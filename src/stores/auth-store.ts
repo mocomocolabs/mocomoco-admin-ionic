@@ -18,12 +18,14 @@ const initState = {
     roles: 'ROLE_USER',
   } as Partial<ISignUpForm>,
   user: {} as IAuthUser,
+  isAdmin: true,
 }
 
 export class Auth {
   @observable.struct signUpForm: Partial<ISignUpForm> = initState.signUpForm
   @observable isLogin = false
   @observable.struct user: IAuthUser = initState.user
+  @observable isAdmin = false
 
   constructor() {}
 
@@ -34,7 +36,6 @@ export class Auth {
     this.isLogin = true
   }
 
-  // 로그인 페이지를 보기 위해서 임시로 만든 것.
   @action
   setIsNotLogin() {
     this.isLogin = false
@@ -54,9 +55,6 @@ export class Auth {
         if (e.status === 405) {
         }
       }
-      console.log('여기서 찍히는데 this를 읽어들이지 못함.', this)
-      // this.setIsNotLogin()
-      // this.user = initState.user
       route.signIn()
     }
   }
@@ -69,7 +67,7 @@ export class Auth {
     }
   }
 
-  // sign-in시 1: access token이 있으면 user정보를 set한다.
+  // 매 호출마다: access token이 있으면 user정보를 set한다.
   @action
   async signInWithToken() {
     const hasToken = await storage.getAccessToken()
@@ -78,7 +76,8 @@ export class Auth {
     if (hasToken) {
       api.setAuthoriationBy(hasToken)
       try {
-        await api.post<IAuthUserDto>(`http://localhost:8080/api/auth/user`, {}).then((user) => {
+        await api.post<IAuthUserDto>(`http://localhost:8080/api/auth/user`, {}).then(async (user) => {
+          await this.checkAdmin(user)
           this.setUser(user)
         })
       } catch (e) {
@@ -101,15 +100,15 @@ export class Auth {
   @task.resolved
   signIn = (async (email: string, password: string) => {
     console.log('$auth.signIn', email, password, inko.ko2en(password))
-
+    this.isAdmin = false
     // postman으로 community를 생성하고 user를 생성하고서 시도하면 됨.
     await http
       .post<IAuthUserDto>(`http://localhost:8080/api/auth/sign-in`, {
         email,
         password: inko.ko2en(password),
       })
-      .then((user: IAuthUserDto) => {
-        this.checkAdmin(user)
+      .then(async (user: IAuthUserDto) => {
+        await this.checkAdmin(user)
         this.setAuth(user)
         this.setUser(user)
       })
@@ -124,14 +123,12 @@ export class Auth {
       .then((communityInfo: ICommunityInfoDto) => {
         if (communityInfo.adminUsers[0].id !== id) {
           console.log('어드민이 아님.')
-          // TODO: admin YN같은 걸로 sign-in 화면에서 얼럿창을 호출해야 함.
-          // $ui.showAlert({
-          // isOpen: true,
-          // header: '확인',
-          // message: '비밀번호를 변경하시겠습니까?' })
-          this.setIsNotLogin()
           route.signIn()
+          this.isAdmin = false
           return
+        } else {
+          console.log('어드민이다')
+          this.isAdmin = true
         }
       })
   }
@@ -139,6 +136,7 @@ export class Auth {
   // 권한 셋: 로그인에 성공하고 나서 권한(accessToken, refreshToken)을 셋한다.
   @action
   setAuth(user: IAuthUserDto) {
+    if (!this.getIsAdmin) return
     const { accessToken, refreshToken } = user
     console.log('권한셋 setAuth', 'accessToken:', accessToken, 'refreshToken:', refreshToken)
 
@@ -150,6 +148,9 @@ export class Auth {
   // 유저셋: 로그인에 성공하고 나서 user 정보를 this.user에 담고 로그인 상태 = true로 바꾼다.
   @action
   setUser(user: IAuthUserDto) {
+    console.log('여기서 튕김??', this.getIsAdmin)
+
+    if (!this.getIsAdmin) return
     const { id, email, name, status, nickname, profileUrl, communities, locale, roles, isUse } = user
     console.log('유저셋 $auth.setUser', user)
 
@@ -213,5 +214,10 @@ export class Auth {
     // if (!hasToken) return
     // else return this.user
     return this.user
+  }
+
+  @computed
+  get getIsAdmin() {
+    return this.isAdmin
   }
 }

@@ -76,6 +76,8 @@ return $ui.getIsHeaderBar ? <div className='m-red'>{message}</div> : <></>
   : 일단 App과 같은 user db를 사용한다. users컬럼에 roles에 보면 'ADMIN'인지 일반사용자인지, 'SYSTEM'인지를 구분할 수 있다. 일단 그걸로 사용한다.
   : 일반 사용자들은 AdMIN에 로그인을 할 수 있지만 roles가 'ADMIN'이상이 아니면 접근할 수 있는 데이터가 없도록 코딩하면 된다.
 
+  - 어드민에서는 일단 로그인한 사람의 정보를 수정할 수 없다. (추후 개발 논의) 앱에서 할 수 있기 때문. 일단 중요한 것부터 개발.
+
 
 
 
@@ -128,3 +130,28 @@ ROLE_USER => 일반 사용자
 - COMMUNITIES 테이블에서 ADMIN_USER_ID만 보면 됨.
 >일단 관리자는 1명이라고 생각하고 개발.
 > SYS 계정은 차후에 개발.
+
+## 코딩 패턴
+```
+ return useObserver(() =>
+     $home.getApvList.map({
+       pending: () => {
+         return (
+           <div>안뇽</div>
+         )
+       },
+       resolved: () => (
+         <div>하세요</div>
+       )
+     })
+   )
+```
+
+## 개발 단계에서의 순서
+```
+- create communities
+- sign-up
+- sign-in
+- 어드민 유저는 COMMUNITY-USERS에서 ROLE = 'ROLE_ADMIN'으로 변경 
+  (어드민 아니면 'ROLE_USERS')
+```

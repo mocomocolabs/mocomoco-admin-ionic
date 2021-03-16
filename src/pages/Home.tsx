@@ -31,10 +31,9 @@ export const Home: React.FC = () => {
     // $home.getApvList
     $ui.setIsHeaderBar(true)
     $user.getUsers()
-    // console.log($user.getUsers())
   })
-  // USERS > STATUS = 'APPROVAL'(승인) or 'PENDING'(미승인)으로 구분.
-  // `http://localhost:8080/api/v1/communities-users/${id}`
+  // TODO: USERS > STATUS = 'APPROVAL'(승인) or 'PENDING'(미승인)으로 구분.
+  // `/v1/communities-users/${id}`
   return useObserver(() => (
     <IonPage>
       <PageHeader pageTitle='하마 ADMIN' menuBtn={true} userBtn={true} />
@@ -105,16 +104,4 @@ export const Home: React.FC = () => {
       </IonContent>
     </IonPage>
   ))
-  // return useObserver(() =>
-  //   $home.getApvList.map({
-  //     pending: () => {
-  //       return (
-  //         <div>안뇽</div>
-  //       )
-  //     },
-  //     resolved: () => (
-  //       <div>하세요</div>
-  //     )
-  //   })
-  // )
 }
