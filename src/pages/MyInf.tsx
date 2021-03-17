@@ -42,11 +42,11 @@ export const MyInf: React.FC = () => {
             <IonItemGroup>
               <div className='flex-center' slot='start'>
                 <IonAvatar className='w-20 height-80'>
-                  <IonImg src={$auth.getAuthInfo && $auth.getAuthInfo.profileUrl} alt='프로필이미지' />
+                  <IonImg src={$auth.getAuthInfo.profileUrl} alt='프로필이미지' />
                 </IonAvatar>
               </div>
               <div className='flex-center' slot='end'>
-                <TextXl className='text-bold'>{$auth.getAuthInfo && $auth.getAuthInfo.name}</TextXl>
+                <TextXl className='text-bold'>{$auth.getAuthInfo.name}</TextXl>
               </div>
             </IonItemGroup>
             <IonItemGroup className='mt-5'>
@@ -55,14 +55,14 @@ export const MyInf: React.FC = () => {
               <IonItem className='block flex'>
                 <IonLabel>ID</IonLabel>
                 <span>
-                  <IonLabel className='ml-auto mr-8'>{$auth.getAuthInfo && $auth.getAuthInfo.id}</IonLabel>
+                  <IonLabel className='ml-auto mr-8'>{$auth.getAuthInfo.id}</IonLabel>
                 </span>
               </IonItem>
               {/* 닉네임 */}
               <IonItem className='block flex'>
                 <IonLabel>닉네임</IonLabel>
                 <span>
-                  <IonLabel className='ml-auto'>{$auth.getAuthInfo && $auth.getAuthInfo.nickname}</IonLabel>
+                  <IonLabel className='ml-auto'>{$auth.getAuthInfo.nickname}</IonLabel>
                 </span>
                 <IonIcon className='inline ml-2 mt-2' icon={chevronForward} />
               </IonItem>
@@ -70,7 +70,7 @@ export const MyInf: React.FC = () => {
               <IonItem className='block flex'>
                 <IonLabel>이메일</IonLabel>
                 <span>
-                  <IonLabel className='ml-auto'>{$auth.getAuthInfo && $auth.getAuthInfo.email}</IonLabel>
+                  <IonLabel className='ml-auto'>{$auth.getAuthInfo.email}</IonLabel>
                 </span>
                 <IonIcon className='inline ml-2 mt-2' icon={chevronForward} />
               </IonItem>
@@ -78,7 +78,7 @@ export const MyInf: React.FC = () => {
               {/* <IonItem className='block flex'>
                 <IonLabel>핸드폰</IonLabel>
                 <span>
-                  <IonLabel className='ml-auto'>{$auth.getAuthInfo && $auth.getAuthInfo.mobile}</IonLabel>
+                  <IonLabel className='ml-auto'>{$auth.getAuthInfo.mobile}</IonLabel>
                 </span>
                 <IonIcon className='inline ml-2 mt-2' icon={chevronForward} />
               </IonItem> */}
@@ -113,7 +113,7 @@ export const MyInf: React.FC = () => {
                 <IonLabel>내 권한</IonLabel>
                 <span>
                   <IonLabel className='ml-auto'>
-                    {$auth.getAuthInfo && $auth.getAuthInfo.roles.includes('ADMIN') ? 'ADMIN' : ''}
+                    {$auth.getAuthInfo.roles.includes('ADMIN') ? 'ADMIN' : ''}
                   </IonLabel>
                 </span>
               </IonItem>
@@ -121,9 +121,7 @@ export const MyInf: React.FC = () => {
               <IonItem className='block flex'>
                 <IonLabel>관리마을이름</IonLabel>
                 <span>
-                  <IonLabel className='ml-auto'>
-                    {$auth.getAuthInfo && $auth.getAuthInfo.communities[0].name}
-                  </IonLabel>
+                  <IonLabel className='ml-auto'>{$auth.getAuthInfo.communities[0].name}</IonLabel>
                 </span>
               </IonItem>
             </IonItemGroup>

@@ -19,6 +19,7 @@ const initState = {
   } as Partial<ISignUpForm>,
   user: {} as IAuthUser,
   isAdmin: true,
+  communityInfo: {} as ICommunityInfoDto,
 }
 
 export class Auth {
@@ -26,6 +27,7 @@ export class Auth {
   @observable isLogin = false
   @observable.struct user: IAuthUser = initState.user
   @observable isAdmin = false
+  @observable communityInfo = initState.communityInfo
 
   constructor() {}
 
@@ -67,7 +69,7 @@ export class Auth {
     }
   }
 
-  // 매 호출마다: access token이 있으면 user정보를 set한다.
+  // 매 호출마다, 새로고침할 때마다
   @action
   async signInWithToken() {
     const hasToken = await storage.getAccessToken()
@@ -101,7 +103,7 @@ export class Auth {
   signIn = (async (email: string, password: string) => {
     console.log('$auth.signIn', email, password, inko.ko2en(password))
     this.isAdmin = false
-    // postman으로 community를 생성하고 user를 생성하고서 시도하면 됨.
+    // TODO: 여기서 너무 많은 정보를 가지고 오는 게 아닐까?
     await http
       .post<IAuthUserDto>(`http://localhost:8080/api/auth/sign-in`, {
         email,
@@ -114,7 +116,7 @@ export class Auth {
       })
   }) as SignInTask
 
-  // 어드민 체크
+  // 어드민 체크(로그인시, 매 호출시, 새로고침 시)
   @task.resolved
   checkAdmin = async (user: IAuthUserDto) => {
     const { communities, id } = user
@@ -129,14 +131,15 @@ export class Auth {
         } else {
           console.log('어드민이다')
           this.isAdmin = true
+          this.setCommunityInfo(communityInfo)
         }
       })
   }
 
-  // 권한 셋: 로그인에 성공하고 나서 권한(accessToken, refreshToken)을 셋한다.
+  // 권한 셋: ID와 비번이 일치하면 권한(accessToken, refreshToken) 셋
   @action
   setAuth(user: IAuthUserDto) {
-    if (!this.getIsAdmin) return
+    if (!this.getIsAdmin) return // 이게 없으면 화면에서는 튕긴 것 같지만 권한을 셋함.
     const { accessToken, refreshToken } = user
     console.log('권한셋 setAuth', 'accessToken:', accessToken, 'refreshToken:', refreshToken)
 
@@ -145,11 +148,9 @@ export class Auth {
     api.setAuthoriationBy(accessToken)
   }
 
-  // 유저셋: 로그인에 성공하고 나서 user 정보를 this.user에 담고 로그인 상태 = true로 바꾼다.
+  // 유저셋: ID와 비번이 일치했을 시, 매 호출시 user 정보를 담고 로그인 상태 = true로 바꾼다.
   @action
   setUser(user: IAuthUserDto) {
-    console.log('여기서 튕김??', this.getIsAdmin)
-
     if (!this.getIsAdmin) return
     const { id, email, name, status, nickname, profileUrl, communities, locale, roles, isUse } = user
     console.log('유저셋 $auth.setUser', user)
@@ -177,6 +178,22 @@ export class Auth {
     }
 
     this.setIsLogin()
+  }
+
+  @action
+  setCommunityInfo(communityInfo: ICommunityInfoDto) {
+    console.log('communityInfo:: ', communityInfo)
+    const { userCount, createdAt, name, locale, id, users, adminUsers, atchFiles } = communityInfo
+    this.communityInfo = {
+      id,
+      name,
+      locale,
+      userCount,
+      users,
+      createdAt,
+      adminUsers,
+      atchFiles,
+    }
   }
 
   @task.resolved
@@ -219,5 +236,10 @@ export class Auth {
   @computed
   get getIsAdmin() {
     return this.isAdmin
+  }
+
+  @computed
+  get getCommunityInfo() {
+    return this.communityInfo
   }
 }

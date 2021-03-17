@@ -82,11 +82,15 @@ interface ICommunityUsers {
   locale: string
   roles: string
   isUse: boolean
-  createdAt: string
-  updatedAt: string
-  createdBy: string
-  updatedBy: string
+  // createdAt: string
+  // updatedAt: string
+  // createdBy: string
+  // updatedBy: string
 }
+// TODO: Dto 의 타입과 보내주는 타입은 서버에서 정의하는건가?
+// 아? network탭에서는 일단 서버에서 보내주는 정보는 모두 가져오지만
+// 화면단에서 가져다가 쓸 때 아래처럼 타입을 미리 정해두지 않으면
+// 가져다가 활용할 수가 없음.
 export interface ICommunityInfoDto {
   id: number
   name: string
@@ -95,9 +99,9 @@ export interface ICommunityInfoDto {
   adminUsers: IAdminUsers[]
   users: ICommunityUsers[]
   atchFiles: IFileDto[]
-  isUse: boolean
+  // isUse: boolean
   createdAt: string
-  updatedAt: string
-  createdBy: string
-  updatedBy: string
+  // updatedAt: string
+  // createdBy: string
+  // updatedBy: string
 }

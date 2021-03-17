@@ -24,16 +24,14 @@ import { TownInf } from './pages/TownInf'
 import { UserSearch } from './pages/UserSearch'
 
 export const App: React.FC = () => {
-  const { $community, $auth } = useStore()
+  const { $auth } = useStore()
   const [intialized, setInitailzed] = useState(false)
 
   useEffect(() => {
     init()
-    // eslint-disable-next-line
-  }, [])
+  })
 
   const init = async () => {
-    // Primise.all의 처리를 다 기다리고 아래의 로직이 수행됨.
     await Promise.all([
       $auth.signInWithToken(),
       // $community.getCommunities(),
