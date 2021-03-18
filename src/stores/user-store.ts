@@ -21,11 +21,13 @@ export class User {
   @observable currentUserId: number | null = initState.currentUserId
 
   constructor() {
-    this.getCurrentUserId()
+    // this.getCurrentUserId() // 일단 주석 로그인한 사람의 정보는 auth에 넣자.
   }
 
   @task
   getCurrentUserId = (async () => {
+    console.log('current User ID------------')
+
     if (this.currentUserId != null) {
       return
     }

@@ -29,7 +29,9 @@ export class Auth {
   @observable isAdmin = false
   @observable communityInfo = initState.communityInfo
 
-  constructor() {}
+  constructor() {
+    // 매번 지어질때마다 호출되는 함수들을 넣는 자리인가봄.
+  }
 
   @action
   setIsLogin() {
@@ -73,7 +75,7 @@ export class Auth {
   @action
   async signInWithToken() {
     const hasToken = await storage.getAccessToken()
-    console.log('access token이 있는지 확인', hasToken)
+    console.log('access token이 있는지 확인*************', hasToken)
 
     if (hasToken) {
       api.setAuthoriationBy(hasToken)

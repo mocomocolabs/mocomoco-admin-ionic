@@ -24,13 +24,13 @@ import { useStore } from '../hooks/use-store'
 import './Home.scoped.scss'
 
 export const Home: React.FC = () => {
-  const { $home, $user, $ui } = useStore()
+  const { $home, $ui } = useStore()
 
   useIonViewWillEnter(() => {
     // $home.getCurMonEventList
     // $home.getApvList
     $ui.setIsHeaderBar(true)
-    $user.getUsers()
+    // $user.getUsers()
   })
   // TODO: USERS > STATUS = 'APPROVAL'(승인) or 'PENDING'(미승인)으로 구분.
   // `/v1/communities-users/${id}`

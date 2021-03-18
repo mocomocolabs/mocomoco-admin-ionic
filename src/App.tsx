@@ -28,7 +28,11 @@ export const App: React.FC = () => {
   const [intialized, setInitailzed] = useState(false)
 
   useEffect(() => {
+    // TODO: 왜 새로고침을 하면 이게 두번 실행되는지 알아야겠음.
     init()
+    return () => {
+      console.log('APP컴포넌트 cleanup')
+    }
   })
 
   const init = async () => {

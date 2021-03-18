@@ -48,7 +48,7 @@ export interface IAuthUser {
 }
 
 //
-interface IAdminUsers {
+export interface IAdminUsers {
   id: number
   email: string
   name: string

@@ -192,7 +192,9 @@ export const Sidebar: React.FC = () => {
               return (
                 <>
                   <XDivider />
-                  <IonListHeader key={index}>
+                  <IonListHeader key={index + page.title}>
+                    {' '}
+                    {/* TODO: ununiq key!! */}
                     <IonLabel>{page.title}</IonLabel>
                   </IonListHeader>
                 </>
