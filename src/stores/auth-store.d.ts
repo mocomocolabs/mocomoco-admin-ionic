@@ -68,7 +68,7 @@ export interface IAdminUsers {
   updatedBy: string
 }
 
-interface ICommunityUsers {
+export interface ICommunityUsers {
   id: number
   email: string
   name: string
@@ -82,7 +82,7 @@ interface ICommunityUsers {
   locale: string
   roles: string
   isUse: boolean
-  // createdAt: string
+  createdAt: string
   // updatedAt: string
   // createdBy: string
   // updatedBy: string

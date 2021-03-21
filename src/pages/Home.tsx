@@ -17,23 +17,40 @@ import {
   useIonViewWillEnter
 } from '@ionic/react'
 import { useObserver } from 'mobx-react-lite'
-import { default as React } from 'react'
+import { default as React, useEffect, useState } from 'react'
 import { TextXxl } from '../components/atoms/TextXxlComponent'
 import { PageHeader } from '../components/molecules/PageHeaderComponent'
 import { useStore } from '../hooks/use-store'
+import { ICommunityUsers } from '../stores/auth-store.d'
 import './Home.scoped.scss'
 
 export const Home: React.FC = () => {
-  const { $home, $ui } = useStore()
+  const { $home, $ui, $auth } = useStore()
+  const [usersListCopy, setUsersListCopy] = useState<ICommunityUsers[] | undefined>()
 
   useIonViewWillEnter(() => {
-    // $home.getCurMonEventList
-    // $home.getApvList
     $ui.setIsHeaderBar(true)
+    setUsersListCopy($auth.getCommunityInfo.users)
     // $user.getUsers()
   })
-  // TODO: USERS > STATUS = 'APPROVAL'(승인) or 'PENDING'(미승인)으로 구분.
-  // `/v1/communities-users/${id}`
+  useEffect(() => {
+    console.log(usersListCopy)
+  }, [usersListCopy])
+
+  const apvBtn = () => {
+    console.log('승인체크')
+    console.log($auth.getCommunityInfo.users)
+  }
+  const asdf = (checkedYn: boolean, a: ICommunityUsers) => {
+    console.log(checkedYn, a)
+    const aa = usersListCopy?.find((a) => a.id === a.id)
+    // TODO: 새로운 Object를 어떻게 할당할 것인가.
+    // aa !== undefined && aa.status = checkedYn ? 'APPROVAL' : 'PENDING'
+    // setUsersListCopy(aa)
+    // if (!_.isEmpty(aa)) {
+    //   aa.status && checkedYn ? (aa.status = 'APPROVAL') : (aa.status = 'PENDING')
+    // }
+  }
   return useObserver(() => (
     <IonPage>
       <PageHeader pageTitle='하마 ADMIN' menuBtn={true} userBtn={true} />
@@ -42,8 +59,10 @@ export const Home: React.FC = () => {
           <div style={{ marginTop: '20px' }} className='apv-wrap'>
             <div className='box'>
               <TextXxl className='text-bold'>가입승인을 기다려요</TextXxl>
-              <strong className='badge'>{$home.getApvList.length}</strong>
-              <IonButton style={{ marginLeft: 'auto' }} size='small' color='dark'>
+              <strong className='badge'>
+                {usersListCopy && usersListCopy.filter((a) => a.status === 'PENDING').length}
+              </strong>
+              <IonButton style={{ marginLeft: 'auto' }} size='small' color='dark' onClick={apvBtn}>
                 승인
               </IonButton>
             </div>
@@ -55,26 +74,29 @@ export const Home: React.FC = () => {
                   <IonCol size='5'></IonCol>
                   <IonCol size='4'></IonCol>
                 </IonCol>
-                {$home.getApvList.map((a, i) => (
-                  <IonRow key={i}>
-                    <IonCol size='1' style={{ maxWidth: '28px', width: '28px' }}>
-                      <IonCheckbox
-                        style={{ width: '23px', height: '23px' }}
-                        checked={a.checked}
-                        color='dark'
-                      />
-                    </IonCol>
-                    <IonCol size='2' style={{ fontSize: '13px' }}>
-                      {a.name}
-                    </IonCol>
-                    <IonCol size='5' style={{ fontSize: '13px' }}>
-                      {a.email}
-                    </IonCol>
-                    <IonCol size='4' style={{ fontSize: '13px' }}>
-                      {a.reqDate} 신청
-                    </IonCol>
-                  </IonRow>
-                ))}
+                {usersListCopy &&
+                  usersListCopy.map((a, i) => (
+                    <IonRow key={i}>
+                      <IonCol size='1' style={{ maxWidth: '28px', width: '28px' }}>
+                        <IonCheckbox
+                          style={{ width: '23px', height: '23px' }}
+                          checked={a.status === 'PENDING' ? false : true}
+                          color='dark'
+                          onIonChange={(e) => asdf(e.detail.checked, a)}
+                        />
+                        {a.status}
+                      </IonCol>
+                      <IonCol size='2' style={{ fontSize: '13px' }}>
+                        {a.name}
+                      </IonCol>
+                      <IonCol size='5' style={{ fontSize: '13px' }}>
+                        {a.email}
+                      </IonCol>
+                      <IonCol size='4' style={{ fontSize: '13px' }}>
+                        {a.createdAt} 신청
+                      </IonCol>
+                    </IonRow>
+                  ))}
               </IonGrid>
             </div>
           </div>
