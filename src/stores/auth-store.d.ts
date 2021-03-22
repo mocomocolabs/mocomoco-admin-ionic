@@ -83,9 +83,9 @@ export interface ICommunityUsers {
   roles: string
   isUse: boolean
   createdAt: string
-  // updatedAt: string
-  // createdBy: string
-  // updatedBy: string
+  updatedAt: string
+  createdBy: string
+  updatedBy: string
 }
 // TODO: Dto 의 타입과 보내주는 타입은 서버에서 정의하는건가?
 // 아? network탭에서는 일단 서버에서 보내주는 정보는 모두 가져오지만

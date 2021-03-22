@@ -16,6 +16,7 @@ import {
   IonRow,
   useIonViewWillEnter
 } from '@ionic/react'
+import * as _ from 'lodash'
 import { useObserver } from 'mobx-react-lite'
 import { default as React, useEffect, useState } from 'react'
 import { TextXxl } from '../components/atoms/TextXxlComponent'
@@ -27,6 +28,7 @@ import './Home.scoped.scss'
 export const Home: React.FC = () => {
   const { $home, $ui, $auth } = useStore()
   const [usersListCopy, setUsersListCopy] = useState<ICommunityUsers[] | undefined>()
+  const [saveData, setSaveData] = useState<ICommunityUsers[]>([])
 
   useIonViewWillEnter(() => {
     $ui.setIsHeaderBar(true)
@@ -42,14 +44,23 @@ export const Home: React.FC = () => {
     console.log($auth.getCommunityInfo.users)
   }
   const asdf = (checkedYn: boolean, a: ICommunityUsers) => {
+    // TODO: 왜 처음에 체크박스가 두번 호출되는지
+    // useState는 날라가버려서 이거 쓰면 스토어에 달아야 할듯?
     console.log(checkedYn, a)
-    const aa = usersListCopy?.find((a) => a.id === a.id)
-    // TODO: 새로운 Object를 어떻게 할당할 것인가.
-    // aa !== undefined && aa.status = checkedYn ? 'APPROVAL' : 'PENDING'
-    // setUsersListCopy(aa)
-    // if (!_.isEmpty(aa)) {
-    //   aa.status && checkedYn ? (aa.status = 'APPROVAL') : (aa.status = 'PENDING')
-    // }
+    !checkedYn ? (a = { ...a, status: 'PENDING' }) : (a = { ...a, status: 'APPROVAL' })
+    console.log(a.status)
+    console.log(saveData)
+    const aaaaa = saveData.find((aa) => aa.id === a.id)
+    console.log('없는지', _.isEmpty(aaaaa))
+
+    if (a.status === 'PENDING') {
+      console.log('pop')
+      setSaveData(saveData.filter((aaa) => aaa.id == a.id))
+    } else if (a.status === 'APPROVAL' && _.isEmpty(aaaaa)) {
+      // 없어야 집어넣는다... 이게 맞나? 맞는 것 같은데..
+      console.log('save')
+      setSaveData((arr) => [...arr, a])
+    }
   }
   return useObserver(() => (
     <IonPage>
@@ -84,7 +95,6 @@ export const Home: React.FC = () => {
                           color='dark'
                           onIonChange={(e) => asdf(e.detail.checked, a)}
                         />
-                        {a.status}
                       </IonCol>
                       <IonCol size='2' style={{ fontSize: '13px' }}>
                         {a.name}
