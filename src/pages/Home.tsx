@@ -26,7 +26,7 @@ import { ICommunityUsers } from '../stores/auth-store.d'
 import './Home.scoped.scss'
 
 export const Home: React.FC = () => {
-  const { $home, $ui, $auth } = useStore()
+  const { $home, $ui, $auth, $user } = useStore()
   const [usersListCopy, setUsersListCopy] = useState<ICommunityUsers[] | undefined>()
   const [saveData, setSaveData] = useState<ICommunityUsers[]>([])
 
@@ -42,6 +42,7 @@ export const Home: React.FC = () => {
   const apvBtn = () => {
     console.log('승인체크')
     console.log($auth.getCommunityInfo.users)
+    $user.updateCommunityUser(2, 'APPROVAL')
   }
   const asdf = (checkedYn: boolean, a: ICommunityUsers) => {
     // TODO: 왜 처음에 체크박스가 두번 호출되는지
@@ -103,7 +104,7 @@ export const Home: React.FC = () => {
                         {a.email}
                       </IonCol>
                       <IonCol size='4' style={{ fontSize: '13px' }}>
-                        {a.createdAt} 신청
+                        {a.createdAt} 가입
                       </IonCol>
                     </IonRow>
                   ))}

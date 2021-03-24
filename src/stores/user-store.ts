@@ -24,6 +24,12 @@ export class User {
     // this.getCurrentUserId() // 일단 주석 로그인한 사람의 정보는 auth에 넣자.
   }
 
+  // TODO: 확인해보기. Corps error
+  @task.resolved
+  updateCommunityUser(id: number, status: string) {
+    http.patch(`/sys/users`, { id, status })
+  }
+
   @task
   getCurrentUserId = (async () => {
     console.log('current User ID------------')

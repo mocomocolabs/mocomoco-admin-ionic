@@ -52,7 +52,7 @@ export class Auth {
     if (hasToken) {
       api.setAuthoriationBy(hasToken)
       try {
-        api.post<IAuthUserDto>(`http://localhost:8080/api/auth/sign-out`, {})
+        api.post<IAuthUserDto>(`/auth/sign-out`, {})
       } catch (e) {
         // TODO: 에러코드 서버와 협의 필요
         // 실패시 얼럿을 띄운다.
@@ -80,7 +80,7 @@ export class Auth {
     if (hasToken) {
       api.setAuthoriationBy(hasToken)
       try {
-        await api.post<IAuthUserDto>(`http://localhost:8080/api/auth/user`, {}).then(async (user) => {
+        await api.post<IAuthUserDto>(`/auth/user`, {}).then(async (user) => {
           await this.checkAdmin(user)
           this.setUser(user)
         })
@@ -92,7 +92,7 @@ export class Auth {
         if (e.status === 405) {
           const refreshToken = await storage.getRefreshToken()
           api.setAuthoriationBy(refreshToken)
-          api.post<IAuthUserDto>(`http://localhost:8080/api/auth/refresh-token`, {}).then((user) => {
+          api.post<IAuthUserDto>(`/auth/refresh-token`, {}).then((user) => {
             this.setAuth(user)
           })
         }
@@ -106,16 +106,20 @@ export class Auth {
     console.log('$auth.signIn', email, password, inko.ko2en(password))
     this.isAdmin = false
     // TODO: 여기서 너무 많은 정보를 가지고 오는 게 아닐까?
-    await http
-      .post<IAuthUserDto>(`http://localhost:8080/api/auth/sign-in`, {
-        email,
-        password: inko.ko2en(password),
-      })
-      .then(async (user: IAuthUserDto) => {
-        await this.checkAdmin(user)
-        this.setAuth(user)
-        this.setUser(user)
-      })
+    try {
+      await http
+        .post<IAuthUserDto>(`/auth/sign-in`, {
+          email,
+          password: inko.ko2en(password),
+        })
+        .then(async (user: IAuthUserDto) => {
+          await this.checkAdmin(user)
+          this.setAuth(user)
+          this.setUser(user)
+        })
+    } catch (e) {
+      console.log('erros')
+    }
   }) as SignInTask
 
   // 어드민 체크(로그인시, 매 호출시, 새로고침 시)
@@ -123,7 +127,7 @@ export class Auth {
   checkAdmin = async (user: IAuthUserDto) => {
     const { communities, id } = user
     await http
-      .get<ICommunityInfoDto>(`http://localhost:8080/api/v1/communities/${communities[0].id}`, {})
+      .get<ICommunityInfoDto>(`/v1/communities/${communities[0].id}`, {})
       .then((communityInfo: ICommunityInfoDto) => {
         if (communityInfo.adminUsers[0].id !== id) {
           console.log('어드민이 아님.')
