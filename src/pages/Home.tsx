@@ -32,7 +32,11 @@ export const Home: React.FC = () => {
 
   useIonViewWillEnter(() => {
     $ui.setIsHeaderBar(true)
-    setUsersListCopy($auth.getCommunityInfo.users)
+    setUsersListCopy(
+      $auth.getCommunityInfo.users
+        .filter((a) => a.id !== $auth.getCommunityInfo.adminUsers[0].id)
+        .filter((a) => a.status !== 'APPROVAL')
+    )
     // $user.getUsers()
   })
   useEffect(() => {
@@ -40,9 +44,7 @@ export const Home: React.FC = () => {
   }, [usersListCopy])
 
   const apvBtn = () => {
-    console.log('승인체크')
-    console.log($auth.getCommunityInfo.users)
-    $user.updateCommunityUser(2, 'APPROVAL')
+    $user.updateCommunityUser(1, 'APPROVAL')
   }
   const asdf = (checkedYn: boolean, a: ICommunityUsers) => {
     // TODO: 왜 처음에 체크박스가 두번 호출되는지
@@ -71,45 +73,51 @@ export const Home: React.FC = () => {
           <div style={{ marginTop: '20px' }} className='apv-wrap'>
             <div className='box'>
               <TextXxl className='text-bold'>가입승인을 기다려요</TextXxl>
-              <strong className='badge'>
-                {usersListCopy && usersListCopy.filter((a) => a.status === 'PENDING').length}
-              </strong>
-              <IonButton style={{ marginLeft: 'auto' }} size='small' color='dark' onClick={apvBtn}>
-                승인
-              </IonButton>
+              <strong className='badge'>{usersListCopy && usersListCopy.length}</strong>
+              {usersListCopy && usersListCopy.length > 0 ? (
+                <IonButton style={{ marginLeft: 'auto' }} size='small' color='dark' onClick={apvBtn}>
+                  승인
+                </IonButton>
+              ) : (
+                <></>
+              )}
             </div>
-            <div className='apv-list-wrap' style={{ marginLeft: '-5px' }}>
-              <IonGrid>
-                <IonCol>
-                  <IonCol size='1'></IonCol>
-                  <IonCol size='2'></IonCol>
-                  <IonCol size='5'></IonCol>
-                  <IonCol size='4'></IonCol>
-                </IonCol>
-                {usersListCopy &&
-                  usersListCopy.map((a, i) => (
-                    <IonRow key={i}>
-                      <IonCol size='1' style={{ maxWidth: '28px', width: '28px' }}>
-                        <IonCheckbox
-                          style={{ width: '23px', height: '23px' }}
-                          checked={a.status === 'PENDING' ? false : true}
-                          color='dark'
-                          onIonChange={(e) => asdf(e.detail.checked, a)}
-                        />
-                      </IonCol>
-                      <IonCol size='2' style={{ fontSize: '13px' }}>
-                        {a.name}
-                      </IonCol>
-                      <IonCol size='5' style={{ fontSize: '13px' }}>
-                        {a.email}
-                      </IonCol>
-                      <IonCol size='4' style={{ fontSize: '13px' }}>
-                        {a.createdAt} 가입
-                      </IonCol>
-                    </IonRow>
-                  ))}
-              </IonGrid>
-            </div>
+            {usersListCopy && usersListCopy.length > 0 ? (
+              <div className='apv-list-wrap' style={{ marginLeft: '-5px' }}>
+                <IonGrid>
+                  <IonCol>
+                    <IonCol size='1'></IonCol>
+                    <IonCol size='2'></IonCol>
+                    <IonCol size='5'></IonCol>
+                    <IonCol size='4'></IonCol>
+                  </IonCol>
+                  {usersListCopy &&
+                    usersListCopy.map((a, i) => (
+                      <IonRow key={i}>
+                        <IonCol size='1' style={{ maxWidth: '28px', width: '28px' }}>
+                          <IonCheckbox
+                            style={{ width: '23px', height: '23px' }}
+                            checked={a.status === 'PENDING' ? false : true}
+                            color='dark'
+                            onIonChange={(e) => asdf(e.detail.checked, a)}
+                          />
+                        </IonCol>
+                        <IonCol size='2' style={{ fontSize: '13px' }}>
+                          {a.name}
+                        </IonCol>
+                        <IonCol size='5' style={{ fontSize: '13px' }}>
+                          {a.email}
+                        </IonCol>
+                        <IonCol size='4' style={{ fontSize: '13px' }}>
+                          {a.createdAt} 가입
+                        </IonCol>
+                      </IonRow>
+                    ))}
+                </IonGrid>
+              </div>
+            ) : (
+              <div>모두 승인 하셨네요!</div>
+            )}
           </div>
           <br />
           <hr className='gray-bar' />
@@ -123,7 +131,6 @@ export const Home: React.FC = () => {
                 {$home.getCurMonEventList.map((v, i) => (
                   <IonCard key={i} style={{ marginBottom: '-10px' }}>
                     <IonCardHeader>
-                      {/* <IonCardSubtitle>{v.date}</IonCardSubtitle> */}
                       <IonCardTitle style={{ fontSize: '14px' }}>
                         {v.date} &nbsp;&nbsp;&nbsp;&nbsp;{v.eventNm}
                       </IonCardTitle>

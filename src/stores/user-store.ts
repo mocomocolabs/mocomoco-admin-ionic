@@ -26,8 +26,9 @@ export class User {
 
   // TODO: 확인해보기. Corps error
   @task.resolved
-  updateCommunityUser(id: number, status: string) {
-    http.patch(`/sys/users`, { id, status })
+  updateCommunityUser = async (id: number, status: string) => {
+    console.log(id, status)
+    await http.patch(`/sys/users`, { id, status, fcmToken: 'fcmToken' })
   }
 
   @task
