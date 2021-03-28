@@ -24,11 +24,11 @@ export class User {
     // this.getCurrentUserId() // 일단 주석 로그인한 사람의 정보는 auth에 넣자.
   }
 
-  // TODO: 확인해보기. Corps error
+  // TODO: 이번에는 로그인한 본인이 아니면 401이 뜸.
   @task.resolved
   updateCommunityUser = async (id: number, status: string) => {
     console.log(id, status)
-    await http.patch(`/sys/users`, { id, status, fcmToken: 'fcmToken' })
+    await http.patch(`/sys/users`, { id, fcmToken: 'fcmToke', status })
   }
 
   @task

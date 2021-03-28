@@ -27,44 +27,43 @@ import './Home.scoped.scss'
 
 export const Home: React.FC = () => {
   const { $home, $ui, $auth, $user } = useStore()
-  const [usersListCopy, setUsersListCopy] = useState<ICommunityUsers[] | undefined>()
+  const [usersListToApprove, setUsersListToApprove] = useState<ICommunityUsers[] | undefined>()
   const [saveData, setSaveData] = useState<ICommunityUsers[]>([])
 
   useIonViewWillEnter(() => {
     $ui.setIsHeaderBar(true)
-    setUsersListCopy(
+    setUsersListToApprove(
       $auth.getCommunityInfo.users
-        .filter((a) => a.id !== $auth.getCommunityInfo.adminUsers[0].id)
-        .filter((a) => a.status !== 'APPROVAL')
+        .filter((a) => a.id !== $auth.getCommunityInfo.adminUsers[0].id) // admin 제외
+        .filter((a) => a.status !== 'APPROVAL') // approval 제외
     )
-    // $user.getUsers()
   })
   useEffect(() => {
-    console.log(usersListCopy)
-  }, [usersListCopy])
+    console.log(usersListToApprove)
+  }, [usersListToApprove])
 
-  const apvBtn = () => {
-    $user.updateCommunityUser(1, 'APPROVAL')
-  }
-  const asdf = (checkedYn: boolean, a: ICommunityUsers) => {
-    // TODO: 왜 처음에 체크박스가 두번 호출되는지
-    // useState는 날라가버려서 이거 쓰면 스토어에 달아야 할듯?
-    console.log(checkedYn, a)
+  const changeStatus = (checkedYn: boolean, a: ICommunityUsers, i: number) => {
     !checkedYn ? (a = { ...a, status: 'PENDING' }) : (a = { ...a, status: 'APPROVAL' })
-    console.log(a.status)
-    console.log(saveData)
-    const aaaaa = saveData.find((aa) => aa.id === a.id)
-    console.log('없는지', _.isEmpty(aaaaa))
-
-    if (a.status === 'PENDING') {
-      console.log('pop')
-      setSaveData(saveData.filter((aaa) => aaa.id == a.id))
-    } else if (a.status === 'APPROVAL' && _.isEmpty(aaaaa)) {
-      // 없어야 집어넣는다... 이게 맞나? 맞는 것 같은데..
-      console.log('save')
-      setSaveData((arr) => [...arr, a])
-    }
+    if (usersListToApprove) usersListToApprove[i] = a
   }
+
+  const apvBtnClick = () => {
+    // console.log('usersListToApprove::', usersListToApprove)
+    const saveObj = usersListToApprove?.filter((a) => a.status !== 'PENDING')
+    if (_.isEmpty(saveObj)) {
+      $ui.showAlert({
+        isOpen: true,
+        header: '확인',
+        message: '승인할 사용자에 체크해 주세요.',
+        oneBtn: true,
+      })
+    }
+    // console.log('saveObj::', saveObj)
+    saveObj?.map((a) => {
+      $user.updateCommunityUser(a.id, 'APPROVAL')
+    })
+  }
+
   return useObserver(() => (
     <IonPage>
       <PageHeader pageTitle='하마 ADMIN' menuBtn={true} userBtn={true} />
@@ -73,16 +72,16 @@ export const Home: React.FC = () => {
           <div style={{ marginTop: '20px' }} className='apv-wrap'>
             <div className='box'>
               <TextXxl className='text-bold'>가입승인을 기다려요</TextXxl>
-              <strong className='badge'>{usersListCopy && usersListCopy.length}</strong>
-              {usersListCopy && usersListCopy.length > 0 ? (
-                <IonButton style={{ marginLeft: 'auto' }} size='small' color='dark' onClick={apvBtn}>
+              <strong className='badge'>{usersListToApprove && usersListToApprove.length}</strong>
+              {usersListToApprove && usersListToApprove.length > 0 ? (
+                <IonButton style={{ marginLeft: 'auto' }} size='small' color='dark' onClick={apvBtnClick}>
                   승인
                 </IonButton>
               ) : (
                 <></>
               )}
             </div>
-            {usersListCopy && usersListCopy.length > 0 ? (
+            {usersListToApprove && usersListToApprove.length > 0 ? (
               <div className='apv-list-wrap' style={{ marginLeft: '-5px' }}>
                 <IonGrid>
                   <IonCol>
@@ -91,15 +90,15 @@ export const Home: React.FC = () => {
                     <IonCol size='5'></IonCol>
                     <IonCol size='4'></IonCol>
                   </IonCol>
-                  {usersListCopy &&
-                    usersListCopy.map((a, i) => (
+                  {usersListToApprove &&
+                    usersListToApprove.map((a, i) => (
                       <IonRow key={i}>
                         <IonCol size='1' style={{ maxWidth: '28px', width: '28px' }}>
                           <IonCheckbox
                             style={{ width: '23px', height: '23px' }}
                             checked={a.status === 'PENDING' ? false : true}
                             color='dark'
-                            onIonChange={(e) => asdf(e.detail.checked, a)}
+                            onIonChange={(e) => changeStatus(e.detail.checked, a, i)}
                           />
                         </IonCol>
                         <IonCol size='2' style={{ fontSize: '13px' }}>
