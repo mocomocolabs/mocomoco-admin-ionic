@@ -24,11 +24,15 @@ export class User {
     // this.getCurrentUserId() // 일단 주석 로그인한 사람의 정보는 auth에 넣자.
   }
 
-  // TODO: 이번에는 로그인한 본인이 아니면 401이 뜸.
+  // 가입승인
   @task.resolved
   updateCommunityUser = async (id: number, status: string) => {
-    console.log(id, status)
-    await http.patch(`/sys/users`, { id, fcmToken: 'fcmToke', status })
+    try {
+      await http.patch(`/sys/users`, { id, status })
+      return true
+    } catch {
+      return false
+    }
   }
 
   @task
@@ -67,6 +71,7 @@ export class User {
       })
     )
   }) as Task
+
   @task
   getUser = (async (userId: number) => {
     await http.get<IUser>(`/sys/users/${userId}`).then(

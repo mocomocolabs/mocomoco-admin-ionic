@@ -13,8 +13,7 @@ import {
   IonGrid,
   IonList,
   IonPage,
-  IonRow,
-  useIonViewWillEnter
+  IonRow
 } from '@ionic/react'
 import * as _ from 'lodash'
 import { useObserver } from 'mobx-react-lite'
@@ -28,19 +27,41 @@ import './Home.scoped.scss'
 export const Home: React.FC = () => {
   const { $home, $ui, $auth, $user } = useStore()
   const [usersListToApprove, setUsersListToApprove] = useState<ICommunityUsers[] | undefined>()
-  const [saveData, setSaveData] = useState<ICommunityUsers[]>([])
+  const [isLoading, setIsLoading] = useState<boolean>()
+  const [isShowApvCompleteAlert, setIsShowApvCompleteAlert] = useState<boolean>()
 
-  useIonViewWillEnter(() => {
-    $ui.setIsHeaderBar(true)
-    setUsersListToApprove(
-      $auth.getCommunityInfo.users
-        .filter((a) => a.id !== $auth.getCommunityInfo.adminUsers[0].id) // admin 제외
-        .filter((a) => a.status !== 'APPROVAL') // approval 제외
-    )
-  })
+  // useIonViewWillEnter(() => {
+  //   console.log('useIonViewWillEnter, home')
+  // })
+
   useEffect(() => {
-    console.log(usersListToApprove)
-  }, [usersListToApprove])
+    setIsLoading(true)
+    if (isLoading) {
+      console.log('여긴 몇번이나 나옵니깡')
+      $ui.setIsHeaderBar(true)
+
+      setUsersListToApprove(
+        $auth.getCommunityInfo.users
+          .filter((a) => a.id !== $auth.getCommunityInfo.adminUsers[0].id) // admin 제외
+          .filter((a) => a.status !== 'APPROVAL') // approval 제외
+      )
+    }
+    return () => setIsLoading(false)
+  }, [$auth.getCommunityInfo, $ui, isLoading])
+
+  useEffect(() => {
+    if (isShowApvCompleteAlert) {
+      console.log('여기들어옴?')
+
+      $ui.showAlert({
+        isOpen: true,
+        header: '확인',
+        message: '승인처리 되었습니다.',
+        oneBtn: true,
+      })
+    }
+    return () => setIsShowApvCompleteAlert(false)
+  }, [$ui, isShowApvCompleteAlert])
 
   const changeStatus = (checkedYn: boolean, a: ICommunityUsers, i: number) => {
     !checkedYn ? (a = { ...a, status: 'PENDING' }) : (a = { ...a, status: 'APPROVAL' })
@@ -57,11 +78,23 @@ export const Home: React.FC = () => {
         message: '승인할 사용자에 체크해 주세요.',
         oneBtn: true,
       })
+    } else {
+      $ui.showAlert({
+        isOpen: true,
+        header: '확인',
+        message: '승인하시겠습니까?',
+        onSuccess() {
+          saveObj?.map(async (a) => {
+            await $user.updateCommunityUser(a.id, 'APPROVAL').then((success) => {
+              if (success) {
+                console.log('승인되었음', success)
+                setIsShowApvCompleteAlert(true)
+              }
+            })
+          })
+        },
+      })
     }
-    // console.log('saveObj::', saveObj)
-    saveObj?.map((a) => {
-      $user.updateCommunityUser(a.id, 'APPROVAL')
-    })
   }
 
   return useObserver(() => (
