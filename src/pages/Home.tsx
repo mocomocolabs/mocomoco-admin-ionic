@@ -37,7 +37,6 @@ export const Home: React.FC = () => {
   useEffect(() => {
     setIsLoading(true)
     if (isLoading) {
-      console.log('여긴 몇번이나 나옵니깡')
       $ui.setIsHeaderBar(true)
 
       setUsersListToApprove(
@@ -50,9 +49,9 @@ export const Home: React.FC = () => {
   }, [$auth.getCommunityInfo, $ui, isLoading])
 
   useEffect(() => {
+    // TODO: isShowApvComleteAlert를 감지하게 하고 얼럿을 띄우려 하였으나 얼럿이 뜨지 않음.
+    // 로그는 찍히는데 Alert 컴포넌트 문제인 것 같기도 하고.
     if (isShowApvCompleteAlert) {
-      console.log('여기들어옴?')
-
       $ui.showAlert({
         isOpen: true,
         header: '확인',
@@ -69,7 +68,6 @@ export const Home: React.FC = () => {
   }
 
   const apvBtnClick = () => {
-    // console.log('usersListToApprove::', usersListToApprove)
     const saveObj = usersListToApprove?.filter((a) => a.status !== 'PENDING')
     if (_.isEmpty(saveObj)) {
       $ui.showAlert({
@@ -87,8 +85,9 @@ export const Home: React.FC = () => {
           saveObj?.map(async (a) => {
             await $user.updateCommunityUser(a.id, 'APPROVAL').then((success) => {
               if (success) {
-                console.log('승인되었음', success)
+                // console.log('승인되었음', success)
                 setIsShowApvCompleteAlert(true)
+                window.location.reload() // TODO: 강제로 새로고침을 함. 나중에 한번 더 볼 것.
               }
             })
           })

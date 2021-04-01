@@ -17,10 +17,10 @@ import { PageHeader } from '../components/molecules/PageHeaderComponent'
 import { useStore } from '../hooks/use-store'
 
 export const UserSearch: React.FC = () => {
-  const { $userSearch } = useStore()
+  const { $userSearch, $auth } = useStore()
 
   useIonViewWillEnter(() => {
-    onSearchList()
+    // onSearchList()
   })
 
   const onSearchList = () => {
@@ -28,17 +28,18 @@ export const UserSearch: React.FC = () => {
     $userSearch.initResultList()
 
     if (!_.isEmpty($userSearch.getSearchObj.name) && _.isEmpty($userSearch.getSearchObj.email)) {
+      console.log('$auth.getCommunityInfo.users::', $auth.getCommunityInfo.users)
       $userSearch.setResultList(
-        $userSearch.getResultList.filter((a) => a.name === $userSearch.getSearchObj.name)
+        $auth.getCommunityInfo.users.filter((a) => a.name === $userSearch.getSearchObj.name)
       )
     } else if (_.isEmpty($userSearch.getSearchObj.name) && !_.isEmpty($userSearch.getSearchObj.email)) {
       $userSearch.setResultList(
-        $userSearch.getResultList.filter((a) => a.email === $userSearch.getSearchObj.email)
+        $auth.getCommunityInfo.users.filter((a) => a.email === $userSearch.getSearchObj.email)
       )
     } else if (_.isEmpty($userSearch.getSearchObj.name) && _.isEmpty($userSearch.getSearchObj.email)) {
       $userSearch.setResultList($userSearch.getResultList)
     } else {
-      const filteredList = $userSearch.getResultList.filter(
+      const filteredList = $auth.getCommunityInfo.users.filter(
         (a) => a.name === $userSearch.getSearchObj.name && a.email === $userSearch.getSearchObj.email
       )
       $userSearch.setResultList(filteredList)
@@ -102,7 +103,7 @@ export const UserSearch: React.FC = () => {
                         <span>{a.name}</span>
                         <h6 className='gray inline ml-3'>(ID:{a.id})</h6>
                         <h5>{a.email}</h5>
-                        <h5>{a.regiDt} 가입</h5>
+                        <h5>{a.createdAt} 가입</h5>
                       </IonLabel>
                     </IonItem>
                   )

@@ -1,7 +1,9 @@
 // description: 홈 화면 scss
 // fileName: Home.scoped.scss
 // created: 2021-01-08, 이지혜
-.box{
+@import '../theme/color';
+
+.box {
   display: flex;
   margin-left: 8px;
   text-align: right;
@@ -19,7 +21,7 @@
     text-align: center;
     font-weight: bold;
     border-radius: 10px;
-    background-color: #ffee80;
+    background-color: $hamaYellow;
     cursor: pointer;
   }
 }

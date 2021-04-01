@@ -1088,6 +1088,13 @@
   left: 0;
 }
 
+.bg-hama-yellow {
+  background-color: #fbc936;
+}
+.bg-hama-purple {
+  background-color: #3f2e99;
+}
+
 .bg-yellow {
   background-color: $yellow;
 }
@@ -1244,7 +1251,7 @@
 .pre-line {
   white-space: pre-line;
 }
-.gray-bar{
+.gray-bar {
   display: block;
   height: 10px;
   margin: 0 -20px 30px;

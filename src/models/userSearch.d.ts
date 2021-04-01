@@ -9,9 +9,9 @@ export interface IResultList {
   mobileOpen?: string // boolean?
   profileUrl?: string
   status?: string
-  regiDt?: string
+  createdAt?: string
 }
 export interface ISearchObj {
-  name?: string;
-  email?: string;
+  name?: string
+  email?: string
 }

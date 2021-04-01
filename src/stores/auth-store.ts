@@ -80,7 +80,7 @@ export class Auth {
     if (hasToken) {
       api.setAuthoriationBy(hasToken)
       try {
-        await api.post<IAuthUserDto>(`/auth/user`, {}).then(async (user) => {
+        await api.get<IAuthUserDto>(`/auth/account`).then(async (user) => {
           await this.checkAdmin(user)
           this.setUser(user)
         })
