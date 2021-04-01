@@ -6,6 +6,7 @@ import { IonContent, IonHeader, IonPage, useIonViewWillEnter } from '@ionic/reac
 import React from 'react'
 import { SignInEmail } from '../components/organisms/SignInEmailComponent'
 import { useStore } from '../hooks/use-store'
+import './SignIn.scoped.scss'
 
 export const SignIn: React.FC = () => {
   const { $ui } = useStore()
@@ -15,11 +16,16 @@ export const SignIn: React.FC = () => {
   })
 
   return (
-    <IonPage>
-      <IonHeader>HAMA ADMIN</IonHeader>
-      <IonContent>
-        <SignInEmail useIn='signIn'></SignInEmail>
-      </IonContent>
+    <IonPage className="login-wrap">
+      <div className="login-box">
+        <IonHeader className="title-container">HAMA ADMIN</IonHeader>
+        <IonContent className="input-area">
+          <SignInEmail useIn='signIn'></SignInEmail>
+        </IonContent>
+      </div>
+      <div className="copyright">
+        <p>COPYRIGHT 2021 mocomocolaps, ALL RIGHTS RESERVED</p>
+      </div>
     </IonPage>
   )
 }
