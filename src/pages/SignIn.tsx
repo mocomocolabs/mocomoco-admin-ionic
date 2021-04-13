@@ -3,11 +3,10 @@
 // fileName: SignIn.tsx
 // created: 2021-03-10, 이지혜
 import { IonContent, IonHeader, IonPage, useIonViewWillEnter } from '@ionic/react'
-import dayjs from 'dayjs'
+import { y } from '../utils/moment-util'
 import React from 'react'
 import { SignInEmail } from '../components/organisms/SignInEmailComponent'
 import { useStore } from '../hooks/use-store'
-import { DT_FORMAT } from '../utils/datetime-util'
 import './SignIn.scoped.scss'
 
 export const SignIn: React.FC = () => {
@@ -16,7 +15,6 @@ export const SignIn: React.FC = () => {
   useIonViewWillEnter(() => {
     $ui.setIsHeaderBar(false)
   })
-  const curYear = dayjs().format(DT_FORMAT.Y)
 
   return (
     <IonPage className='login-wrap'>
@@ -29,7 +27,7 @@ export const SignIn: React.FC = () => {
         </IonContent>
       </div>
       <div className='copyright'>
-        <p>COPYRIGHT {curYear} mocomocolaps, ALL RIGHTS RESERVED</p>
+        <p>COPYRIGHT {y(Date())} mocomocolaps, ALL RIGHTS RESERVED</p>
       </div>
     </IonPage>
   )

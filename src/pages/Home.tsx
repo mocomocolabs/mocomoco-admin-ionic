@@ -22,6 +22,7 @@ import { TextXxl } from '../components/atoms/TextXxlComponent'
 import { PageHeader } from '../components/molecules/PageHeaderComponent'
 import { useStore } from '../hooks/use-store'
 import { ICommunityUsers } from '../stores/auth-store.d'
+import { ymdhm } from '../utils/moment-util'
 import './Home.scoped.scss'
 
 export const Home: React.FC = () => {
@@ -63,6 +64,8 @@ export const Home: React.FC = () => {
   }, [$ui, isShowApvCompleteAlert])
 
   const changeStatus = (checkedYn: boolean, a: ICommunityUsers, i: number) => {
+    console.log(usersListToApprove);
+    
     !checkedYn ? (a = { ...a, status: 'PENDING' }) : (a = { ...a, status: 'APPROVAL' })
     if (usersListToApprove) usersListToApprove[i] = a
   }
@@ -85,9 +88,8 @@ export const Home: React.FC = () => {
           saveObj?.map(async (a) => {
             await $user.updateCommunityUser(a.id, 'APPROVAL').then((success) => {
               if (success) {
-                // console.log('승인되었음', success)
                 setIsShowApvCompleteAlert(true)
-                window.location.reload() // TODO: 강제로 새로고침을 함. 나중에 한번 더 볼 것.
+                window.location.reload()
               }
             })
           })
@@ -104,16 +106,18 @@ export const Home: React.FC = () => {
           <div style={{ marginTop: '20px' }} className='apv-wrap'>
             <div className='box'>
               <TextXxl className='text-bold'>가입승인을 기다려요</TextXxl>
-              <strong className='badge'>{usersListToApprove && usersListToApprove.length}</strong>
-              {usersListToApprove && usersListToApprove.length > 0 ? (
+              <strong className='badge'>{usersListToApprove?.length}</strong>
+              {usersListToApprove && usersListToApprove?.length < 0 ? (
+                <></>
+              ) : (
                 <IonButton style={{ marginLeft: 'auto' }} size='small' color='dark' onClick={apvBtnClick}>
                   승인
                 </IonButton>
-              ) : (
-                <></>
               )}
             </div>
-            {usersListToApprove && usersListToApprove.length > 0 ? (
+            { usersListToApprove && usersListToApprove?.length < 0 ? (
+              <div>모두 승인 하셨네요!</div>
+            ):(
               <div className='apv-list-wrap' style={{ marginLeft: '-5px' }}>
                 <IonGrid>
                   <IonCol>
@@ -140,14 +144,12 @@ export const Home: React.FC = () => {
                           {a.email}
                         </IonCol>
                         <IonCol size='4' style={{ fontSize: '13px' }}>
-                          {a.createdAt} 가입
+                          {ymdhm(a.createdAt)}
                         </IonCol>
                       </IonRow>
                     ))}
                 </IonGrid>
               </div>
-            ) : (
-              <div>모두 승인 하셨네요!</div>
             )}
           </div>
           <br />

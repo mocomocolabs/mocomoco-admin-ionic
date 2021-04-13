@@ -1,7 +1,7 @@
 import { IonDatetime } from '@ionic/react'
 import dayjs from 'dayjs'
 import React, { FC } from 'react'
-import { DT_FORMAT, hm, ymd } from '../../utils/datetime-util'
+import { DT_FORMAT, hm, ymd } from '../../utils/moment-util'
 
 export interface IDatetimePicker {
   value?: string

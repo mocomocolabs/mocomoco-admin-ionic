@@ -13,7 +13,7 @@ import React from 'react'
 import { Input } from '../components/atoms/InputComponent'
 import { PageHeader } from '../components/molecules/PageHeaderComponent'
 import { useStore } from '../hooks/use-store'
-import { ymd } from '../utils/datetime-util'
+import { ymd } from '../utils/moment-util'
 
 export const TownEvent: React.FC = () => {
   const { $home } = useStore()
