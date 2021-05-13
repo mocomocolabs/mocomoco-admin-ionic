@@ -5,16 +5,22 @@
 import {
   IonButton,
   IonCard,
+  IonCardContent,
   IonCardHeader,
+  IonCardSubtitle,
   IonCardTitle,
   IonCheckbox,
   IonCol,
   IonContent,
   IonGrid,
+  IonIcon,
   IonList,
   IonPage,
   IonRow,
+  IonItem,
+  IonLabel
 } from '@ionic/react'
+import { refreshOutline, pin } from 'ionicons/icons'
 import * as _ from 'lodash'
 import { useObserver } from 'mobx-react-lite'
 import { default as React, useEffect, useState } from 'react'
@@ -86,16 +92,32 @@ export const Home: React.FC = () => {
         message: '승인하시겠습니까?',
         onSuccess() {
           saveObj?.map(async (a) => {
-            await $user.updateCommunityUser(a.id, 'APPROVAL').then((success) => {
-              if (success) {
-                setIsShowApvCompleteAlert(true)
-                window.location.reload()
-              }
-            })
+            // 1. 사용자 정보 업데이트
+            await $user.updateCommunityUser(a.id, 'APPROVAL')
+            // 2. 성공 팝업 show
+            setIsShowApvCompleteAlert(true)
+            // 3. 데이터 재조회
+            await $auth.signInWithToken()
+            // 4. 테이블 재렌더링
+            setUsersListToApprove(
+              $auth.getCommunityInfo.users
+                .filter((a) => a.id !== $auth.getCommunityInfo.adminUsers[0].id) // admin 제외
+                .filter((a) => a.status !== 'APPROVAL') // approval 제외
+            )
           })
         },
       })
     }
+  }
+
+  // TODO: 중복되는 코드를 어떻게 합칠 수 있을까?
+  const researchAndRerenderTable = async () => {
+    await $auth.signInWithToken()
+    setUsersListToApprove(
+      $auth.getCommunityInfo.users
+        .filter((a) => a.id !== $auth.getCommunityInfo.adminUsers[0].id) // admin 제외
+        .filter((a) => a.status !== 'APPROVAL') // approval 제외
+    )
   }
 
   return useObserver(() => (
@@ -107,16 +129,19 @@ export const Home: React.FC = () => {
             <div className='box'>
               <TextXxl className='text-bold'>가입승인을 기다려요</TextXxl>
               <strong className='badge'>{usersListToApprove?.length}</strong>
-              {usersListToApprove && usersListToApprove?.length < 0 ? (
+              {usersListToApprove && usersListToApprove?.length < 1 ? (
                 <></>
               ) : (
-                <IonButton style={{ marginLeft: 'auto' }} size='small' color='dark' onClick={apvBtnClick}>
+                <IonButton style={{ marginLeft: 'auto' }} size='small' color='primary' onClick={apvBtnClick}>
                   승인
                 </IonButton>
               )}
+              <IonButton onClick={researchAndRerenderTable} color='success' className='refresh-btn'>
+                <IonIcon slot='icon-only' size='small' icon={refreshOutline}></IonIcon>
+              </IonButton>
             </div>
-            {usersListToApprove && usersListToApprove?.length < 0 ? (
-              <div>모두 승인 하셨네요!</div>
+            {usersListToApprove && usersListToApprove?.length < 1 ? (
+              <div style={{ marginLeft: '15px' }}>모두 승인 하셨네요!</div>
             ) : (
               <div className='apv-list-wrap' style={{ marginLeft: '-5px' }}>
                 <IonGrid>
@@ -156,9 +181,36 @@ export const Home: React.FC = () => {
           <hr className='gray-bar' />
           <div className='month-event-wrap'>
             <header style={{ marginBottom: '-30px' }}>
-              <TextXxl className='text-bold'>이번달 우리마을 일정</TextXxl>
+              <TextXxl className='text-bold'>
+                이번달 {$auth.getCommunityInfo.name} 일정
+                <button>more</button>
+              </TextXxl>
             </header>
             <br />
+            <IonCard>
+              <IonCardHeader>
+                <IonCardSubtitle>고추장 담그기 워크숍</IonCardSubtitle>
+                <IonCardTitle>Card Title</IonCardTitle>
+              </IonCardHeader>
+
+              <IonCardContent>
+                Keep close to Nature's heart... and break clear away, once in awhile, and climb a mountain or
+                spend a week in the woods. Wash your spirit clean.
+              </IonCardContent>
+            </IonCard>
+            <IonCard>
+              <IonItem>
+                {/* <IonIcon icon={pin} slot='start' /> */}
+                <IonLabel>ion-item in a card, icon left, button right</IonLabel>
+                <IonButton fill='outline' slot='end'>
+                  View
+                </IonButton>
+              </IonItem>
+
+              <IonCardContent>
+                This is content, without any paragraph or header tags, within an ion-cardContent element.
+              </IonCardContent>
+            </IonCard>
             <div className='month-event-list-wrap' style={{ marginLeft: '-5px' }}>
               <IonList>
                 {$home.getCurMonEventList.map((v, i) => (
