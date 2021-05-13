@@ -4,7 +4,7 @@ import {
 } from '@ionic/react';
 import React from 'react';
 import { PageHeader } from '../components/molecules/PageHeaderComponent';
-import './Example.scoped.scss';
+import './Example.scss';
 interface IEvent {
   eventNm?: string;
   date?: string;

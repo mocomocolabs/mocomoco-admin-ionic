@@ -7,7 +7,7 @@ import { y } from '../utils/moment-util'
 import React from 'react'
 import { SignInEmail } from '../components/organisms/SignInEmailComponent'
 import { useStore } from '../hooks/use-store'
-import './SignIn.scoped.scss'
+import './SignIn.scss'
 
 export const SignIn: React.FC = () => {
   const { $ui } = useStore()

@@ -13,7 +13,7 @@ import {
   IonGrid,
   IonList,
   IonPage,
-  IonRow
+  IonRow,
 } from '@ionic/react'
 import * as _ from 'lodash'
 import { useObserver } from 'mobx-react-lite'
@@ -23,7 +23,7 @@ import { PageHeader } from '../components/molecules/PageHeaderComponent'
 import { useStore } from '../hooks/use-store'
 import { ICommunityUsers } from '../stores/auth-store.d'
 import { ymdhm } from '../utils/moment-util'
-import './Home.scoped.scss'
+import './Home.scss'
 
 export const Home: React.FC = () => {
   const { $home, $ui, $auth, $user } = useStore()
@@ -64,8 +64,8 @@ export const Home: React.FC = () => {
   }, [$ui, isShowApvCompleteAlert])
 
   const changeStatus = (checkedYn: boolean, a: ICommunityUsers, i: number) => {
-    console.log(usersListToApprove);
-    
+    console.log(usersListToApprove)
+
     !checkedYn ? (a = { ...a, status: 'PENDING' }) : (a = { ...a, status: 'APPROVAL' })
     if (usersListToApprove) usersListToApprove[i] = a
   }
@@ -115,9 +115,9 @@ export const Home: React.FC = () => {
                 </IonButton>
               )}
             </div>
-            { usersListToApprove && usersListToApprove?.length < 0 ? (
+            {usersListToApprove && usersListToApprove?.length < 0 ? (
               <div>모두 승인 하셨네요!</div>
-            ):(
+            ) : (
               <div className='apv-list-wrap' style={{ marginLeft: '-5px' }}>
                 <IonGrid>
                   <IonCol>

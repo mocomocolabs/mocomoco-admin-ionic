@@ -9,7 +9,7 @@ import {
   IonList,
   IonListHeader,
   IonMenu,
-  IonMenuToggle
+  IonMenuToggle,
 } from '@ionic/react'
 import {
   closeOutline,
@@ -22,13 +22,13 @@ import {
   shirt,
   shirtOutline,
   trophy,
-  trophyOutline
+  trophyOutline,
 } from 'ionicons/icons'
 import React from 'react'
 import { useLocation } from 'react-router-dom'
 import { useStore } from '../../hooks/use-store'
 import { XDivider } from '../atoms/XDividerComponent'
-import './Sidebar.scoped.scss'
+import './Sidebar.scss'
 interface AppPage {
   url: string
   iosIcon: string
