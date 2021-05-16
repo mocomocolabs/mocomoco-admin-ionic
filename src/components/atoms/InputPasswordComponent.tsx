@@ -12,7 +12,7 @@ export const InputPassword: FC<IInput> = (props) => {
       <IonIcon
         onClick={() => setShowPassword(!showPassword)}
         icon={showPassword ? eyeOff : eyeOutline}
-        className='absolute-vertical-center right-0 pr-2'
+        className='pwd-eye absolute-vertical-center right-0 pr-2'
       ></IonIcon>
     </div>
   )

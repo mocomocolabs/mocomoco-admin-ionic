@@ -42,57 +42,34 @@ export const SignInEmail: FC<IEmailComponent> = ({ useIn }) => {
     }
   })
   return useObserver(() =>
-    useIn === 'signIn' ? (
-      <form onSubmit={onSubmit}>
-        <InputNormal
-          name='email'
-          type='email'
-          placeholder='이메일'
-          register={register({
-            required: '이메일을 입력해주세요',
-            pattern: {
-              value: /\S+@\S+[.]\S+$/,
-              message: '이메일 형식이 올바르지 않습니다.',
-            },
-          })}
-        ></InputNormal>
-        <ValidationMessage isShow={errors.email} message={errors.email?.message}></ValidationMessage>
-        <InputPassword
-          name='password'
-          placeholder='비밀번호'
-          register={register({
-            required: '패스워드를 입력해주세요',
-            minLength: { value: 6, message: '6자 이상 입력해주세요' },
-          })}
-        ></InputPassword>
-        <ValidationMessage isShow={errors.password} message={errors?.password?.message}></ValidationMessage>
-        {/* TODO: SubmitButton pending 편하게 처리할 수 있도록 수정 */}
-        {$auth.signUp.match({
-          pending: () => <Spinner></Spinner>,
-          resolved: () => <SubmitButton disabled={!formState.isValid} text='로그인'></SubmitButton>,
+    <form onSubmit={onSubmit} className='sign-in-email-wrap'>
+      <InputNormal
+        name='email'
+        type='email'
+        placeholder='이메일'
+        register={register({
+          required: '이메일을 입력해주세요',
+          pattern: {
+            value: /\S+@\S+[.]\S+$/,
+            message: '이메일 형식이 올바르지 않습니다.',
+          },
         })}
-      </form>
-    ) : (
-      <>
-        <IonLabel className='mb-5'>회원님의 소중한 정보 보호를 위해 현재 비밀번호를 입력해주세요.</IonLabel>
-        <form onSubmit={onSubmit}>
-          <InputNormal name='email' type='email' value={$auth.getAuthInfo.email} disabled></InputNormal>
-          <ValidationMessage isShow={errors.email} message={errors.email?.message}></ValidationMessage>
-          <InputPassword
-            name='password'
-            placeholder='비밀번호'
-            register={register({
-              required: '패스워드를 입력해주세요',
-              minLength: { value: 6, message: '6자 이상 입력해주세요' },
-            })}
-          ></InputPassword>
-          <ValidationMessage isShow={errors.password} message={errors?.password?.message}></ValidationMessage>
-          {$auth.signUp.match({
-            pending: () => <Spinner></Spinner>,
-            resolved: () => <SubmitButton disabled={!formState.isValid} text='다음'></SubmitButton>,
-          })}
-        </form>
-      </>
-    )
+      ></InputNormal>
+      <ValidationMessage isShow={errors.email} message={errors.email?.message}></ValidationMessage>
+      <InputPassword
+        name='password'
+        placeholder='비밀번호'
+        register={register({
+          required: '패스워드를 입력해주세요',
+          minLength: { value: 6, message: '6자 이상 입력해주세요' },
+        })}
+      ></InputPassword>
+      <ValidationMessage isShow={errors.password} message={errors?.password?.message}></ValidationMessage>
+      {/* TODO: SubmitButton pending 편하게 처리할 수 있도록 수정 */}
+      {$auth.signUp.match({
+        pending: () => <Spinner></Spinner>,
+        resolved: () => <SubmitButton disabled={!formState.isValid} text='로그인'></SubmitButton>,
+      })}
+    </form>
   )
 }

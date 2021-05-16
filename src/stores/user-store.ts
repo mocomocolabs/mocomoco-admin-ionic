@@ -1,14 +1,15 @@
 // 로그인 한 사람을 포함한 모든 사람에 대한 정보를 모아두는 스토어.
-import { action, observable } from 'mobx'
+import { action, computed, observable } from 'mobx'
 import { task } from 'mobx-task'
 import { IUser } from '../models/user'
 import { http } from '../utils/http-util'
 import { Task } from './task.d'
-import { GetUserTask, SetUserTask, UpdateUserTask } from './user-store.d'
+import { GetUserTask, ISearchResultDto, ISearchUserObj, SetUserTask, UpdateUserTask } from './user-store.d'
 
 const initState = {
   user: {} as IUser,
   currentUserId: null,
+  searchResultList: {} as ISearchResultDto
 }
 
 export class User {
@@ -19,6 +20,7 @@ export class User {
 
   // primitive value will be observable.box automatically
   @observable currentUserId: number | null = initState.currentUserId
+  @observable searchResultList: ISearchResultDto = initState.searchResultList
 
   constructor() {
     // this.getCurrentUserId() // 일단 주석 로그인한 사람의 정보는 auth에 넣자.
@@ -32,6 +34,31 @@ export class User {
       return true
     } catch {
       return false
+    }
+  }
+
+  // 사용자 검색 기능(로그인 이후)
+  // http://localhost:8080/api/sys/users?community-id=1&nickname=like:37&name=sc372&email=sdf@asdf.com
+  // email 하고 name 은 암호화해서 저장되기 때문에 like 검색은 안되고 풀네임 그대로  이퀄(eq) 조회 해야됨
+  @task.resolved
+  searchCommunityUser = async (searchObj: ISearchUserObj) => {
+    const { communityId, inputName, inputNickname, inputEmail} = searchObj
+    await http
+      .get<ISearchResultDto>(`/sys/users?community-id=${communityId}&nickname=like:${inputNickname}&name=${inputName}&email=${inputEmail}`, {})
+      .then((searchResultList: ISearchResultDto) => {
+        console.log('searchResultList::',searchResultList);
+        this.setResultList(searchResultList);
+      })
+  }
+
+  @action
+  setResultList(searchResultList: ISearchResultDto) {
+    console.log('searchResultList:: ', searchResultList)
+    const { count, users } = searchResultList;
+
+    this.searchResultList = {
+      count,
+      users
     }
   }
 
@@ -99,4 +126,9 @@ export class User {
 
     return success
   }) as UpdateUserTask
+
+  @computed
+  get getSearchResultList() {
+    return this.searchResultList
+  }
 }

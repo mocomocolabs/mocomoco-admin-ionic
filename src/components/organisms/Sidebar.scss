@@ -1,10 +1,12 @@
 // description: 사이드바 컴포넌트 scss
 // fileName: Sidebar.scoped.scss
 // created: 2021-01-12, 이지혜
+@import '../../theme/color';
+
 .selected {
   background-color: 'red';
   color: 'red';
 }
 .menu-close {
-  background-color: #ffee80;
+  background-color: $hamaYellow;
 }

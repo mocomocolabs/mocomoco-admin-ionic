@@ -1,5 +1,4 @@
-import { IonContent, IonIcon, IonPage, IonThumbnail } from '@ionic/react'
-import { camera } from 'ionicons/icons'
+import { IonContent, IonPage, IonThumbnail } from '@ionic/react'
 import { useObserver } from 'mobx-react-lite'
 import React, { useEffect, useState } from 'react'
 import { TextLg } from '../components/atoms/TextLgComponent'
@@ -7,7 +6,7 @@ import { PageHeader } from '../components/molecules/PageHeaderComponent'
 import { useStore } from '../hooks/use-store'
 
 export const TownInf: React.FC = () => {
-  const { $townInf, $auth } = useStore()
+  const { $auth } = useStore()
   const [language, setLanguage] = useState<string>('ko_KR')
   useEffect(() => {
     setLanguageFn()
@@ -32,14 +31,8 @@ export const TownInf: React.FC = () => {
         <div className='px-container my-4'>
           <div className='flex-center' slot='start'>
             <IonThumbnail style={{ width: '400px', height: '200px' }}>
-              <img src={$townInf.getTownInf.profileUrl} alt='프로필이미지' />
+              <img src={$auth.getCommunityInfo.atchFiles[0].url} alt='프로필이미지' />
             </IonThumbnail>
-            <IonIcon
-              style={{ position: 'absolute', transform: 'translate(150px,80px)', color: 'white' }}
-              size='large'
-              slot='start'
-              icon={camera}
-            />
           </div>
           <div className='flex-center' slot='end'>
             <TextLg className='text-bold'>{$auth.getCommunityInfo.name}</TextLg>

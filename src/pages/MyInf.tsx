@@ -6,32 +6,38 @@ import {
   IonAvatar,
   IonButton,
   IonContent,
-  IonIcon,
   IonImg,
   IonItem,
   IonItemGroup,
   IonLabel,
   IonList,
   IonPage,
-  IonSelect,
-  IonSelectOption,
   useIonViewWillEnter
 } from '@ionic/react'
-import { chevronForward } from 'ionicons/icons'
 import { useObserver } from 'mobx-react-lite'
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
 import { TextXl } from '../components/atoms/TextXlComponent'
 import { PageHeader } from '../components/molecules/PageHeaderComponent'
 import { useStore } from '../hooks/use-store'
 
 export const MyInf: React.FC = () => {
   const [language, setLanguage] = useState<string>('ko_KR')
-  const { $auth } = useStore()
+  const { $auth, $ui } = useStore()
 
   useIonViewWillEnter(() => {
     setLanguage($auth.getAuthInfo ? $auth.getAuthInfo.locale : '')
   }, [$auth.getAuthInfo])
+
+  const validate = () => {
+    $ui.showAlert({
+      isOpen: true,
+      header: '확인',
+      message: '로그아웃 하시겠습니까?',
+      onSuccess() {
+        $auth.logout()
+      }
+    })
+  }
 
   return useObserver(() => (
     <IonPage>
@@ -42,7 +48,7 @@ export const MyInf: React.FC = () => {
             <IonItemGroup>
               <div className='flex-center' slot='start'>
                 <IonAvatar className='w-20 height-80'>
-                  <IonImg src={$auth.getAuthInfo.profileUrl} alt='프로필이미지' />
+                  <IonImg src={$auth.getAuthInfo.profileUrl.includes('http:://') ? $auth.getAuthInfo.profileUrl : '/assets/img/avatar.png'} alt='프로필이미지' />
                 </IonAvatar>
               </div>
               <div className='flex-center' slot='end'>
@@ -55,7 +61,7 @@ export const MyInf: React.FC = () => {
               <IonItem className='block flex'>
                 <IonLabel>ID</IonLabel>
                 <span>
-                  <IonLabel className='ml-auto mr-8'>{$auth.getAuthInfo.id}</IonLabel>
+                  <IonLabel className='ml-auto'>{$auth.getAuthInfo.id}</IonLabel>
                 </span>
               </IonItem>
               {/* 닉네임 */}
@@ -64,7 +70,6 @@ export const MyInf: React.FC = () => {
                 <span>
                   <IonLabel className='ml-auto'>{$auth.getAuthInfo.nickname}</IonLabel>
                 </span>
-                <IonIcon className='inline ml-2 mt-2' icon={chevronForward} />
               </IonItem>
               {/* 이메일 */}
               <IonItem className='block flex'>
@@ -72,38 +77,13 @@ export const MyInf: React.FC = () => {
                 <span>
                   <IonLabel className='ml-auto'>{$auth.getAuthInfo.email}</IonLabel>
                 </span>
-                <IonIcon className='inline ml-2 mt-2' icon={chevronForward} />
               </IonItem>
-              {/* 핸드폰 */}
-              {/* <IonItem className='block flex'>
-                <IonLabel>핸드폰</IonLabel>
-                <span>
-                  <IonLabel className='ml-auto'>{$auth.getAuthInfo.mobile}</IonLabel>
-                </span>
-                <IonIcon className='inline ml-2 mt-2' icon={chevronForward} />
-              </IonItem> */}
               {/* 언어 */}
               <IonItem>
                 <IonLabel>언어</IonLabel>
-                <IonSelect
-                  interface='action-sheet'
-                  value={language}
-                  placeholder={language}
-                  onIonChange={(e) => {
-                    setLanguage(e.detail.value)
-                  }}
-                >
-                  <IonSelectOption value='ko_KR'>한국어</IonSelectOption>
-                  <IonSelectOption value='en_US'>English</IonSelectOption>
-                  <IonSelectOption value='ja_JP'>日本</IonSelectOption>
-                </IonSelect>
-              </IonItem>
-              {/* 비밀번호 변경 */}
-              <IonItem className='block flex' routerLink='/confirmPwd'>
-                <Link to='/confirmPwd' className='no-underline black'>
-                  <IonLabel>비밀번호 변경</IonLabel>
-                  {/* <IonIcon className="inline ml-2 mt-2" /> */}
-                </Link>
+                <span>
+                  <IonLabel className='ml-auto'>{$auth.getAuthInfo.locale}</IonLabel>
+                </span>
               </IonItem>
             </IonItemGroup>
             <IonItemGroup className='mt-5'>
@@ -119,14 +99,14 @@ export const MyInf: React.FC = () => {
               </IonItem>
               {/* 관리마을이름 */}
               <IonItem className='block flex'>
-                <IonLabel>관리마을이름</IonLabel>
+                <IonLabel>마을이름</IonLabel>
                 <span>
                   <IonLabel className='ml-auto'>{$auth.getAuthInfo.communities[0].name}</IonLabel>
                 </span>
               </IonItem>
             </IonItemGroup>
             {/* 로그아웃 */}
-            <IonButton expand='full' color='dark' className='mt-8' onClick={$auth.logout}>
+            <IonButton expand='full' color='dark' className='mt-8' onClick={validate}>
               로그아웃
             </IonButton>
             {/* 버전 */}

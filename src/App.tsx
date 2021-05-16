@@ -64,34 +64,7 @@ export const App: React.FC = () => {
             <GuardRoute path='/confirmPwd' component={ConfirmPwd} exact />
             <GuardRoute path='/changePwd' component={ChangePwd} exact />
             <Redirect from='/' to='/home' exact />
-            {/* <Route path='/feed' component={Feed} exact />
-            <Route path='/feed/:id' component={FeedDetail} exact />
-            <Route path='/feed-write' component={FeedWrite} exact />
-            <Route path='/trade' component={Trade} exact />
-            <Route path='/chat' component={Chat} exact />
-            <Route path='/chat/:id' component={ChatRoom} exact /> */}
-            {/* <Route path='/users/:id' component={ProfileDetail} exact />
-            <Route path='/users/:id/edit' component={ProfileUpdate} exact /> */}
           </IonRouterOutlet>
-          {/* <IonTabBar slot='bottom' hidden={!$ui.isBottomTab}>
-            <IonTabButton tab='home' href='/home'>
-              <IonIcon icon={home} />
-            </IonTabButton>
-            <IonTabButton tab='feed' href='/feed'>
-              <IonIcon icon={beer} />
-            </IonTabButton>
-            <IonTabButton tab='trade' href='/trade'>
-              <IonIcon icon={basket} />
-            </IonTabButton>
-            <IonTabButton tab='chat' href='/chat'>
-              <IonIcon icon={paperPlane} />
-              {$chat.countUnread > 0 && <div className='badge'></div>}
-            </IonTabButton>
-            <IonTabButton tab='my-page' href='/my-page'>
-              <IonIcon icon={personCircle} />
-            </IonTabButton>
-          </IonTabBar> */}
-          {/* </IonTabs> */}
         </IonReactRouter>
       ) : (
         <Spinner isFull={true} color='white'></Spinner>

@@ -7,7 +7,6 @@ import { News } from './example/news-store'
 import { TodoList } from './example/todo-list-store'
 import { Feed } from './feed-store'
 import { Home } from './home-store'
-import { TownInf } from './townInf-store'
 import { Stuff, Talent } from './trade-store'
 import { Ui } from './ui-store'
 import { User } from './user-store'
@@ -32,7 +31,6 @@ export class RootStore {
   // isa 추가
   $home: Home
   $userSearch: UserSearch
-  $townInf: TownInf
   $auth: Auth
 
   constructor() {
@@ -48,7 +46,6 @@ export class RootStore {
     // isa 추가
     this.$home = new Home()
     this.$userSearch = new UserSearch()
-    this.$townInf = new TownInf()
     this.$auth = new Auth()
 
     // example

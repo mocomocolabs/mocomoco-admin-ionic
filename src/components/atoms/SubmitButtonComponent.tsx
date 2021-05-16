@@ -10,7 +10,7 @@ export const SubmitButton: FC<ISubmitButton> = ({ text, disabled = false, onClic
   return (
     <button
       type='submit'
-      className={`w-full h-10 ${disabled ? 'bg-gray' : 'bg-yellow'}`}
+      className={`w-full h-10 ${disabled ? 'bg-gray' : 'bg-yellow'} submit-btn`}
       disabled={disabled}
       onClick={onClick}
     >

@@ -43,16 +43,6 @@ interface AppPage {
 
 const appPages: AppPage[] = [
   {
-    title: 'Home',
-    url: '/home',
-    iosIcon: homeOutline,
-    mdIcon: home,
-    menuGrp: 'home',
-    author: 'ADMIN',
-    menuId: 10,
-    upMenuId: 0,
-  },
-  {
     title: '우리마을관리',
     url: '',
     iosIcon: '',

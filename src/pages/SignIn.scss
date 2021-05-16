@@ -6,12 +6,11 @@
 
 .login-wrap {
   overflow: hidden;
-  overflow-y: auto;
+  overflow-y: hidden;
   position: relative;
   display: flex;
   width: 100%;
   min-height: 100%;
-  padding-bottom: 50px;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
   -webkit-box-pack: center;
@@ -44,10 +43,33 @@
     }
     .input-area {
       margin: 30px 0 22px;
-      height: 90%; // 내가 추가함
+      height: 60%;
+      .input-normal-wrap {
+        input {
+          border: none;
+          width: 90%;
+          border-bottom: 1px solid lightgray !important;
+          display: block;
+        }
+      }
+      .relative {
+        input {
+          border: none;
+          width: 90%;
+          border-bottom: 1px solid lightgray !important;
+        }
+        .pwd-eye{
+          color:gray;
+        }
+      }
+      .m-red {
+        color: $hamaPurple;
+        font-size: 12px;
+      }
     }
-    .login-btn {
+    .submit-btn {
       height: 50px;
+      margin-top: 10px;
     }
   }
   .copyright {

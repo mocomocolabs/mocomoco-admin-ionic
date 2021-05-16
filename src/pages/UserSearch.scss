@@ -1,0 +1,15 @@
+// description: 홈 화면 scss
+// fileName: Home.scoped.scss
+// created: 2021-01-08, 이지혜
+
+@import '../theme/color';
+
+.search-area-input{
+  input{
+    border:none;
+    border-bottom: 1px solid lightgray;
+  }
+  .search-area-bottom-btn{
+    margin-top:15px;
+  }
+}
