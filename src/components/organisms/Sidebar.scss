@@ -3,10 +3,21 @@
 // created: 2021-01-12, 이지혜
 @import '../../theme/color';
 
+.welcome-txt{ 
+  color: $hamaYellow;
+  margin-top:10px;
+}
+.close-btn{
+  color: $hamaYellow;
+}
 .selected {
   background-color: 'red';
   color: 'red';
 }
 .menu-close {
-  background-color: $hamaYellow;
+  background-color: $hamaPurple;
+}
+
+.inbox-list{
+  padding-top:0;
 }

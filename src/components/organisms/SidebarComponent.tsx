@@ -13,16 +13,14 @@ import {
 } from '@ionic/react'
 import {
   closeOutline,
-  helpCircle,
-  helpCircleOutline,
-  home,
-  homeOutline,
   settings,
   settingsOutline,
-  shirt,
-  shirtOutline,
   trophy,
   trophyOutline,
+  informationCircleOutline,
+  peopleCircleOutline,
+  calendarOutline,
+  helpCircleOutline
 } from 'ionicons/icons'
 import React from 'react'
 import { useLocation } from 'react-router-dom'
@@ -56,8 +54,8 @@ const appPages: AppPage[] = [
   {
     title: '우리마을정보',
     url: '/townInf',
-    iosIcon: shirtOutline,
-    mdIcon: shirt,
+    iosIcon: "information-circle-outline",
+    mdIcon: informationCircleOutline,
     menuGrp: 'user',
     level: 2,
     author: 'ADMIN',
@@ -67,8 +65,8 @@ const appPages: AppPage[] = [
   {
     title: '우리마을사람들',
     url: '/userList',
-    iosIcon: shirtOutline,
-    mdIcon: shirt,
+    iosIcon: "peopleCircleOutline",
+    mdIcon: peopleCircleOutline,
     menuGrp: 'user',
     level: 2,
     author: 'ADMIN',
@@ -78,8 +76,8 @@ const appPages: AppPage[] = [
   {
     title: '우리마을일정',
     url: '/townEvent',
-    iosIcon: shirtOutline,
-    mdIcon: shirt,
+    iosIcon: "calendarOutline",
+    mdIcon: calendarOutline,
     menuGrp: 'user',
     level: 2,
     author: 'ADMIN',
@@ -127,11 +125,22 @@ const appPages: AppPage[] = [
     menuId: 40,
     upMenuId: 0,
   },
+  // {
+  //   title: '앱 설정',
+  //   url: '/settings',
+  //   iosIcon: settingsOutline,
+  //   mdIcon: settings,
+  //   menuGrp: 'sys',
+  //   level: 2,
+  //   author: 'ADMIN',
+  //   menuId: 41,
+  //   upMenuId: 40,
+  // },
   {
-    title: '앱 설정',
-    url: '/settings',
-    iosIcon: settingsOutline,
-    mdIcon: settings,
+    title: 'Help',
+    url: '/help',
+    iosIcon: helpCircleOutline,
+    mdIcon: helpCircleOutline,
     menuGrp: 'sys',
     level: 2,
     author: 'ADMIN',
@@ -139,24 +148,16 @@ const appPages: AppPage[] = [
     upMenuId: 40,
   },
   // {
-  //   title: 'Help',
-  //   url: '/help',
+  //   title: '예시 코드',
+  //   url: '/example',
   //   iosIcon: helpCircleOutline,
   //   mdIcon: helpCircle,
-  //   menuGrp: 'sys',
-  //   level: 2
+  //   menuGrp: 'exsample',
+  //   level: 2,
+  //   author: 'ADMIN',
+  //   menuId: 42,
+  //   upMenuId: 40,
   // },
-  {
-    title: '예시 코드',
-    url: '/example',
-    iosIcon: helpCircleOutline,
-    mdIcon: helpCircle,
-    menuGrp: 'exsample',
-    level: 2,
-    author: 'ADMIN',
-    menuId: 42,
-    upMenuId: 40,
-  },
 ]
 export const Sidebar: React.FC = () => {
   const location = useLocation()
@@ -165,13 +166,13 @@ export const Sidebar: React.FC = () => {
   return (
     <IonMenu contentId='main' type='overlay' menuId='leftSidebar' color='dark'>
       <IonContent>
-        <IonList id='inbox-list'>
+        <IonList id='inbox-list' className='inbox-list'>
           <div className='menu-close flex'>
-            <IonLabel className='ml-5 mt-3 mb-2'>
+            <IonLabel className='ml-2 mb-1 welcome-txt'>
               안녕하세요, {$auth.getAuthInfo && $auth.getAuthInfo.name}님!
             </IonLabel>
-            <IonButtons className='ml-auto mt-1' slot='end'>
-              <IonButton slot='end' color='dark' onClick={() => menuController.close()}>
+            <IonButtons className='ml-auto close-btn' slot='end'>
+              <IonButton slot='end' onClick={() => menuController.close()}>
                 <IonIcon slot='icon-only' icon={closeOutline} size='default' />
               </IonButton>
             </IonButtons>
@@ -185,7 +186,7 @@ export const Sidebar: React.FC = () => {
                   <IonListHeader key={index + page.title}>
                     {' '}
                     {/* TODO: ununiq key!! */}
-                    <IonLabel>{page.title}</IonLabel>
+                    <IonLabel style={{fontSize:'18px'}}>{page.title}</IonLabel>
                   </IonListHeader>
                 </>
               )
@@ -200,7 +201,7 @@ export const Sidebar: React.FC = () => {
                     detail={false}
                   >
                     <IonIcon slot='start' ios={page.iosIcon} md={page.mdIcon} />
-                    <IonLabel>{page.title}</IonLabel>
+                    <IonLabel style={{color:'#666'}}>{page.title}</IonLabel>
                   </IonItem>
                 </IonMenuToggle>
               )

@@ -132,16 +132,20 @@ export const Home: React.FC = () => {
               {usersListToApprove && usersListToApprove?.length < 1 ? (
                 <></>
               ) : (
-                <IonButton style={{ marginLeft: 'auto' }} size='small' color='primary' onClick={apvBtnClick}>
+                <IonButton className='apv-btn' color='#' size='small' onClick={apvBtnClick}>
                   승인
                 </IonButton>
               )}
-              <IonButton onClick={researchAndRerenderTable} color='success' className='refresh-btn'>
-                <IonIcon slot='icon-only' size='small' icon={refreshOutline}></IonIcon>
-              </IonButton>
+                <IonIcon 
+                  className='refresh-btn'
+                  onClick={researchAndRerenderTable}
+                  slot='icon-only'
+                  size='large'
+                  icon={refreshOutline}>
+                </IonIcon>
             </div>
             {usersListToApprove && usersListToApprove?.length < 1 ? (
-              <div style={{ marginLeft: '15px' }}>모두 승인 하셨네요!</div>
+              <div style={{ marginLeft: '15px', fontSize:'15px', color:'#555' }}>모두 승인 하셨네요!</div>
             ) : (
               <div className='apv-list-wrap' style={{ marginLeft: '-5px' }}>
                 <IonGrid>
@@ -154,22 +158,24 @@ export const Home: React.FC = () => {
                   {usersListToApprove &&
                     usersListToApprove.map((a, i) => (
                       <IonRow key={i}>
-                        <IonCol size='1' style={{ maxWidth: '28px', width: '28px' }}>
-                          <IonCheckbox
-                            style={{ width: '23px', height: '23px' }}
-                            checked={a.status === 'PENDING' ? false : true}
-                            color='dark'
-                            onIonChange={(e) => changeStatus(e.detail.checked, a, i)}
-                          />
+                        <IonCol size='3' style={{ fontSize: '15px' }}>
+                          <span>
+                            <IonCheckbox
+                              className='apv-ch-box mr5'
+                              checked={a.status === 'PENDING' ? false : true}
+                              color='light'
+                              onIonChange={(e) => changeStatus(e.detail.checked, a, i)}
+                              style={{width:'18px',height:'18px'}}
+                            />
+                          </span>
+                          <span className='apv-name' style={{}}>{a.name}</span>
                         </IonCol>
-                        <IonCol size='2' style={{ fontSize: '13px' }}>
-                          {a.name}
+                        <IonCol size='4' style={{ fontSize: '15px' }}>
+                          <span>{a.email}</span>
                         </IonCol>
-                        <IonCol size='5' style={{ fontSize: '13px' }}>
-                          {a.email}
-                        </IonCol>
-                        <IonCol size='4' style={{ fontSize: '13px' }}>
-                          {ymdhm(a.createdAt)}
+                        <IonCol size='5' style={{ fontSize: '15px' }}>
+                          <span>{ymdhm(a.createdAt)}</span>
+                          <span className='apv-date'>신청</span>
                         </IonCol>
                       </IonRow>
                     ))}

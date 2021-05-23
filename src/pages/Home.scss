@@ -1,6 +1,7 @@
 // description: 홈 화면 scss
 // fileName: Home.scoped.scss
-// created: 2021-01-08, 이지혜
+// created: 2021-01-08
+
 @import '../theme/color';
 
 .box {
@@ -24,8 +25,26 @@
     background-color: $hamaYellow;
     cursor: pointer;
   }
-  .refresh-btn{
-    height: 27px;
-    margin-left:10px;
+  .apv-btn{
+    margin-left:auto;
+    background-color: $hamaPurple !important;
+    border-radius: 2px;
+    width:55px;
   }
+  .refresh-btn{
+    height: 25px;
+    margin-left:5px;
+    cursor: pointer;
+    margin-top:5px;
+    color:$hamaPurple;
+  }
+}
+.apv-date{
+  margin-left: 3px;
+  font-size: 12px;
+  color: #E5303C;
+  background-color: #F5F5F5;
+  padding:0.5px 5px;
+  border-radius:2px;
+  transform: translateY(-2px);
 }

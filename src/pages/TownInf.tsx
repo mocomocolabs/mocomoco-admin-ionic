@@ -30,7 +30,7 @@ export const TownInf: React.FC = () => {
       <IonContent>
         <div className='px-container my-4'>
           <div className='flex-center' slot='start'>
-            <IonThumbnail style={{ width: '400px', height: '200px' }}>
+            <IonThumbnail style={{ width: '100%', height: '400px' }}>
               <img src={$auth.getCommunityInfo.atchFiles[0].url} alt='프로필이미지' />
             </IonThumbnail>
           </div>

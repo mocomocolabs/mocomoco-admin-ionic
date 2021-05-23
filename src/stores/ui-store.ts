@@ -61,6 +61,14 @@ export class Ui {
   }
 
   @action
+  testPopover = () => {
+    this.popover = {
+      isOpen: true,
+      event: undefined
+    }
+  }
+
+  @action
   hidePopover = (value?: IPopoverResult) => {
     if (this.popover.resolve) {
       this.popover.resolve(value)

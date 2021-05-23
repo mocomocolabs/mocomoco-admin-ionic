@@ -9,7 +9,7 @@ import { GetUserTask, ISearchResultDto, ISearchUserObj, SetUserTask, UpdateUserT
 const initState = {
   user: {} as IUser,
   currentUserId: null,
-  searchResultList: {} as ISearchResultDto
+  resultList: {} as ISearchResultDto
 }
 
 export class User {
@@ -20,7 +20,7 @@ export class User {
 
   // primitive value will be observable.box automatically
   @observable currentUserId: number | null = initState.currentUserId
-  @observable searchResultList: ISearchResultDto = initState.searchResultList
+  @observable resultList: ISearchResultDto = initState.resultList
 
   constructor() {
     // this.getCurrentUserId() // 일단 주석 로그인한 사람의 정보는 auth에 넣자.
@@ -41,25 +41,23 @@ export class User {
   // http://localhost:8080/api/sys/users?community-id=1&nickname=like:37&name=sc372&email=sdf@asdf.com
   // email 하고 name 은 암호화해서 저장되기 때문에 like 검색은 안되고 풀네임 그대로  이퀄(eq) 조회 해야됨
   @task.resolved
-  searchCommunityUser = async (searchObj: ISearchUserObj) => {
+  onSearchCommunityUser = async (searchObj: ISearchUserObj) => {
     const { communityId, inputName, inputNickname, inputEmail} = searchObj
     await http
       .get<ISearchResultDto>(`/sys/users?community-id=${communityId}&nickname=like:${inputNickname}&name=${inputName}&email=${inputEmail}`, {})
       .then((searchResultList: ISearchResultDto) => {
-        console.log('searchResultList::',searchResultList);
-        this.setResultList(searchResultList);
+        console.log('searchResultList:: ',searchResultList);
+        this.setSearshResultList(searchResultList);
       })
   }
 
   @action
-  setResultList(searchResultList: ISearchResultDto) {
-    console.log('searchResultList:: ', searchResultList)
+  setSearshResultList(searchResultList: ISearchResultDto) {
     const { count, users } = searchResultList;
-
-    this.searchResultList = {
-      count,
+    this.resultList = {
+      count, 
       users
-    }
+    };
   }
 
   @task
@@ -129,6 +127,6 @@ export class User {
 
   @computed
   get getSearchResultList() {
-    return this.searchResultList
+    return this.resultList
   }
 }

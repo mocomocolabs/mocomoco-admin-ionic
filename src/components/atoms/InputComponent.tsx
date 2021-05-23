@@ -27,6 +27,7 @@
 //   )
 // }
 
+import { enter } from 'ionicons/icons'
 import React, { FC } from 'react'
 
 export interface IInput {
@@ -40,6 +41,7 @@ export interface IInput {
   // eslint-disable-next-line
   register?: any
   disabled?: boolean
+  onKeyUpEnterFn?: Function
 }
 
 export const Input: FC<IInput> = ({
@@ -52,6 +54,7 @@ export const Input: FC<IInput> = ({
   onChange,
   register,
   disabled,
+  onKeyUpEnterFn
 }) => {
   return (
     <input
@@ -64,6 +67,7 @@ export const Input: FC<IInput> = ({
       onChange={(e) => onChange && onChange(e.target.value!)}
       ref={register}
       disabled={disabled}
+      onKeyUp={(e) => e.key === 'Enter' && onKeyUpEnterFn !== undefined && onKeyUpEnterFn()}
     ></input>
   )
 }

@@ -22,6 +22,7 @@ import { SignIn } from './pages/SignIn'
 import { TownEvent } from './pages/TownEvent'
 import { TownInf } from './pages/TownInf'
 import { UserSearch } from './pages/UserSearch'
+import { Help } from './pages/Help'
 
 export const App: React.FC = () => {
   const { $auth } = useStore()
@@ -63,6 +64,7 @@ export const App: React.FC = () => {
             <GuardRoute path='/townEvent' component={TownEvent} exact />
             <GuardRoute path='/confirmPwd' component={ConfirmPwd} exact />
             <GuardRoute path='/changePwd' component={ChangePwd} exact />
+            <GuardRoute path='/help' component={Help} exact />
             <Redirect from='/' to='/home' exact />
           </IonRouterOutlet>
         </IonReactRouter>

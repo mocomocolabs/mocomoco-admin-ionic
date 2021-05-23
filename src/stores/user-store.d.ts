@@ -16,20 +16,5 @@ export interface ISearchUserObj {
 
 export interface ISearchResultDto {
     count: number,
-    users: [
-        createdAt: string,
-        createdBy: string,
-        email: string,
-        fcmToken: string,
-        id: number,
-        isPublicEmail: boolean,
-        isPublicMobile: boolean,
-        isUser: boolean,
-        locale: string,
-        mobile: string,
-        name: string,
-        nickname: string,
-        profileUrl: string,
-        status: string
-    ]
+    users: ICommunityUsers[]
 }

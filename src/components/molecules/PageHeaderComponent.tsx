@@ -54,8 +54,10 @@ export const PageHeader: FC<IPageHeader> = ({
               <IonMenuButton autoHide={false} color='dark'></IonMenuButton>
             </IonButtons>
           )}
-          <IonTitle>
-            <span>{pageTitle}</span>
+          <IonTitle style={{textAlign: 'center'}}>
+            {pageTitle === '하마 ADMIN'? 
+            <img style={{width:'35px', paddingTop:'3px'}} src='/assets/img/hamalogo.png' alt='hamalogo' /> 
+            : <span>{pageTitle}</span>}
           </IonTitle>
           <IonButtons slot='end'>
             {homeBtn && (
