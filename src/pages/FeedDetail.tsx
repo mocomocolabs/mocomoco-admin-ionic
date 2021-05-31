@@ -48,7 +48,7 @@ export const FeedDetail: React.FC<RouteComponentProps<{ id: string }, StaticCont
   })
 
   // eslint-disable-next-line
-  const taskGroup = TaskGroup<any[], void>([$feed.getFeed, $comment.deleteComment])
+  // const taskGroup = TaskGroup<any[], void>([$feed.getFeed, $comment.deleteComment])
 
   return useObserver(() => (
     <IonPage>
@@ -63,10 +63,10 @@ export const FeedDetail: React.FC<RouteComponentProps<{ id: string }, StaticCont
 
       <IonContent>
         <div className='px-container'>
-          {taskGroup.match({
+          {/* {taskGroup.match({
             pending: () => <Spinner isFull={true}></Spinner>,
             resolved: () => <FeedItem feed={$feed.feed} isDetail={true}></FeedItem>,
-          })}
+          })} */}
         </div>
         <ContentPopover></ContentPopover>
       </IonContent>

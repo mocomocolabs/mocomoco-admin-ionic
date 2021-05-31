@@ -64,6 +64,7 @@ export const SignInEmail: FC<IEmailComponent> = ({ useIn }) => {
           minLength: { value: 6, message: '6자 이상 입력해주세요' },
         })}
       ></InputPassword>
+      <br></br>
       <ValidationMessage isShow={errors.password} message={errors?.password?.message}></ValidationMessage>
       {/* TODO: SubmitButton pending 편하게 처리할 수 있도록 수정 */}
       {$auth.signUp.match({

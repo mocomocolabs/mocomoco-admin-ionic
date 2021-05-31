@@ -32,7 +32,7 @@ export const CommentUpdateForm: React.FC<ICommentUpdateForm> = ({ commentId }) =
       <div className='flex-between-center'>
         <IonIcon icon={close} className='black' onClick={() => $comment.setUpdateCommentId(null)}></IonIcon>
 
-        {$comment.updateComment.match({
+        {/* {$comment.updateComment.match({
           pending: () => <Spinner></Spinner>,
           resolved: () => (
             <IonButton
@@ -50,7 +50,7 @@ export const CommentUpdateForm: React.FC<ICommentUpdateForm> = ({ commentId }) =
               업데이트
             </IonButton>
           ),
-        })}
+        })} */}
       </div>
     </div>
   ))

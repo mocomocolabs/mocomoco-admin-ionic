@@ -14,13 +14,14 @@ import {
   IonContent,
   IonGrid,
   IonIcon,
+  IonItem,
+  IonLabel,
   IonList,
   IonPage,
   IonRow,
-  IonItem,
-  IonLabel
+  useIonViewWillEnter,
 } from '@ionic/react'
-import { refreshOutline, pin } from 'ionicons/icons'
+import { refreshOutline } from 'ionicons/icons'
 import * as _ from 'lodash'
 import { useObserver } from 'mobx-react-lite'
 import { default as React, useEffect, useState } from 'react'
@@ -34,40 +35,41 @@ import './Home.scss'
 export const Home: React.FC = () => {
   const { $home, $ui, $auth, $user } = useStore()
   const [usersListToApprove, setUsersListToApprove] = useState<ICommunityUsers[] | undefined>()
-  const [isLoading, setIsLoading] = useState<boolean>()
   const [isShowApvCompleteAlert, setIsShowApvCompleteAlert] = useState<boolean>()
 
-  // useIonViewWillEnter(() => {
-  //   console.log('useIonViewWillEnter, home')
-  // })
+  useIonViewWillEnter(() => {
+    console.log('-------2------ will enter!!');
+    
+    // ui셋
+    $ui.setIsHeaderBar(true)
+  })
 
   useEffect(() => {
-    setIsLoading(true)
-    if (isLoading) {
-      $ui.setIsHeaderBar(true)
+    console.log('--------1---------use Effect!!')
+    // 마을 소모임 겟
+    //   $auth.getTownEvent()
 
-      setUsersListToApprove(
-        $auth.getCommunityInfo.users
-          .filter((a) => a.id !== $auth.getCommunityInfo.adminUsers[0].id) // admin 제외
-          .filter((a) => a.status !== 'APPROVAL') // approval 제외
-      )
-    }
-    return () => setIsLoading(false)
-  }, [$auth.getCommunityInfo, $ui, isLoading])
+    // 승인리스트 셋
+    setUsersListToApprove(
+      $auth.getCommunityInfo.users
+        .filter((a) => a.id !== $auth.getCommunityInfo.adminUsers[0].id) // admin 제외
+        .filter((a) => a.status !== 'APPROVAL') // approval 제외
+    )
+  }, [])
 
-  useEffect(() => {
-    // TODO: isShowApvComleteAlert를 감지하게 하고 얼럿을 띄우려 하였으나 얼럿이 뜨지 않음.
-    // 로그는 찍히는데 Alert 컴포넌트 문제인 것 같기도 하고.
-    if (isShowApvCompleteAlert) {
-      $ui.showAlert({
-        isOpen: true,
-        header: '확인',
-        message: '승인처리 되었습니다.',
-        oneBtn: true,
-      })
-    }
-    return () => setIsShowApvCompleteAlert(false)
-  }, [$ui, isShowApvCompleteAlert])
+  // useEffect(() => {
+  //   // TODO: isShowApvComleteAlert를 감지하게 하고 얼럿을 띄우려 하였으나 얼럿이 뜨지 않음.
+  //   // 로그는 찍히는데 Alert 컴포넌트 문제인 것 같기도 하고.
+  //   if (isShowApvCompleteAlert) {
+  //     $ui.showAlert({
+  //       isOpen: true,
+  //       header: '확인',
+  //       message: '승인처리 되었습니다.',
+  //       oneBtn: true,
+  //     })
+  //   }
+  //   return () => setIsShowApvCompleteAlert(false)
+  // }, [$ui, isShowApvCompleteAlert])
 
   const changeStatus = (checkedYn: boolean, a: ICommunityUsers, i: number) => {
     console.log(usersListToApprove)
@@ -91,7 +93,7 @@ export const Home: React.FC = () => {
         header: '확인',
         message: '승인하시겠습니까?',
         onSuccess() {
-          saveObj?.map(async (a) => {
+          return saveObj?.map(async (a) => {
             // 1. 사용자 정보 업데이트
             await $user.updateCommunityUser(a.id, 'APPROVAL')
             // 2. 성공 팝업 show
@@ -136,16 +138,16 @@ export const Home: React.FC = () => {
                   승인
                 </IonButton>
               )}
-                <IonIcon 
-                  className='refresh-btn'
-                  onClick={researchAndRerenderTable}
-                  slot='icon-only'
-                  size='large'
-                  icon={refreshOutline}>
-                </IonIcon>
+              <IonIcon
+                className='refresh-btn'
+                onClick={researchAndRerenderTable}
+                slot='icon-only'
+                size='large'
+                icon={refreshOutline}
+              ></IonIcon>
             </div>
             {usersListToApprove && usersListToApprove?.length < 1 ? (
-              <div style={{ marginLeft: '15px', fontSize:'15px', color:'#555' }}>모두 승인 하셨네요!</div>
+              <div style={{ marginLeft: '15px', fontSize: '15px', color: '#555' }}>모두 승인 하셨네요!</div>
             ) : (
               <div className='apv-list-wrap' style={{ marginLeft: '-5px' }}>
                 <IonGrid>
@@ -165,10 +167,12 @@ export const Home: React.FC = () => {
                               checked={a.status === 'PENDING' ? false : true}
                               color='light'
                               onIonChange={(e) => changeStatus(e.detail.checked, a, i)}
-                              style={{width:'18px',height:'18px'}}
+                              style={{ width: '18px', height: '18px' }}
                             />
                           </span>
-                          <span className='apv-name' style={{}}>{a.name}</span>
+                          <span className='apv-name' style={{}}>
+                            {a.name}
+                          </span>
                         </IonCol>
                         <IonCol size='4' style={{ fontSize: '15px' }}>
                           <span>{a.email}</span>

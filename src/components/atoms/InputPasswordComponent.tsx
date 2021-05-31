@@ -8,11 +8,11 @@ export const InputPassword: FC<IInput> = (props) => {
   // TODO: disabled(boolean), type('text', 'password') 기능확인하기.
   return (
     <div className='relative'>
-      <Input {...props} className='w-full h-10 my-1' type={showPassword ? 'text' : 'password'}></Input>
+      <Input {...props} className='w-full inputHeight' type={showPassword ? 'text' : 'password'}></Input>
       <IonIcon
         onClick={() => setShowPassword(!showPassword)}
         icon={showPassword ? eyeOff : eyeOutline}
-        className='pwd-eye absolute-vertical-center right-0 pr-2'
+        className='pwd-eye absolute-vertical-center right-0'
       ></IonIcon>
     </div>
   )

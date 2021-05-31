@@ -1,28 +1,18 @@
-import { IonContent, IonPage, IonThumbnail } from '@ionic/react'
+import { IonContent, IonLabel, IonPage, IonThumbnail } from '@ionic/react'
 import { useObserver } from 'mobx-react-lite'
 import React, { useEffect, useState } from 'react'
-import { TextLg } from '../components/atoms/TextLgComponent'
 import { PageHeader } from '../components/molecules/PageHeaderComponent'
 import { useStore } from '../hooks/use-store'
+import { langSwitcher } from '../utils/utils'
 
 export const TownInf: React.FC = () => {
   const { $auth } = useStore()
-  const [language, setLanguage] = useState<string>('ko_KR')
+  const [language, setLanguage] = useState<string | undefined>('ko_KR')
   useEffect(() => {
     setLanguageFn()
   })
-  // TODO: 이거 공통 함수로 만들기(MyInf랑 TownInf랑 같이 쓰기)
   const setLanguageFn = () => {
-    switch ($auth.getCommunityInfo.locale) {
-      case 'ko_KR':
-        setLanguage('한국어')
-        break
-      case 'en_US':
-        setLanguage('영어')
-        break
-      case 'ja_JP':
-        setLanguage('일본어')
-    }
+    setLanguage(langSwitcher($auth.getCommunityInfo.locale))
   }
   return useObserver(() => (
     <IonPage>
@@ -35,20 +25,20 @@ export const TownInf: React.FC = () => {
             </IonThumbnail>
           </div>
           <div className='flex-center' slot='end'>
-            <TextLg className='text-bold'>{$auth.getCommunityInfo.name}</TextLg>
+            <IonLabel className='mt-5 text-bold'>{$auth.getCommunityInfo.name}</IonLabel>
           </div>
           <div className='basic-inf mt-8'>
-            <div className='block flex'>
-              &nbsp;<TextLg>언어</TextLg>
-              <TextLg className='ml-auto mr-8'>{language}</TextLg>
+            <div className='mt-5 block flex'>
+              <IonLabel>언어</IonLabel>
+              <IonLabel className='ml-auto mr-8'>{language}</IonLabel>
             </div>
-            <div className='block flex'>
-              &nbsp;<TextLg>마을사람들</TextLg>
-              <TextLg className='ml-auto mr-8'>{$auth.getCommunityInfo.userCount}명</TextLg>
+            <div className='mt-5 block flex'>
+              <IonLabel>마을사람들</IonLabel>
+              <IonLabel className='ml-auto mr-8'>{$auth.getCommunityInfo.userCount}명</IonLabel>
             </div>
-            <div className='block flex'>
-              &nbsp;<TextLg>마을관리자</TextLg>
-              <TextLg className='ml-auto mr-8'>{$auth.getCommunityInfo.adminUsers[0].name}</TextLg>
+            <div className='mt-5 block flex'>
+              <IonLabel>마을관리자</IonLabel>
+              <IonLabel className='ml-auto mr-8'>{$auth.getCommunityInfo.adminUsers[0].name}</IonLabel>
             </div>
           </div>
         </div>

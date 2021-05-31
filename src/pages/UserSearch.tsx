@@ -85,12 +85,10 @@ export const UserSearch: React.FC = () => {
             {$user.getSearchResultList && $user.getSearchResultList.count === 0 ? (
               <div className='flex-center mt-3 mb-3'>결과값이 없습니다</div>
             ) :  (
-              <>
-              <div className='total ml-5 mt-3 mb-3'>검색 결과는 (( {$user.getSearchResultList.count} )) 건 입니다.</div>
-              <hr className='gray-bar' />
-            </>
+              <div className='flex-center mt-3 mb-3'>검색 결과는 (( {$user.getSearchResultList.count} )) 건 입니다.</div>
             )
           }
+          <hr className='gray-bar' />
           {$user.getSearchResultList && 
             $user.getSearchResultList.count > 0 && 
               $userSearch.getResultList.map((a, index) => {

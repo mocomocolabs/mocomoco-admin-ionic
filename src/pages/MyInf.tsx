@@ -12,21 +12,18 @@ import {
   IonLabel,
   IonList,
   IonPage,
-  useIonViewWillEnter
 } from '@ionic/react'
 import { useObserver } from 'mobx-react-lite'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { TextXl } from '../components/atoms/TextXlComponent'
 import { PageHeader } from '../components/molecules/PageHeaderComponent'
 import { useStore } from '../hooks/use-store'
+import './MyInf.scss'
+import { langSwitcher } from '../utils/utils'
 
 export const MyInf: React.FC = () => {
-  const [language, setLanguage] = useState<string>('ko_KR')
+  const [language, setLanguage] = useState<string | undefined>('ko_KR')
   const { $auth, $ui } = useStore()
-
-  useIonViewWillEnter(() => {
-    setLanguage($auth.getAuthInfo ? $auth.getAuthInfo.locale : '')
-  }, [$auth.getAuthInfo])
 
   const validate = () => {
     $ui.showAlert({
@@ -35,8 +32,15 @@ export const MyInf: React.FC = () => {
       message: '로그아웃 하시겠습니까?',
       onSuccess() {
         $auth.logout()
-      }
+      },
     })
+  }
+
+  useEffect(() => {
+    setLanguageFn()
+  })
+  const setLanguageFn = () => {
+    setLanguage(langSwitcher($auth.getAuthInfo.locale))
   }
 
   return useObserver(() => (
@@ -48,7 +52,14 @@ export const MyInf: React.FC = () => {
             <IonItemGroup>
               <div className='flex-center' slot='start'>
                 <IonAvatar className='w-20 height-80'>
-                  <IonImg src={$auth.getAuthInfo.profileUrl.includes('http:://') ? $auth.getAuthInfo.profileUrl : '/assets/img/avatar.png'} alt='프로필이미지' />
+                  <IonImg
+                    src={
+                      $auth.getAuthInfo.profileUrl.includes('http:://')
+                        ? $auth.getAuthInfo.profileUrl
+                        : '/assets/img/avatar.png'
+                    }
+                    alt='프로필이미지'
+                  />
                 </IonAvatar>
               </div>
               <div className='flex-center' slot='end'>
@@ -56,7 +67,7 @@ export const MyInf: React.FC = () => {
               </div>
             </IonItemGroup>
             <IonItemGroup className='mt-5'>
-              <IonLabel>내 정보</IonLabel>
+              <IonLabel className='mother-menu'>내 정보</IonLabel>
               {/* id */}
               <IonItem className='block flex'>
                 <IonLabel>ID</IonLabel>
@@ -82,12 +93,14 @@ export const MyInf: React.FC = () => {
               <IonItem>
                 <IonLabel>언어</IonLabel>
                 <span>
-                  <IonLabel className='ml-auto'>{$auth.getAuthInfo.locale}</IonLabel>
+                  <IonLabel className='ml-auto'>
+                    {language}
+                  </IonLabel>
                 </span>
               </IonItem>
             </IonItemGroup>
             <IonItemGroup className='mt-5'>
-              <IonLabel>관리마을정보</IonLabel>
+              <IonLabel className='mother-menu'>관리마을정보</IonLabel>
               {/* 내 권한 */}
               <IonItem className='block flex'>
                 <IonLabel>내 권한</IonLabel>
@@ -111,7 +124,10 @@ export const MyInf: React.FC = () => {
             </IonButton>
             {/* 버전 */}
             <IonItem className='mb-8'>
-              <IonLabel className='flex-center text-center'>버전: 0.0.1</IonLabel>
+              <IonLabel className='flex-center text-center'>
+                <span className='gray mr-1'>현재버전 : V0.0.1</span>
+                <span> / 최신버전 : V0.0.1</span>
+              </IonLabel>
             </IonItem>
           </IonList>
         </div>

@@ -54,7 +54,7 @@ const appPages: AppPage[] = [
   {
     title: '우리마을정보',
     url: '/townInf',
-    iosIcon: "information-circle-outline",
+    iosIcon: informationCircleOutline,
     mdIcon: informationCircleOutline,
     menuGrp: 'user',
     level: 2,
@@ -65,7 +65,7 @@ const appPages: AppPage[] = [
   {
     title: '우리마을사람들',
     url: '/userList',
-    iosIcon: "peopleCircleOutline",
+    iosIcon: peopleCircleOutline,
     mdIcon: peopleCircleOutline,
     menuGrp: 'user',
     level: 2,
@@ -76,7 +76,7 @@ const appPages: AppPage[] = [
   {
     title: '우리마을일정',
     url: '/townEvent',
-    iosIcon: "calendarOutline",
+    iosIcon: calendarOutline,
     mdIcon: calendarOutline,
     menuGrp: 'user',
     level: 2,
@@ -185,7 +185,6 @@ export const Sidebar: React.FC = () => {
                   <XDivider />
                   <IonListHeader key={index + page.title}>
                     {' '}
-                    {/* TODO: ununiq key!! */}
                     <IonLabel style={{fontSize:'18px'}}>{page.title}</IonLabel>
                   </IonListHeader>
                 </>

@@ -49,11 +49,11 @@ export class Chat {
       )
   }) as GetChatMessagesTask
 
-  @task.resolved
-  insertChatMessage = (async ({ roomId, message }: IInsertChatMessage) => {
-    await new Promise((r) => setTimeout(() => r(), 1000))
-    await http.post(`/chats/rooms/${roomId}`, { roomId, message })
-  }) as InsertChatMessageTask
+  // @task.resolved
+  // insertChatMessage = (async ({ roomId, message }: IInsertChatMessage) => {
+  //   await new Promise((r) => setTimeout(() => r(), 1000))
+  //   await http.post(`/chats/rooms/${roomId}`, { roomId, message })
+  // }) as InsertChatMessageTask
 
   @action
   setCurrentRoomId(roomId: number | null) {

@@ -62,7 +62,7 @@ export abstract class TradeStore {
 
   @task.resolved
   deleteItem = (async (id: number) => {
-    await new Promise((r) => setTimeout(() => r(), 1000))
+    // await new Promise((r) => setTimeout(() => r(), 1000))
     await http.delete(`/${this.path}/${id}`)
   }) as TaskByNumber
 }

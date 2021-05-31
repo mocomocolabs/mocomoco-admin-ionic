@@ -18,7 +18,7 @@ export const CommentItem: FC<ICommentItem> = ({ comment, feedId, showOverlowMenu
   const { $comment, $feed } = useStore()
 
   const onDelete = async (id: number) => {
-    await $comment.deleteComment(id)
+    // await $comment.deleteComment(id)
     await $feed.getFeed(feedId)
   }
 

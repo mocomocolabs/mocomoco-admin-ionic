@@ -53,21 +53,21 @@ export class Comment {
     delete this.updateForm[commentId]
   }
 
-  @task.resolved
-  insertComment = (async ({ feedId, content }: IInsertComment) => {
-    await new Promise((r) => setTimeout(() => r(), 1000))
-    await http.post(`/comment`, { feedId, content })
-  }) as InsertCommentTask
+  // @task.resolved
+  // insertComment = (async ({ feedId, content }: IInsertComment) => {
+  //   await new Promise((r) => setTimeout(() => r(), 1000))
+  //   await http.post(`/comment`, { feedId, content })
+  // }) as InsertCommentTask
 
-  @task.resolved
-  updateComment = (async ({ id, content }: IUpdateComment) => {
-    await new Promise((r) => setTimeout(() => r(), 1000))
-    await http.put(`/comment/${id}`, { content })
-  }) as UpdateCommentTask
+  // @task.resolved
+  // updateComment = (async ({ id, content }: IUpdateComment) => {
+  //   await new Promise((r) => setTimeout(() => r(), 1000))
+  //   await http.put(`/comment/${id}`, { content })
+  // }) as UpdateCommentTask
 
-  @task.resolved
-  deleteComment = (async (id: number) => {
-    await new Promise((r) => setTimeout(() => r(), 1000))
-    await http.delete(`/comment/${id}`)
-  }) as TaskByNumber
+  // @task.resolved
+  // deleteComment = (async (id: number) => {
+  //   await new Promise((r) => setTimeout(() => r(), 1000))
+  //   await http.delete(`/comment/${id}`)
+  // }) as TaskByNumber
 }

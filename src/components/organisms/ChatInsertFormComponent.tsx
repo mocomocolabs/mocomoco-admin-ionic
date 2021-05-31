@@ -30,7 +30,7 @@ export const ChatInsertForm: React.FC<IChatInsertForm> = ({ roomId, autoFocus = 
       ></IonTextarea>
 
       <div className='ml-2'>
-        {$chat.insertChatMessage.match({
+        {/* {$chat.insertChatMessage.match({
           pending: () => <Spinner></Spinner>,
           resolved: () => (
             <IonIcon
@@ -46,7 +46,7 @@ export const ChatInsertForm: React.FC<IChatInsertForm> = ({ roomId, autoFocus = 
               }}
             ></IonIcon>
           ),
-        })}
+        })} */}
       </div>
     </div>
   ))

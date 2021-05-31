@@ -36,7 +36,6 @@ export class Auth {
   @action
   setIsLogin() {
     console.log('로그인에성공')
-
     this.isLogin = true
   }
 
@@ -100,12 +99,21 @@ export class Auth {
     }
   }
 
+  // 마을 일정 가져오기 테스트
+  // http://localhost:8080/api/v1/clubs?community-id=1
+  @action
+  async getTownEvent() {
+    await http.get(`/v1/clubs?community-id=1`)
+    .then((res) => {
+      console.log('get Town Event::', res);
+    })
+  }
+
   // 로그인 페이지에서 사용. 이메일과 비번을 보내면 인증정보와 개인 정보를 저장.
   @task.resolved
   signIn = (async (email: string, password: string) => {
     console.log('$auth.signIn', email, password, inko.ko2en(password))
     this.isAdmin = false
-    // TODO: 여기서 너무 많은 정보를 가지고 오는 게 아닐까?
     try {
       await http
         .post<IAuthUserDto>(`/auth/sign-in`, {

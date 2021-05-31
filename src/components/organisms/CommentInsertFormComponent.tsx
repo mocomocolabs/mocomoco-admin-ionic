@@ -30,7 +30,7 @@ export const CommentInsertForm: React.FC<ICommentInsertForm> = ({ feedId, autoFo
       ></IonTextarea>
 
       <div className='ml-2'>
-        {$comment.insertComment.match({
+        {/* {$comment.insertComment.match({
           pending: () => <Spinner></Spinner>,
           resolved: () => (
             <IonIcon
@@ -45,7 +45,7 @@ export const CommentInsertForm: React.FC<ICommentInsertForm> = ({ feedId, autoFo
               }}
             ></IonIcon>
           ),
-        })}
+        })} */}
       </div>
     </div>
   ))
