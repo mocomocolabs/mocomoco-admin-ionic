@@ -39,7 +39,7 @@ export const Home: React.FC = () => {
 
   useIonViewWillEnter(() => {
     console.log('-------2------ will enter!!');
-    
+
     // ui셋
     $ui.setIsHeaderBar(true)
   })

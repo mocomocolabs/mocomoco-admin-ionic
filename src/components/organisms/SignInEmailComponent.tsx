@@ -1,6 +1,12 @@
 import { IonLabel } from '@ionic/react'
+import {
+  loadCaptchaEnginge,
+  LoadCanvasTemplate,
+  LoadCanvasTemplateNoReload,
+  validateCaptcha
+} from 'react-simple-captcha';
 import { useObserver } from 'mobx-react-lite'
-import React, { FC, useRef } from 'react'
+import React, { FC, useEffect, useRef } from 'react'
 import { useForm } from 'react-hook-form'
 import { useStore } from '../../hooks/use-store'
 import { route } from '../../services/route-service'
@@ -9,11 +15,21 @@ import { InputPassword } from '../atoms/InputPasswordComponent'
 import { Spinner } from '../atoms/SpinnerComponent'
 import { SubmitButton } from '../atoms/SubmitButtonComponent'
 import { ValidationMessage } from '../atoms/ValidationMessageComponent'
+
 interface IEmailComponent {
   useIn: string
 }
+
 export const SignInEmail: FC<IEmailComponent> = ({ useIn }) => {
-  const { register, handleSubmit, errors, watch, formState } = useForm<{ email: string; password: string }>({
+  useEffect(() => loadCaptchaEnginge(6), [])
+
+  const {
+    register,
+    handleSubmit,
+    errors,
+    watch,
+    formState
+  } = useForm<{ email: string; password: string, captcha: string }>({
     mode: 'onChange',
   })
 
@@ -23,6 +39,15 @@ export const SignInEmail: FC<IEmailComponent> = ({ useIn }) => {
   const { $auth, $ui } = useStore()
 
   const onSubmit = handleSubmit((form) => {
+    if (!validateCaptcha(form.captcha)) {
+      return $ui.showAlert({
+        isOpen: true,
+        header: '확인',
+        message: '보안 문자를 다르게 입력하였습니다.',
+        oneBtn: true,
+      })
+    }
+
     if (useIn === 'signIn') {
       $auth.signIn(form.email, form.password).then(() => {
         if (!$auth.getIsAdmin) {
@@ -64,9 +89,23 @@ export const SignInEmail: FC<IEmailComponent> = ({ useIn }) => {
           minLength: { value: 6, message: '6자 이상 입력해주세요' },
         })}
       ></InputPassword>
+
       <br></br>
       <ValidationMessage isShow={errors.password} message={errors?.password?.message}></ValidationMessage>
       {/* TODO: SubmitButton pending 편하게 처리할 수 있도록 수정 */}
+
+      <br></br>
+      <LoadCanvasTemplate />
+      <InputNormal
+        name='captcha'
+        type='captcha'
+        placeholder='캡챠'
+        register={register({
+          required: '보안 문자를 입력해주세요.',
+          minLength: { value: 6, message: '6자를 입력해주세요' },
+        })}
+      ></InputNormal>
+
       {$auth.signUp.match({
         pending: () => <Spinner></Spinner>,
         resolved: () => <SubmitButton disabled={!formState.isValid} text='로그인'></SubmitButton>,
