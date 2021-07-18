@@ -89,22 +89,24 @@ export const SignInEmail: FC<IEmailComponent> = ({ useIn }) => {
           minLength: { value: 6, message: '6자 이상 입력해주세요' },
         })}
       ></InputPassword>
-
-      <br></br>
       <ValidationMessage isShow={errors.password} message={errors?.password?.message}></ValidationMessage>
-      {/* TODO: SubmitButton pending 편하게 처리할 수 있도록 수정 */}
 
-      <br></br>
-      <LoadCanvasTemplate />
+      {/* captcha */}
+      <div className='load-canvas-template-wrap'>
+        <LoadCanvasTemplate/>
+      </div>
+
       <InputNormal
         name='captcha'
         type='captcha'
-        placeholder='캡챠'
+        className='captcha-wrap'
+        placeholder='보안문자'
         register={register({
           required: '보안 문자를 입력해주세요.',
           minLength: { value: 6, message: '6자를 입력해주세요' },
         })}
       ></InputNormal>
+      <ValidationMessage isShow={errors.captcha} message={errors?.captcha?.message}></ValidationMessage>
 
       {$auth.signUp.match({
         pending: () => <Spinner></Spinner>,

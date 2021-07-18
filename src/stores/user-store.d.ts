@@ -12,6 +12,7 @@ export interface ISearchUserObj {
     inputName: string,
     inputNickname: string,
     inputEmail: string
+    inputStatus: string
 }
 
 export interface ISearchResultDto {

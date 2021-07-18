@@ -23,7 +23,7 @@
   background-size: cover;
   .login-box {
     width: 320px;
-    height: 370px;
+    height: 490px; // org:370px
     padding: 35px 40px 70px;
     margin-top: -10px;
     text-align: center;
@@ -43,7 +43,10 @@
     }
     .input-area {
       margin: 30px 0 22px;
-      height: 70%;
+      height: 85%; // org: 70%
+      main{
+        overflow: hidden;
+      }
       .input-normal-wrap {
         input {
           border: none;
@@ -65,6 +68,16 @@
       .m-red {
         color: $hamaPurple;
         font-size: 12px;
+      }
+      // captcha
+      .load-canvas-template-wrap{
+        margin-top: 20px;
+        a{
+          background-color: $hamaPurple;
+          color: white !important; 
+          padding: 4px 10px;
+          border-radius: 0.3rem;
+        }
       }
     }
     .submit-btn {

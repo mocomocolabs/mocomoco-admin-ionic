@@ -42,9 +42,9 @@ export class User {
   // email 하고 name 은 암호화해서 저장되기 때문에 like 검색은 안되고 풀네임 그대로  이퀄(eq) 조회 해야됨
   @task.resolved
   onSearchCommunityUser = async (searchObj: ISearchUserObj) => {
-    const { communityId, inputName, inputNickname, inputEmail} = searchObj
+    const { communityId, inputName, inputNickname, inputEmail, inputStatus} = searchObj
     await http
-      .get<ISearchResultDto>(`/sys/users?community-id=${communityId}&nickname=like:${inputNickname}&name=${inputName}&email=${inputEmail}`, {})
+      .get<ISearchResultDto>(`/sys/users?community-id=${communityId}&nickname=like:${inputNickname}&name=${inputName}&email=${inputEmail}&status=${inputStatus}`, {})
       .then((searchResultList: ISearchResultDto) => {
         console.log('searchResultList:: ',searchResultList);
         this.setSearshResultList(searchResultList);

@@ -1,6 +1,6 @@
-// description: 홈 화면 scss
-// fileName: Home.scss
-// created: 2021-01-08, 이지혜
+// description: 마을 사람들 scss
+// fileName: UserSearch.scss
+// created: 2021-01-08 이지혜
 
 @import '../theme/color';
 
@@ -11,5 +11,25 @@
   }
   .search-area-bottom-btn{
     margin-top:15px;
+  }
+}
+
+.result-list-wrap{
+  // 검색 결과 count에서의 승인대기 스타일링
+  .result_cnt-pending-red {
+    color: white;
+    background-color: red;
+    padding: 1px 4px;
+    border-radius: 0.3rem;
+    margin-left: 0.2rem;
+    margin-right: 0.2rem;
+  }
+  // 리스트에서의 '승인대기'
+  .pending-red-in-list{
+    display: inline;
+    color: white;
+    background-color: red;
+    padding: 2px 4px;
+    border-radius: 0.2rem;
   }
 }

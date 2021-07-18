@@ -189,7 +189,7 @@ export const Home: React.FC = () => {
           </div>
           <br />
           <hr className='gray-bar' />
-          <div className='month-event-wrap'>
+          {/* <div className='month-event-wrap'>
             <header style={{ marginBottom: '-30px' }}>
               <TextXxl className='text-bold'>
                 이번달 {$auth.getCommunityInfo.name} 일정
@@ -210,7 +210,6 @@ export const Home: React.FC = () => {
             </IonCard>
             <IonCard>
               <IonItem>
-                {/* <IonIcon icon={pin} slot='start' /> */}
                 <IonLabel>ion-item in a card, icon left, button right</IonLabel>
                 <IonButton fill='outline' slot='end'>
                   View
@@ -234,7 +233,7 @@ export const Home: React.FC = () => {
                 ))}
               </IonList>
             </div>
-          </div>
+          </div> */}
         </div>
       </IonContent>
     </IonPage>

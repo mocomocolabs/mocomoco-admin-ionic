@@ -1,4 +1,4 @@
-import { IonAvatar, IonButton, IonContent, IonIcon, IonImg, IonItem, IonLabel, IonList, IonPage } from '@ionic/react'
+import { IonAvatar, IonButton, IonContent, IonIcon, IonImg, IonItem, IonLabel, IonList, IonPage, IonSelect, IonSelectOption } from '@ionic/react'
 import { searchOutline } from 'ionicons/icons'
 import { useObserver } from 'mobx-react-lite'
 import { default as React, useEffect, useState } from 'react'
@@ -14,6 +14,7 @@ export const UserSearch: React.FC = () => {
   const [inputName, setInputName] = useState<string>('')
   const [inputEmail, setInputEmail] = useState<string>('')
   const [inputNickname, setInputNickname] = useState<string>('')
+  const [inputStatus, setInputStatus] = useState<string>('')
 
   useEffect(() => {
     onSearchList();
@@ -21,7 +22,7 @@ export const UserSearch: React.FC = () => {
 
   const onSearchList = async () => {
     const communityId = $auth.getCommunityInfo.id
-    await $user.onSearchCommunityUser({ communityId, inputName, inputNickname, inputEmail })
+    await $user.onSearchCommunityUser({ communityId, inputName, inputNickname, inputEmail, inputStatus })
     $userSearch.setResultList($user.getSearchResultList.users)
   }
 
@@ -71,6 +72,23 @@ export const UserSearch: React.FC = () => {
                     onKeyUpEnterFn={onSearchList}
                   />
                 </div>
+                <div className='mt-3 mb-3'>
+                  <IonItem>
+                    <IonLabel className='ml-8'>승인 상태</IonLabel>
+                    <IonSelect
+                      interface='action-sheet'
+                      className='ml-8'
+                      value={inputStatus}
+                      placeholder='상태'
+                      onIonChange={(e) => setInputStatus(e.detail.value)}
+                      onKeyPress={onSearchList}
+                  >
+                    <IonSelectOption value=''>전체</IonSelectOption>
+                    <IonSelectOption value='APPROVE'>승인 완료</IonSelectOption>
+                    <IonSelectOption value='PENDING'>승인 대기</IonSelectOption>
+                  </IonSelect>
+                  </IonItem>
+                </div>
               </IonList>
             </div>
             <div className='search-area-bottom-btn'>
@@ -85,7 +103,10 @@ export const UserSearch: React.FC = () => {
             {$user.getSearchResultList && $user.getSearchResultList.count === 0 ? (
               <div className='flex-center mt-3 mb-3'>결과값이 없습니다</div>
             ) :  (
-              <div className='flex-center mt-3 mb-3'>검색 결과는 (( {$user.getSearchResultList.count} )) 건 입니다.</div>
+              <div className='flex-center mt-3 mb-3'>검색 결과는 (( {$user.getSearchResultList.count} )) 건 입니다. 
+                (<span className='result_cnt-pending-red'>승인대기</span>
+                <span>{$userSearch.getResultList?.filter(a => a.status === 'PENDING').length}건 포함</span>)
+              </div>
             )
           }
           <hr className='gray-bar' />
@@ -103,7 +124,7 @@ export const UserSearch: React.FC = () => {
                       {/* position="stacked" */}
                       <span style={{marginRight:'5px'}}>{a.name}</span>
                       <h6 className='dark-gray inline' style={{fontSize:'12px'}}>
-                        닉네임: {a.nickname} / ID: {a.id}
+                        닉네임: {a.nickname} / ID: {a.id} {a.status !== 'APPROVAL' ? (<h5 className='pending-red-in-list'>승인대기</h5>) : <></>}
                       </h6>
                       <h5>{a.email}</h5>
                       <h5>가입일자: {ymdhm(a.createdAt)}</h5>

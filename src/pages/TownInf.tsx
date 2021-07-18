@@ -34,7 +34,10 @@ export const TownInf: React.FC = () => {
             </div>
             <div className='mt-5 block flex'>
               <IonLabel>마을사람들</IonLabel>
-              <IonLabel className='ml-auto mr-8'>{$auth.getCommunityInfo.userCount}명</IonLabel>
+              <IonLabel className='ml-auto mr-8'>
+                총 {$auth.getCommunityInfo.users?.filter(a => a.status === 'APPROVAL').length}명
+                (승인 대기: {$auth.getCommunityInfo.users?.filter(a => a.status !== 'APPROVAL').length}명)
+              </IonLabel>
             </div>
             <div className='mt-5 block flex'>
               <IonLabel>마을관리자</IonLabel>
