@@ -29,9 +29,9 @@ export class Auth {
   @observable isAdmin = false
   @observable communityInfo = initState.communityInfo
 
-  constructor() {
+  // constructor() {
     // 매번 지어질때마다 호출되는 함수들을 넣는 자리인가봄.
-  }
+  // }
 
   @action
   setIsLogin() {

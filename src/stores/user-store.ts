@@ -22,9 +22,9 @@ export class User {
   @observable currentUserId: number | null = initState.currentUserId
   @observable resultList: ISearchResultDto = initState.resultList
 
-  constructor() {
+  // constructor() {
     // this.getCurrentUserId() // 일단 주석 로그인한 사람의 정보는 auth에 넣자.
-  }
+  // }
 
   // 가입승인
   @task.resolved

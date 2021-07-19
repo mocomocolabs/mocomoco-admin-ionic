@@ -177,7 +177,7 @@ export const Sidebar: React.FC = () => {
             </IonButtons>
           </div>
           {appPages.map((page, index) => {
-            if (page.author === 'SYS') return
+            if (page.author === 'SYS') return <></>
             if (page.level === 1) {
               return (
                 <>

@@ -18,7 +18,7 @@ export const UserSearch: React.FC = () => {
 
   useEffect(() => {
     onSearchList();
-  }, [])
+  })
 
   const onSearchList = async () => {
     const communityId = $auth.getCommunityInfo.id
