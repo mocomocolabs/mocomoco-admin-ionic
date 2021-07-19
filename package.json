@@ -8,7 +8,7 @@
     "front": "ionic serve -p 3000",
     "server": "nodemon --watch server server/index.js",
     "run:prod": "http-server ./build -p 3000",
-    "build": "npm run build",
+    "build": "react-scripts build",
     "serve:build": "npx serve -s build",
     "sync": "yarn build && npx cap sync",
     "dev:ios": "ionic capacitor run ios -l --external",
