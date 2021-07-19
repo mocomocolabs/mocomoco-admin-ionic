@@ -11,13 +11,10 @@ import { Sidebar } from './components/organisms/SidebarComponent'
 import './global.scss'
 import { GuardRoute } from './GuardRoute'
 import { useStore } from './hooks/use-store'
-import { ChangePwd } from './pages/ChangePwd'
-import { ConfirmPwd } from './pages/ConfirmPwd'
 import { Example } from './pages/Example'
 import { Home } from './pages/Home'
 import { MyInf } from './pages/MyInf'
 import { MyPage } from './pages/MyPage'
-import { Settings } from './pages/Settings'
 import { SignIn } from './pages/SignIn'
 import { TownEvent } from './pages/TownEvent'
 import { TownInf } from './pages/TownInf'
@@ -57,13 +54,10 @@ export const App: React.FC = () => {
             <GuardRoute path='/home' component={Home} exact />
             <GuardRoute path='/userList' component={UserSearch} exact />
             <GuardRoute path='/my-page' component={MyPage} exact />
-            <GuardRoute path='/settings' component={Settings} exact />
             <GuardRoute path='/example' component={Example} exact />
             <GuardRoute path='/myInf' component={MyInf} exact />
             <GuardRoute path='/townInf' component={TownInf} exact />
             <GuardRoute path='/townEvent' component={TownEvent} exact />
-            <GuardRoute path='/confirmPwd' component={ConfirmPwd} exact />
-            <GuardRoute path='/changePwd' component={ChangePwd} exact />
             <GuardRoute path='/help' component={Help} exact />
             <Redirect from='/' to='/home' exact />
           </IonRouterOutlet>

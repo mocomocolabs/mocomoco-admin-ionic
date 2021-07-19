@@ -19,7 +19,6 @@ import {
   trophyOutline,
   informationCircleOutline,
   peopleCircleOutline,
-  calendarOutline,
   helpCircleOutline
 } from 'ionicons/icons'
 import React from 'react'

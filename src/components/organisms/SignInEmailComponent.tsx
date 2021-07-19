@@ -1,8 +1,6 @@
-import { IonLabel } from '@ionic/react'
 import {
   loadCaptchaEnginge,
   LoadCanvasTemplate,
-  LoadCanvasTemplateNoReload,
   validateCaptcha
 } from 'react-simple-captcha';
 import { useObserver } from 'mobx-react-lite'

@@ -9,7 +9,7 @@ import { ymdhm } from '../utils/moment-util'
 import './UserSearch.scss'
 
 export const UserSearch: React.FC = () => {
-  const { $userSearch, $auth, $user, $ui } = useStore()
+  const { $userSearch, $auth, $user } = useStore()
 
   const [inputName, setInputName] = useState<string>('')
   const [inputEmail, setInputEmail] = useState<string>('')
