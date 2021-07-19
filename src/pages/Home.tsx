@@ -47,7 +47,7 @@ export const Home: React.FC = () => {
         .filter((a) => a.id !== $auth.getCommunityInfo.adminUsers[0].id) // admin 제외
         .filter((a) => a.status !== 'APPROVAL') // approval 제외
     )
-  })
+  }, [$auth.getCommunityInfo.users, $auth.getCommunityInfo.adminUsers])
 
   // useEffect(() => {
   //   // TODO: isShowApvComleteAlert를 감지하게 하고 얼럿을 띄우려 하였으나 얼럿이 뜨지 않음.
