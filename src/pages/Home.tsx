@@ -25,7 +25,7 @@ import { ymdhm } from '../utils/moment-util'
 import './Home.scss'
 
 export const Home: React.FC = () => {
-  const { $home, $ui, $auth, $user } = useStore()
+  const { $ui, $auth, $user } = useStore()
   const [usersListToApprove, setUsersListToApprove] = useState<ICommunityUsers[] | undefined>()
   const [isShowApvCompleteAlert, setIsShowApvCompleteAlert] = useState<boolean>()
 
@@ -65,6 +65,7 @@ export const Home: React.FC = () => {
 
   const changeStatus = (checkedYn: boolean, a: ICommunityUsers, i: number) => {
     console.log(usersListToApprove)
+    console.log(isShowApvCompleteAlert)
 
     !checkedYn ? (a = { ...a, status: 'PENDING' }) : (a = { ...a, status: 'APPROVAL' })
     if (usersListToApprove) usersListToApprove[i] = a

@@ -2,12 +2,10 @@ import {
   IonContent,
   IonPage,
 } from '@ionic/react'
-import React, { useState } from 'react'
+import React from 'react'
 import { PageHeader } from '../components/molecules/PageHeaderComponent'
 
 export const Help: React.FC = () => {
-  const [alarmSound, setAlarmSound] = useState<string>('구름씨 랄라~')
-  const [language, setLanguage] = useState<string>('한국어')
 
   return (
     <IonPage>
