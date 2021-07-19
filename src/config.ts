@@ -23,7 +23,7 @@ const configEnv: ConfigByEnv = {
     },
   },
   production: {
-    API_URL: 'http://localhost:8080/api',
+    API_URL: 'http://15.164.227.63:8080/api',
     KEY: {
       ENCRYPT_SECRET: '8DA03642F53C0D631F1E6884F8C9BA60',
     },
