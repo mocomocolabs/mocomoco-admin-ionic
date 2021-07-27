@@ -53,6 +53,7 @@
     "crypto-js": "^4.0.0",
     "date-fns": "^2.17.0",
     "dayjs": "^1.9.3",
+    "http-proxy-middleware": "^2.0.1",
     "http-server": "^0.12.3",
     "inko": "^1.1.1",
     "ionicons": "^5.2.3",
