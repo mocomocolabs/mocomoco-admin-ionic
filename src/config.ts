@@ -23,7 +23,7 @@ const configEnv: ConfigByEnv = {
     },
   },
   production: {
-    API_URL: '/api', //http://13.209.84.58
+    API_URL: 'http://13.209.84.58/api',
     KEY: {
       ENCRYPT_SECRET: '8DA03642F53C0D631F1E6884F8C9BA60',
     },
