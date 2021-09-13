@@ -112,18 +112,18 @@ export class Auth {
   // 로그인 페이지에서 사용. 이메일과 비번을 보내면 인증정보와 개인 정보를 저장.
   @task.resolved
   signIn = (async (email: string, password: string) => {
-    console.log('$auth.signIn', email, password, inko.ko2en(password))
+    console.log('$auth.signIn ===> ', email, password, inko.ko2en(password))
     this.isAdmin = false
     try {
-      await http
-        .post<IAuthUserDto>(`/auth/sign-in`, {
+      await api.post<IAuthUserDto>(`/auth/sign-in`, {
           email,
           password: inko.ko2en(password),
         })
         .then(async (user: IAuthUserDto) => {
-          await this.checkAdmin(user)
+          // accessToken, refreshToken이 set이 되어야 api-service.setAuthoriationBy() 가 호출되고 그 이후에 api.get을 사용할 수 있음.
           this.setAuth(user)
           this.setUser(user)
+          await this.checkAdmin(user)
         })
     } catch (e) {
       console.log('erros')
@@ -134,18 +134,17 @@ export class Auth {
   @task.resolved
   checkAdmin = async (user: IAuthUserDto) => {
     const { communities, id } = user
-    await http
-      .get<ICommunityInfoDto>(`/v1/communities/${communities[0].id}`, {})
+    await api.get<ICommunityInfoDto>(`/v1/communities/${communities[0].id}`) // ex) https://hama.network/api/v1/communities/1
       .then((communityInfo: ICommunityInfoDto) => {
-        if (communityInfo.adminUsers[0].id !== id) {
-          console.log('어드민이 아님.')
+        if (communityInfo.users.find(a => a.id === id)?.roles.includes('ROLE_ADMIN')) {
+          console.log('----------------세상에, 당신은 어드민이군요?! ---------------')
+          this.isAdmin = true
+          this.setCommunityInfo(communityInfo)
+        } else {
+          console.log('---------------- 당신은 어드민이 아님 -------------------- ')
           route.signIn()
           this.isAdmin = false
           return
-        } else {
-          console.log('어드민이다')
-          this.isAdmin = true
-          this.setCommunityInfo(communityInfo)
         }
       })
   }
@@ -153,9 +152,9 @@ export class Auth {
   // 권한 셋: ID와 비번이 일치하면 권한(accessToken, refreshToken) 셋
   @action
   setAuth(user: IAuthUserDto) {
-    if (!this.getIsAdmin) return // 이게 없으면 화면에서는 튕긴 것 같지만 권한을 셋함.
+    // if (!this.getIsAdmin) return // 이게 없으면 화면에서는 튕긴 것 같지만 권한을 셋함.
     const { accessToken, refreshToken } = user
-    console.log('권한셋 setAuth', 'accessToken:', accessToken, 'refreshToken:', refreshToken)
+    console.log('권한셋 setAuth ===> ', 'accessToken:', accessToken, 'refreshToken:', refreshToken)
 
     storage.setAccessToken(accessToken)
     storage.setRefreshToken(refreshToken)
@@ -165,9 +164,9 @@ export class Auth {
   // 유저셋: ID와 비번이 일치했을 시, 매 호출시 user 정보를 담고 로그인 상태 = true로 바꾼다.
   @action
   setUser(user: IAuthUserDto) {
-    if (!this.getIsAdmin) return
+    // if (!this.getIsAdmin) return
     const { id, email, name, status, nickname, profileUrl, communities, locale, roles, isUse } = user
-    console.log('유저셋 $auth.setUser', user)
+    console.log('유저셋 $auth.setUser ====> ', user)
 
     this.user = {
       id,
@@ -190,7 +189,7 @@ export class Auth {
       roles,
       isUse,
     }
-
+    
     this.setIsLogin()
   }
 

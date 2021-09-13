@@ -1,4 +1,4 @@
-import axios, { AxiosInstance } from 'axios'
+import axios, { AxiosInstance, AxiosRequestConfig } from 'axios'
 import { IResponse } from '../../types/axios'
 import { config } from '../config'
 
@@ -9,18 +9,23 @@ class ApiService {
     this.init()
   }
 
-  get<T>(url: string): Promise<T> {
-    return this.http.get(url)
+  get<T>(url: string, config?: AxiosRequestConfig): Promise<T> {
+    return this.http.get(url, config)
   }
 
   // eslint-disable-next-line
-  post<T>(url: string, data: any): Promise<T> {
+  post<T>(url: string, data?: any): Promise<T> {
     return this.http.post(url, data)
   }
 
   // eslint-disable-next-line
   put<T>(url: string, data: any): Promise<T> {
     return this.http.put(url, data)
+  }
+
+  // eslint-disable-next-line
+  patch<T>(url: string, data?: any, config?: any): Promise<T> {
+    return this.http.patch(url, data, config)
   }
 
   delete<T>(url: string): Promise<T> {

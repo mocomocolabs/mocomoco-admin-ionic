@@ -4,6 +4,8 @@ import { decrypt, encrypt } from '../utils/encrypt-util'
 const { Storage } = Plugins
 
 class StorageService {
+  private _communityId : number | null = 0
+  accessTokenForSync = ''
   private readonly ACCESS_TOKEN = 'ACCESS_TOKEN'
   private readonly REFRESH_TOKEN = 'REFRESH_TOKEN'
 
@@ -32,6 +34,9 @@ class StorageService {
   setRefreshToken(refreshToken: string): Promise<void> {
     return this.setObject(this.REFRESH_TOKEN, encrypt(refreshToken, config.KEY.ENCRYPT_SECRET))
   }
+  async setAccessTokenForSync() {
+    this.accessTokenForSync = await this.getAccessToken()
+  }
 
   // eslint-disable-next-line
   private async setObject(key: string, value: any) {
@@ -47,6 +52,13 @@ class StorageService {
       return null
     }
     return JSON.parse(ret.value)
+  }
+  get communityId() {
+    return this._communityId
+  }
+
+  async clear() {
+    await Storage.clear()
   }
 }
 

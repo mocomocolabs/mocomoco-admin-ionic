@@ -54,9 +54,7 @@ export const MyInf: React.FC = () => {
                 <IonAvatar className='w-20 height-80'>
                   <IonImg
                     src={
-                      $auth.getAuthInfo.profileUrl.includes('http:://')
-                        ? $auth.getAuthInfo.profileUrl
-                        : '/assets/img/avatar.png'
+                     '/assets/img/avatar.png'
                     }
                     alt='프로필이미지'
                   />

@@ -44,7 +44,7 @@ export const Home: React.FC = () => {
     // 승인리스트 셋
     setUsersListToApprove(
       $auth.getCommunityInfo.users
-        .filter((a) => a.id !== $auth.getCommunityInfo.adminUsers[0].id) // admin 제외
+        .filter((a) => !a.roles.includes("ROLE_ADMIN")) // admin 제외
         .filter((a) => a.status !== 'APPROVAL') // approval 제외
     )
   }, [$auth.getCommunityInfo.users, $auth.getCommunityInfo.adminUsers])
@@ -96,7 +96,7 @@ export const Home: React.FC = () => {
             // 4. 테이블 재렌더링
             setUsersListToApprove(
               $auth.getCommunityInfo.users
-                .filter((a) => a.id !== $auth.getCommunityInfo.adminUsers[0].id) // admin 제외
+                .filter((a) => !a.roles.includes("ROLE_ADMIN")) // admin 제외
                 .filter((a) => a.status !== 'APPROVAL') // approval 제외
             )
           })
@@ -110,7 +110,7 @@ export const Home: React.FC = () => {
     await $auth.signInWithToken()
     setUsersListToApprove(
       $auth.getCommunityInfo.users
-        .filter((a) => a.id !== $auth.getCommunityInfo.adminUsers[0].id) // admin 제외
+        .filter((a) => !a.roles.includes("ROLE_ADMIN")) // admin 제외
         .filter((a) => a.status !== 'APPROVAL') // approval 제외
     )
   }

@@ -14,16 +14,19 @@ interface ConfigByEnv {
   test: Config
 }
 
+const serverUrl = 'https://hama.network'
+// const serverUrl = 'http://localhost:8080'
+
 // TODO: 실서버 배포시, key변경해야함
 const configEnv: ConfigByEnv = {
   development: {
-    API_URL: '/api',
+    API_URL: serverUrl + '/api',
     KEY: {
       ENCRYPT_SECRET: '8DA03642F53C0D631F1E6884F8C9BA60',
     },
   },
   production: {
-    API_URL: 'http://13.209.84.58/api',
+    API_URL: serverUrl + '/api',
     KEY: {
       ENCRYPT_SECRET: '8DA03642F53C0D631F1E6884F8C9BA60',
     },
