@@ -1,7 +1,7 @@
 import { IonAvatar, IonButton, IonContent, IonIcon, IonImg, IonItem, IonLabel, IonList, IonPage, IonSelect, IonSelectOption } from '@ionic/react'
 import { addOutline, removeOutline, searchOutline } from 'ionicons/icons'
 import { useObserver } from 'mobx-react-lite'
-import { default as React, useEffect, useState } from 'react'
+import { default as React, useState } from 'react'
 import { Input } from '../components/atoms/InputComponent'
 import { PageHeader } from '../components/molecules/PageHeaderComponent'
 import { useStore } from '../hooks/use-store'
@@ -98,7 +98,7 @@ export const UserSearch: React.FC = () => {
           </div>
           <div className='result-list-wrap'>
             <IonList className='mb-8'>
-            {$user.getSearchResultList && $user.getSearchResultList.count === 0 ? (
+            {$user.getSearchResultList && $user.getSearchResultList.count == 0 ? (
               <div className='flex-center mt-3 mb-3'>결과값이 없습니다</div>
             ) :  (
               <div className='flex-center mt-3 mb-3'>검색 결과는 (( {$user.getSearchResultList.count} )) 건 입니다. 
@@ -129,7 +129,7 @@ export const UserSearch: React.FC = () => {
                       {item.status !== 'APPROVAL' ? (<h5 className='pending-red-in-list ml5'>승인대기</h5>) : <></> }
                       {item.roles?.includes("ROLE_ADMIN") ? (<h5 className='inline-block pending-admin-in-list ml5'>하마지기</h5>) : <></> }
                       <h3>{ymdhm(item.createdAt)} 가입</h3>
-                      { curOpenIntroduceId === item.id ? 
+                      { curOpenIntroduceId == item.id ? 
                           <>
                             <p>ID: {item.id}</p>
                             <p>{item.email}</p>

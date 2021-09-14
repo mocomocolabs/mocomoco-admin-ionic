@@ -6,18 +6,15 @@ import {
   IonAvatar,
   IonButton,
   IonCheckbox,
-  IonCol,
   IonContent,
-  IonGrid,
   IonIcon,
   IonImg,
   IonItem,
   IonLabel,
   IonPage,
-  IonRow,
   useIonViewWillEnter,
 } from '@ionic/react'
-import { addOutline, chevronDownOutline, chevronUpOutline, refreshOutline, removeOutline } from 'ionicons/icons'
+import { addOutline, refreshOutline, removeOutline } from 'ionicons/icons'
 import * as _ from 'lodash'
 import { useObserver } from 'mobx-react-lite'
 import { default as React, useEffect, useState } from 'react'
@@ -53,20 +50,6 @@ export const Home: React.FC = () => {
         .filter((a) => a.status !== 'APPROVAL') // approval 제외
     )
   }, [$auth.getCommunityInfo.users, $auth.getCommunityInfo.adminUsers])
-
-  // useEffect(() => {
-  //   // TODO: isShowApvComleteAlert를 감지하게 하고 얼럿을 띄우려 하였으나 얼럿이 뜨지 않음.
-  //   // 로그는 찍히는데 Alert 컴포넌트 문제인 것 같기도 하고.
-  //   if (isShowApvCompleteAlert) {
-  //     $ui.showAlert({
-  //       isOpen: true,
-  //       header: '확인',
-  //       message: '승인처리 되었습니다.',
-  //       oneBtn: true,
-  //     })
-  //   }
-  //   return () => setIsShowApvCompleteAlert(false)
-  // }, [$ui, isShowApvCompleteAlert])
 
   const changeStatus = (checkedYn: boolean, a: ICommunityUsers, i: number) => {
     console.log('클릭하면!')
