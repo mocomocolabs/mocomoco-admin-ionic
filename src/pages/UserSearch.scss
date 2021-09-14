@@ -32,4 +32,12 @@
     padding: 2px 4px;
     border-radius: 0.2rem;
   }
+  // 리스트에서의 '하마지기'
+  .pending-admin-in-list{
+    display: inline;
+    color: white;
+    background-color: $hamaPurple;
+    padding: 2px 4px;
+    border-radius: 0.2rem;
+  }
 }

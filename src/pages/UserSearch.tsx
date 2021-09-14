@@ -1,5 +1,5 @@
 import { IonAvatar, IonButton, IonContent, IonIcon, IonImg, IonItem, IonLabel, IonList, IonPage, IonSelect, IonSelectOption } from '@ionic/react'
-import { searchOutline } from 'ionicons/icons'
+import { addOutline, removeOutline, searchOutline } from 'ionicons/icons'
 import { useObserver } from 'mobx-react-lite'
 import { default as React, useEffect, useState } from 'react'
 import { Input } from '../components/atoms/InputComponent'
@@ -15,19 +15,17 @@ export const UserSearch: React.FC = () => {
   const [inputEmail, setInputEmail] = useState<string>('')
   const [inputNickname, setInputNickname] = useState<string>('')
   const [inputStatus, setInputStatus] = useState<string>('')
-
-  useEffect(() => {
-    onSearchList();
-  })
+  const [curOpenIntroduceId, setCurOpenIntroduceId] = useState<number>()
 
   const onSearchList = async () => {
     const communityId = $auth.getCommunityInfo.id
-    await $user.onSearchCommunityUser({ communityId, inputName, inputNickname, inputEmail, inputStatus })
+    await $user.onSearchCommunityUser({ communityId, inputName, inputNickname, inputEmail, inputStatus });
     $userSearch.setResultList($user.getSearchResultList.users)
   }
 
-  const asdf = (a:any) => {
-    console.log(a);
+  const randomImgNm = () => {
+    const ImgArr = [13,14,15,16,17,18,19]
+    return ImgArr[Math.floor(Math.random() * 7)] 
   }
 
   return useObserver(() => (
@@ -104,32 +102,43 @@ export const UserSearch: React.FC = () => {
               <div className='flex-center mt-3 mb-3'>결과값이 없습니다</div>
             ) :  (
               <div className='flex-center mt-3 mb-3'>검색 결과는 (( {$user.getSearchResultList.count} )) 건 입니다. 
-                (<span className='result_cnt-pending-red'>승인대기</span>
-                <span>{$userSearch.getResultList?.filter(a => a.status === 'PENDING').length}건 포함</span>)
+                (<span>승인대기</span>
+                <span className='result_cnt-pending-red'>{$userSearch.getResultList?.filter(a => a.status === 'PENDING').length}</span>건 포함)
               </div>
             )
           }
           <hr className='gray-bar' />
           {$user.getSearchResultList && 
             $user.getSearchResultList.count > 0 && 
-              $userSearch.getResultList.map((a, index) => {
+              $userSearch.getResultList.map((item, index) => {
                 return (
-                  <IonItem key={index} onClick={() => asdf(a)}>
-                    <IonAvatar slot='start'>
-                      <IonImg src={a.profileUrl && 
-                                    a.profileUrl.includes('http:://') ? 
-                                    a.profileUrl : '/assets/img/avatar.png'} alt='프로필이미지' />
-                    </IonAvatar>
+                  <>
+                  <IonItem lines="none"> 
+                    <IonIcon
+                      icon={curOpenIntroduceId == item.id ? removeOutline : addOutline}
+                      className='absolute right-0 bottom-0 mt10'
+                      onClick={() => curOpenIntroduceId !== item.id ? setCurOpenIntroduceId(item.id) : setCurOpenIntroduceId(0)}
+                    />
+                  </IonItem>
+                  <IonItem lines="none"> 
+                      <IonAvatar slot="end">
+                        <IonImg src={index < 12 ? `/assets/img/${index + 1}.png` : `/assets/img/${randomImgNm}.png`}/>
+                      </IonAvatar>
                     <IonLabel>
-                      {/* position="stacked" */}
-                      <span style={{marginRight:'5px'}}>{a.name}</span>
-                      <h6 className='dark-gray inline' style={{fontSize:'12px'}}>
-                        닉네임: {a.nickname} / ID: {a.id} {a.status !== 'APPROVAL' ? (<h5 className='pending-red-in-list'>승인대기</h5>) : <></>}
-                      </h6>
-                      <h5>{a.email}</h5>
-                      <h5>가입일자: {ymdhm(a.createdAt)}</h5>
+                      <h2 className='inline'>{item.name}</h2> <h6 className='inline dark-gray'>{item.nickname}</h6>
+                      {item.status !== 'APPROVAL' ? (<h5 className='pending-red-in-list ml5'>승인대기</h5>) : <></> }
+                      {item.roles?.includes("ROLE_ADMIN") ? (<h5 className='inline-block pending-admin-in-list ml5'>하마지기</h5>) : <></> }
+                      <h3>{ymdhm(item.createdAt)} 가입</h3>
+                      { curOpenIntroduceId === item.id ? 
+                          <>
+                            <p>ID: {item.id}</p>
+                            <p>{item.email}</p>
+                            <p>{item.introduce}</p> 
+                          </>
+                          : null }
                     </IonLabel>
                   </IonItem>
+                </>
                 )
               })}
             </IonList>

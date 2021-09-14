@@ -10,6 +10,8 @@ export interface IResultList {
   profileUrl?: string
   status?: string
   createdAt?: string
+  introduce?: string
+  roles?: string
 }
 export interface ISearchObj {
   name?: string

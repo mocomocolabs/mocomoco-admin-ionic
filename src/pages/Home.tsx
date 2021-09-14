@@ -3,17 +3,21 @@
 // fileName: Home.tsx
 // created: 2021-01-03, 이지혜
 import {
+  IonAvatar,
   IonButton,
   IonCheckbox,
   IonCol,
   IonContent,
   IonGrid,
   IonIcon,
+  IonImg,
+  IonItem,
+  IonLabel,
   IonPage,
   IonRow,
   useIonViewWillEnter,
 } from '@ionic/react'
-import { refreshOutline } from 'ionicons/icons'
+import { addOutline, chevronDownOutline, chevronUpOutline, refreshOutline, removeOutline } from 'ionicons/icons'
 import * as _ from 'lodash'
 import { useObserver } from 'mobx-react-lite'
 import { default as React, useEffect, useState } from 'react'
@@ -28,6 +32,7 @@ export const Home: React.FC = () => {
   const { $ui, $auth, $user } = useStore()
   const [usersListToApprove, setUsersListToApprove] = useState<ICommunityUsers[] | undefined>()
   const [isShowApvCompleteAlert, setIsShowApvCompleteAlert] = useState<boolean>()
+  const [curOpenIntroduceId, setCurOpenIntroduceId] = useState<number>()
 
   useIonViewWillEnter(() => {
     console.log('-------2------ will enter!!');
@@ -64,6 +69,7 @@ export const Home: React.FC = () => {
   // }, [$ui, isShowApvCompleteAlert])
 
   const changeStatus = (checkedYn: boolean, a: ICommunityUsers, i: number) => {
+    console.log('클릭하면!')
     console.log(usersListToApprove)
     console.log(isShowApvCompleteAlert)
 
@@ -115,6 +121,11 @@ export const Home: React.FC = () => {
     )
   }
 
+  const randomImgNm = () => {
+    const ImgArr = [13,14,15,16,17,18,19]
+    return ImgArr[Math.floor(Math.random() * 7)] 
+  }
+
   return useObserver(() => (
     <IonPage>
       <PageHeader pageTitle='하마 ADMIN' menuBtn={true} userBtn={true} />
@@ -140,93 +151,46 @@ export const Home: React.FC = () => {
               ></IonIcon>
             </div>
             {usersListToApprove && usersListToApprove?.length < 1 ? (
-              <div style={{ marginLeft: '15px', fontSize: '15px', color: '#555' }}>모두 승인 하셨네요!</div>
+              <div style={{ marginLeft: '15px', fontSize: '15px', color: '#555' }}>쨕쨕쨕! 모두 승인 하셨네요!</div>
             ) : (
               <div className='apv-list-wrap' style={{ marginLeft: '-5px' }}>
-                <IonGrid>
-                  <IonCol>
-                    <IonCol size='1'></IonCol>
-                    <IonCol size='2'></IonCol>
-                    <IonCol size='5'></IonCol>
-                    <IonCol size='4'></IonCol>
-                  </IonCol>
-                  {usersListToApprove &&
-                    usersListToApprove.map((a, i) => (
-                      <IonRow key={i}>
-                        <IonCol size='3' style={{ fontSize: '15px' }}>
-                          <span>
-                            <IonCheckbox
-                              className='apv-ch-box mr5'
-                              checked={a.status === 'PENDING' ? false : true}
-                              color='light'
-                              onIonChange={(e) => changeStatus(e.detail.checked, a, i)}
-                              style={{ width: '18px', height: '18px' }}
-                            />
-                          </span>
-                          <span className='apv-name' style={{}}>
-                            {a.name}
-                          </span>
-                        </IonCol>
-                        <IonCol size='4' style={{ fontSize: '15px' }}>
-                          <span>{a.email}</span>
-                        </IonCol>
-                        <IonCol size='5' style={{ fontSize: '15px' }}>
-                          <span>{ymdhm(a.createdAt)}</span>
-                          <span className='apv-date'>신청</span>
-                        </IonCol>
-                      </IonRow>
-                    ))}
-                </IonGrid>
+              { usersListToApprove && usersListToApprove.map((item, index) => (
+                <>
+                  <IonItem lines="none"> 
+                    <IonIcon
+                      icon={curOpenIntroduceId == item.id ? removeOutline : addOutline}
+                      className='absolute right-0 bottom-0 mt10'
+                      onClick={() => curOpenIntroduceId !== item.id ? setCurOpenIntroduceId(item.id) : setCurOpenIntroduceId(0)}
+                    />
+                  </IonItem>
+                  <IonItem lines="none"> 
+                    <IonCheckbox
+                      className='mr5'
+                      checked={item.status === 'PENDING' ? false : true}
+                      color='light'
+                      onIonChange={(e) => changeStatus(e.detail.checked, item, index)}
+                    />
+                      <IonAvatar slot="end">
+                        <IonImg src={index < 12 ? `/assets/img/${index + 1}.png` : `/assets/img/${randomImgNm}.png`}/>
+                      </IonAvatar>
+                    <IonLabel>
+                      <h2>{item.name}</h2>
+                      <h3>{ymdhm(item.createdAt)} 가입신청</h3>
+                      { curOpenIntroduceId === item.id ? 
+                        <>
+                          <p>{item.email}</p>
+                          <p>{item.introduce}</p>
+                        </> : null 
+                      }
+                    </IonLabel>
+                  </IonItem>
+                </>
+              ))}
               </div>
             )}
           </div>
           <br />
           <hr className='gray-bar' />
-          {/* <div className='month-event-wrap'>
-            <header style={{ marginBottom: '-30px' }}>
-              <TextXxl className='text-bold'>
-                이번달 {$auth.getCommunityInfo.name} 일정
-                <button>more</button>
-              </TextXxl>
-            </header>
-            <br />
-            <IonCard>
-              <IonCardHeader>
-                <IonCardSubtitle>고추장 담그기 워크숍</IonCardSubtitle>
-                <IonCardTitle>Card Title</IonCardTitle>
-              </IonCardHeader>
-
-              <IonCardContent>
-                Keep close to Nature's heart... and break clear away, once in awhile, and climb a mountain or
-                spend a week in the woods. Wash your spirit clean.
-              </IonCardContent>
-            </IonCard>
-            <IonCard>
-              <IonItem>
-                <IonLabel>ion-item in a card, icon left, button right</IonLabel>
-                <IonButton fill='outline' slot='end'>
-                  View
-                </IonButton>
-              </IonItem>
-
-              <IonCardContent>
-                This is content, without any paragraph or header tags, within an ion-cardContent element.
-              </IonCardContent>
-            </IonCard>
-            <div className='month-event-list-wrap' style={{ marginLeft: '-5px' }}>
-              <IonList>
-                {$home.getCurMonEventList.map((v, i) => (
-                  <IonCard key={i} style={{ marginBottom: '-10px' }}>
-                    <IonCardHeader>
-                      <IonCardTitle style={{ fontSize: '14px' }}>
-                        {v.date} &nbsp;&nbsp;&nbsp;&nbsp;{v.eventNm}
-                      </IonCardTitle>
-                    </IonCardHeader>
-                  </IonCard>
-                ))}
-              </IonList>
-            </div>
-          </div> */}
         </div>
       </IonContent>
     </IonPage>

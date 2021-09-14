@@ -41,7 +41,9 @@ export const TownInf: React.FC = () => {
             </div>
             <div className='mt-5 block flex'>
               <IonLabel>마을관리자</IonLabel>
-              <IonLabel className='ml-auto mr-8'>{$auth.getCommunityInfo.adminUsers[0].name}</IonLabel>
+              <IonLabel className='ml-auto mr-8'>
+                {$auth.getCommunityInfo.users.filter(a => a.roles.includes("ROLE_ADMIN")).map(a => a.name)}
+              </IonLabel>
             </div>
           </div>
         </div>

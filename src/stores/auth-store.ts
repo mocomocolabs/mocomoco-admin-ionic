@@ -115,7 +115,7 @@ export class Auth {
     console.log('$auth.signIn ===> ', email, password, inko.ko2en(password))
     this.isAdmin = false
     try {
-      await api.post<IAuthUserDto>(`/auth/sign-in`, {
+      await http.post<IAuthUserDto>(`/auth/sign-in`, { // 로그인 되기 전이기 때문에 http.post
           email,
           password: inko.ko2en(password),
         })

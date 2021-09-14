@@ -2,6 +2,7 @@
 import { action, computed, observable } from 'mobx'
 import { task } from 'mobx-task'
 import { IUser } from '../models/user'
+import { api } from '../services/api-service'
 import { http } from '../utils/http-util'
 import { Task } from './task.d'
 import { GetUserTask, ISearchResultDto, ISearchUserObj, SetUserTask, UpdateUserTask } from './user-store.d'
@@ -30,7 +31,7 @@ export class User {
   @task.resolved
   updateCommunityUser = async (id: number, status: string) => {
     try {
-      await http.patch(`/sys/users`, { id, status })
+      await api.patch(`/sys/users`, { id, status })
       return true
     } catch {
       return false
@@ -43,8 +44,7 @@ export class User {
   @task.resolved
   onSearchCommunityUser = async (searchObj: ISearchUserObj) => {
     const { communityId, inputName, inputNickname, inputEmail, inputStatus} = searchObj
-    await http
-      .get<ISearchResultDto>(`/sys/users?community-id=${communityId}&nickname=like:${inputNickname}&name=${inputName}&email=${inputEmail}&status=${inputStatus}`, {})
+    await api.get<ISearchResultDto>(`/sys/users?community-id=${communityId}&nickname=like:${inputNickname}&name=${inputName}&email=${inputEmail}&status=${inputStatus}`, {})
       .then((searchResultList: ISearchResultDto) => {
         console.log('searchResultList:: ',searchResultList);
         this.setSearshResultList(searchResultList);
