@@ -3,7 +3,7 @@ import {
   IonIcon,
   IonPage,
 } from '@ionic/react'
-import { desktop, desktopOutline, logoGithub, logoGoogle, logoGooglePlaystore } from 'ionicons/icons'
+import { desktopOutline, logoGithub, logoGoogle, logoGooglePlaystore } from 'ionicons/icons'
 import React from 'react'
 import { PageHeader } from '../components/molecules/PageHeaderComponent'
 
