@@ -141,7 +141,7 @@ export const Home: React.FC = () => {
                 <>
                   <IonItem lines="none"> 
                     <IonIcon
-                      icon={curOpenIntroduceId == item.id ? removeOutline : addOutline}
+                      icon={curOpenIntroduceId === item.id ? removeOutline : addOutline}
                       className='absolute right-0 bottom-0 mt10'
                       onClick={() => curOpenIntroduceId !== item.id ? setCurOpenIntroduceId(item.id) : setCurOpenIntroduceId(0)}
                     />
