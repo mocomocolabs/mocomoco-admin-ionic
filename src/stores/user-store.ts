@@ -1,16 +1,17 @@
 // 로그인 한 사람을 포함한 모든 사람에 대한 정보를 모아두는 스토어.
+import { count } from 'console'
 import { action, computed, observable } from 'mobx'
 import { task } from 'mobx-task'
 import { IUser } from '../models/user'
 import { api } from '../services/api-service'
 import { http } from '../utils/http-util'
 import { Task } from './task.d'
-import { GetUserTask, ISearchResultDto, ISearchUserObj, SetUserTask, UpdateUserTask } from './user-store.d'
+import { GetUserTask, ISaveVO, ISearchResultDto, ISearchUserObj, SetUserTask, UpdateUserTask } from './user-store.d'
 
 const initState = {
   user: {} as IUser,
   currentUserId: null,
-  resultList: {} as ISearchResultDto
+  resultList: {} as ISaveVO
 }
 
 export class User {
@@ -21,7 +22,7 @@ export class User {
 
   // primitive value will be observable.box automatically
   @observable currentUserId: number | null = initState.currentUserId
-  @observable resultList: ISearchResultDto = initState.resultList
+  @observable resultList: ISaveVO = initState.resultList
 
   // constructor() {
     // this.getCurrentUserId() // 일단 주석 로그인한 사람의 정보는 auth에 넣자.
@@ -37,26 +38,39 @@ export class User {
       return false
     }
   }
-
+  
   // 사용자 검색 기능(로그인 이후)
   // http://localhost:8080/api/sys/users?community-id=1&nickname=like:37&name=sc372&email=sdf@asdf.com
   // email 하고 name 은 암호화해서 저장되기 때문에 like 검색은 안되고 풀네임 그대로  이퀄(eq) 조회 해야됨
+  // @task.resolved
+  // onSearchCommunityUser = async (searchObj: ISearchUserObj) => {
+  //   const { communityId, inputName, inputNickname, inputEmail, inputStatus} = searchObj
+  //   await api.get<ISearchResultDto>(`/sys/users?community-id=${communityId}&nickname=like:${inputNickname}&name=${inputName}&email=${inputEmail}&status=${inputStatus}`, {})
+  //     .then((searchResultList: ISearchResultDto) => {
+  //       console.log('searchResultList:: ',searchResultList);
+  //       this.setSearshResultList(searchResultList);
+  //     })
+  // }
+
+  // new - 그런데 필터링이 안됨
   @task.resolved
   onSearchCommunityUser = async (searchObj: ISearchUserObj) => {
     const { communityId, inputName, inputNickname, inputEmail, inputStatus} = searchObj
-    await api.get<ISearchResultDto>(`/sys/users?community-id=${communityId}&nickname=like:${inputNickname}&name=${inputName}&email=${inputEmail}&status=${inputStatus}`, {})
+    console.log(searchObj);
+    
+    await api.get<ISearchResultDto>(`/v1/communities-users?community-id=${communityId}&nickname=like:${inputNickname}&name=${inputName}&email=${inputEmail}&status=${inputStatus}&isUse=true`, {})
       .then((searchResultList: ISearchResultDto) => {
-        console.log('searchResultList:: ',searchResultList);
-        this.setSearshResultList(searchResultList);
+        this.setSearshResultList(searchResultList)
       })
   }
 
   @action
   setSearshResultList(searchResultList: ISearchResultDto) {
-    const { count, users } = searchResultList;
-    this.resultList = {
+    const { count, communityUsers } = searchResultList;
+
+    this.resultList = { 
       count, 
-      users
+      userList: communityUsers.map(a => a.user)
     };
   }
 

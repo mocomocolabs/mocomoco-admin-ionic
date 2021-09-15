@@ -20,7 +20,7 @@ export const UserSearch: React.FC = () => {
   const onSearchList = async () => {
     const communityId = $auth.getCommunityInfo.id
     await $user.onSearchCommunityUser({ communityId, inputName, inputNickname, inputEmail, inputStatus });
-    $userSearch.setResultList($user.getSearchResultList.users)
+    // $userSearch.setResultList($user.getSearchResultList.communityUsers)
   }
 
   const randomImgNm = () => {
@@ -103,14 +103,12 @@ export const UserSearch: React.FC = () => {
             ) :  (
               <div className='flex-center mt-3 mb-3'>검색 결과는 (( {$user.getSearchResultList.count} )) 건 입니다. 
                 (<span>승인대기</span>
-                <span className='result_cnt-pending-red'>{$userSearch.getResultList?.filter(a => a.status === 'PENDING').length}</span>건 포함)
+                <span className='result_cnt-pending-red'>{$user.getSearchResultList?.userList?.filter(a => a.status === 'PENDING').length}</span>건 포함)
               </div>
             )
           }
           <hr className='gray-bar' />
-          {$user.getSearchResultList && 
-            $user.getSearchResultList.count > 0 && 
-              $userSearch.getResultList.map((item, index) => {
+          { $user.getSearchResultList?.userList?.map((item, index) => {
                 return (
                   <>
                   <IonItem lines="none"> 
@@ -121,9 +119,9 @@ export const UserSearch: React.FC = () => {
                     />
                   </IonItem>
                   <IonItem lines="none"> 
-                      <IonAvatar slot="end">
-                        <IonImg src={index < 12 ? `/assets/img/${index + 1}.png` : `/assets/img/${randomImgNm}.png`}/>
-                      </IonAvatar>
+                    <IonAvatar slot="end">
+                      <IonImg src={index < 12 ? `/assets/img/${index + 1}.png` : `/assets/img/${randomImgNm}.png`}/>
+                    </IonAvatar>
                     <IonLabel>
                       <h2 className='inline'>{item.name}</h2> <h6 className='inline dark-gray'>{item.nickname}</h6>
                       {item.status !== 'APPROVAL' ? (<h5 className='pending-red-in-list ml5'>승인대기</h5>) : <></> }
