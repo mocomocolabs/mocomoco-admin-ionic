@@ -1,5 +1,4 @@
 // 로그인 한 사람을 포함한 모든 사람에 대한 정보를 모아두는 스토어.
-import { count } from 'console'
 import { action, computed, observable } from 'mobx'
 import { task } from 'mobx-task'
 import { IUser } from '../models/user'
