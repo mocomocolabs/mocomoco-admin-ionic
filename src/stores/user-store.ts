@@ -5,6 +5,7 @@ import { IUser } from '../models/user'
 import { api } from '../services/api-service'
 import { http } from '../utils/http-util'
 import { Task } from './task.d'
+import * as _ from 'lodash'
 import { GetUserTask, ISaveVO, ISearchResultDto, ISearchUserObj, SetUserTask, UpdateUserTask } from './user-store.d'
 
 const initState = {
@@ -14,18 +15,9 @@ const initState = {
 }
 
 export class User {
-  // @observable.struct don't notify if new value is equal to old value.
-  // Like observable.deep, except that any assigned value that
-  // is structurally equal to the current value will be ignored.
   @observable.struct user: IUser = initState.user
-
-  // primitive value will be observable.box automatically
   @observable currentUserId: number | null = initState.currentUserId
   @observable resultList: ISaveVO = initState.resultList
-
-  // constructor() {
-    // this.getCurrentUserId() // 일단 주석 로그인한 사람의 정보는 auth에 넣자.
-  // }
 
   // 가입승인
   @task.resolved
@@ -39,28 +31,18 @@ export class User {
   }
   
   // 사용자 검색 기능(로그인 이후)
-  // http://localhost:8080/api/sys/users?community-id=1&nickname=like:37&name=sc372&email=sdf@asdf.com
   // email 하고 name 은 암호화해서 저장되기 때문에 like 검색은 안되고 풀네임 그대로  이퀄(eq) 조회 해야됨
-  // @task.resolved
-  // onSearchCommunityUser = async (searchObj: ISearchUserObj) => {
-  //   const { communityId, inputName, inputNickname, inputEmail, inputStatus} = searchObj
-  //   await api.get<ISearchResultDto>(`/sys/users?community-id=${communityId}&nickname=like:${inputNickname}&name=${inputName}&email=${inputEmail}&status=${inputStatus}`, {})
-  //     .then((searchResultList: ISearchResultDto) => {
-  //       console.log('searchResultList:: ',searchResultList);
-  //       this.setSearshResultList(searchResultList);
-  //     })
-  // }
-
-  // new - 그런데 필터링이 안됨
   @task.resolved
   onSearchCommunityUser = async (searchObj: ISearchUserObj) => {
     const { communityId, inputName, inputNickname, inputEmail, inputStatus} = searchObj
-    console.log(searchObj);
-    
-    await api.get<ISearchResultDto>(`/v1/communities-users?community-id=${communityId}&nickname=like:${inputNickname}&name=${inputName}&email=${inputEmail}&status=${inputStatus}&isUse=true`, {})
-      .then((searchResultList: ISearchResultDto) => {
-        this.setSearshResultList(searchResultList)
-      })
+
+    const inputNicknameParam = !_.isEmpty(inputNickname) ? `user-nickname=like:${inputNickname}&` : '';
+    const inputNameParam = !_.isEmpty(inputName) ? `user-name=${inputName}&` : '';
+    const inputEmailParam = !_.isEmpty(inputEmail) ? `user-email=${inputEmail}&` : '';
+    const inputStatusParam = !_.isEmpty(inputStatus) ? `user-status=${inputStatus}` : '';
+
+    await api.get<ISearchResultDto>(`/v1/communities-users?community-id=${communityId}&is-use=true&${inputNicknameParam}${inputNameParam}${inputEmailParam}${inputStatusParam}`, {})
+      .then((searchResultList: ISearchResultDto) => this.setSearshResultList(searchResultList))
   }
 
   @action

@@ -82,7 +82,7 @@ export const UserSearch: React.FC = () => {
                       onKeyPress={onSearchList}
                   >
                     <IonSelectOption value=''>전체</IonSelectOption>
-                    <IonSelectOption value='APPROVE'>승인 완료</IonSelectOption>
+                    <IonSelectOption value='APPROVAL'>승인 완료</IonSelectOption>
                     <IonSelectOption value='PENDING'>승인 대기</IonSelectOption>
                   </IonSelect>
                   </IonItem>
