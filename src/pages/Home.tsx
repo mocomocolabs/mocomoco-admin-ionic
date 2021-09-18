@@ -166,11 +166,11 @@ export const Home: React.FC = () => {
                       </div>
                       <h4>{item.email}</h4>
                       <p style={{whiteSpace:'normal'}}>{item.introduce}</p>
-                      { curOpenIntroduceId === item.id ? 
+                      {/* { curOpenIntroduceId === item.id ? 
                         <>
                           <p>{item.email}</p>
                         </> : null 
-                      }
+                      } */}
                     </IonLabel>
                   </IonItem>
                 </>
