@@ -131,7 +131,7 @@ export const UserSearch: React.FC = () => {
                           <>
                             <p>ID: {item.id}</p>
                             <p>{item.email}</p>
-                            <p>{item.introduce}</p> 
+                            <p style={{whiteSpace:'normal'}}>{item.introduce}</p> 
                           </>
                           : null }
                     </IonLabel>

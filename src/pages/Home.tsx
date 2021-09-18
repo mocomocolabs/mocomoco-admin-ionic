@@ -3,18 +3,16 @@
 // fileName: Home.tsx
 // created: 2021-01-03, 이지혜
 import {
-  IonAvatar,
   IonButton,
   IonCheckbox,
   IonContent,
   IonIcon,
-  IonImg,
   IonItem,
   IonLabel,
   IonPage,
   useIonViewWillEnter,
 } from '@ionic/react'
-import { addOutline, refreshOutline, removeOutline } from 'ionicons/icons'
+import { refreshOutline } from 'ionicons/icons'
 import * as _ from 'lodash'
 import { useObserver } from 'mobx-react-lite'
 import { default as React, useEffect, useState } from 'react'
@@ -114,7 +112,15 @@ export const Home: React.FC = () => {
       <PageHeader pageTitle='하마 ADMIN' menuBtn={true} userBtn={true} />
       <IonContent>
         <div className='px-container'>
-          <div style={{ marginTop: '20px' }} className='apv-wrap'>
+          {/* <IonButtons slot='start'>
+            <IonButton style={{borderBottom:'1px solid #ccc', color: '#ccc'}} slot='end' color='dark' routerLink='/home'>
+              우리마을 조회
+            </IonButton>
+            <IonButton style={{borderBottom:'1px solid #ccc', color: '#ccc'}} slot='end' color='dark' routerLink='/home'>
+              우리마을정보
+            </IonButton>
+          </IonButtons> */}
+          <div style={{ marginTop: '20px', overflow: 'auto' }} className='apv-wrap'>
             <div className='box'>
               <TextXxl className='text-bold'>가입승인을 기다려요</TextXxl>
               <strong className='badge'>{usersListToApprove?.length}</strong>
@@ -139,13 +145,13 @@ export const Home: React.FC = () => {
               <div className='apv-list-wrap' style={{ marginLeft: '-5px' }}>
               { usersListToApprove && usersListToApprove.map((item, index) => (
                 <>
-                  <IonItem lines="none"> 
+                  {/* <IonItem lines="none" style={{height:'25px'}}> 
                     <IonIcon
                       icon={curOpenIntroduceId === item.id ? removeOutline : addOutline}
-                      className='absolute right-0 bottom-0 mt10'
+                      className='absolute right-0 top-0 mt10'
                       onClick={() => curOpenIntroduceId !== item.id ? setCurOpenIntroduceId(item.id) : setCurOpenIntroduceId(0)}
                     />
-                  </IonItem>
+                  </IonItem> */}
                   <IonItem lines="none"> 
                     <IonCheckbox
                       className='mr5'
@@ -153,16 +159,16 @@ export const Home: React.FC = () => {
                       color='light'
                       onIonChange={(e) => changeStatus(e.detail.checked, item, index)}
                     />
-                      <IonAvatar slot="end">
-                        <IonImg src={index < 12 ? `/assets/img/${index + 1}.png` : `/assets/img/${randomImgNm}.png`}/>
-                      </IonAvatar>
-                    <IonLabel>
-                      <h2>{item.name}</h2>
-                      <h3>{ymdhm(item.createdAt)} 가입신청</h3>
+                    <IonLabel style={{width:'100px'}}>
+                      <div>
+                        <h2 className='inline'>{item.name}</h2>
+                        <h4 className='inline' style={{textAlign: 'right', color:'#3f2e99'}}> {ymdhm(item.createdAt)} 신청</h4>
+                      </div>
+                      <h4>{item.email}</h4>
+                      <p style={{whiteSpace:'normal'}}>{item.introduce}</p>
                       { curOpenIntroduceId === item.id ? 
                         <>
                           <p>{item.email}</p>
-                          <p>{item.introduce}</p>
                         </> : null 
                       }
                     </IonLabel>
@@ -172,8 +178,8 @@ export const Home: React.FC = () => {
               </div>
             )}
           </div>
-          <br />
-          <hr className='gray-bar' />
+          {/* <br /> */}
+          {/* <hr className='gray-bar' /> */}
         </div>
       </IonContent>
     </IonPage>
