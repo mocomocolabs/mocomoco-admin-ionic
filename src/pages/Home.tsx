@@ -27,7 +27,7 @@ export const Home: React.FC = () => {
   const { $ui, $auth, $user } = useStore()
   const [usersListToApprove, setUsersListToApprove] = useState<ICommunityUsers[] | undefined>()
   const [isShowApvCompleteAlert, setIsShowApvCompleteAlert] = useState<boolean>()
-  const [curOpenIntroduceId, setCurOpenIntroduceId] = useState<number>()
+  // const [curOpenIntroduceId, setCurOpenIntroduceId] = useState<number>()
 
   useIonViewWillEnter(() => {
     console.log('-------2------ will enter!!');
@@ -102,10 +102,10 @@ export const Home: React.FC = () => {
     )
   }
 
-  const randomImgNm = () => {
-    const ImgArr = [13,14,15,16,17,18,19]
-    return ImgArr[Math.floor(Math.random() * 7)] 
-  }
+  // const randomImgNm = () => {
+  //   const ImgArr = [13,14,15,16,17,18,19]
+  //   return ImgArr[Math.floor(Math.random() * 7)] 
+  // }
 
   return useObserver(() => (
     <IonPage>

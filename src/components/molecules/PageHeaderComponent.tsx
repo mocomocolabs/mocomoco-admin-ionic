@@ -1,12 +1,12 @@
 // description: 페이지 헤더영역
 // fileName: PageHeader.tsx
 // created: 2021-01-09, 이지혜
-import { IonButton, IonButtons, IonHeader, IonIcon, IonImg, IonMenuButton, IonTitle, IonToolbar } from '@ionic/react'
+import { IonButton, IonButtons, IonHeader, IonIcon, IonMenuButton, IonTitle, IonToolbar } from '@ionic/react'
 import { chevronBack, closeOutline, home, person, personCircle } from 'ionicons/icons'
 import { useObserver } from 'mobx-react-lite'
 import React, { FC } from 'react'
 import { useStore } from '../../hooks/use-store'
-import { route } from '../../services/route-service'
+// import { route } from '../../services/route-service'
 
 interface IPageHeader {
   pageTitle: string
