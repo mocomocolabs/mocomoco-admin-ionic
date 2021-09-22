@@ -26,7 +26,7 @@ import './Home.scss'
 export const Home: React.FC = () => {
   const { $ui, $auth, $user } = useStore()
   const [usersListToApprove, setUsersListToApprove] = useState<ICommunityUsers[] | undefined>()
-  const [isShowApvCompleteAlert, setIsShowApvCompleteAlert] = useState<boolean>()
+  // const [isShowApvCompleteAlert, setIsShowApvCompleteAlert] = useState<boolean>()
 
   useIonViewWillEnter(() => {
     $ui.setIsHeaderBar(true)
@@ -66,7 +66,7 @@ export const Home: React.FC = () => {
             // 1. 사용자 정보 업데이트
             await $user.updateCommunityUser(a.id, 'APPROVAL')
             // 2. 성공 팝업 show
-            setIsShowApvCompleteAlert(true)
+            // setIsShowApvCompleteAlert(true)
             // 3. 데이터 재조회
             await $auth.signInWithToken()
             // 4. 테이블 재렌더링
