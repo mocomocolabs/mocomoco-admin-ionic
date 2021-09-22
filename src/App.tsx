@@ -1,25 +1,12 @@
-import { IonApp, IonRouterOutlet } from '@ionic/react'
-import { IonReactRouter } from '@ionic/react-router'
+import { IonApp } from '@ionic/react'
 import { useObserver } from 'mobx-react-lite'
 import React, { useEffect, useState } from 'react'
-import { Redirect, Route } from 'react-router-dom'
-import { route } from '../src/services/route-service'
 import './App.scss'
 import { Spinner } from './components/atoms/SpinnerComponent'
 import { Alert } from './components/molecules/AlertComponent'
-import { Sidebar } from './components/organisms/SidebarComponent'
 import './global.scss'
-import { GuardRoute } from './GuardRoute'
 import { useStore } from './hooks/use-store'
-import { Example } from './pages/Example'
-import { Home } from './pages/Home'
-import { MyInf } from './pages/MyInf'
-import { MyPage } from './pages/MyPage'
-import { SignIn } from './pages/SignIn'
-import { TownEvent } from './pages/TownEvent'
-import { TownInf } from './pages/TownInf'
-import { UserSearch } from './pages/UserSearch'
-import { Help } from './pages/Help'
+import { RouterTab } from './RouterTab'
 
 export const App: React.FC = () => {
   const { $auth } = useStore()
@@ -45,27 +32,8 @@ export const App: React.FC = () => {
 
   return useObserver(() => (
     <IonApp>
-      {intialized ? (
-        <IonReactRouter history={route.history}>
-          <Sidebar />
-          {/* <IonTabs> */}
-          <IonRouterOutlet id='main'>
-            <Route path='/sign-in' component={SignIn} exact />
-            <GuardRoute path='/home' component={Home} exact />
-            <GuardRoute path='/userList' component={UserSearch} exact />
-            <GuardRoute path='/my-page' component={MyPage} exact />
-            <GuardRoute path='/example' component={Example} exact />
-            <GuardRoute path='/myInf' component={MyInf} exact />
-            <GuardRoute path='/townInf' component={TownInf} exact />
-            <GuardRoute path='/townEvent' component={TownEvent} exact />
-            <GuardRoute path='/help' component={Help} exact />
-            <Redirect from='/' to='/home' exact />
-          </IonRouterOutlet>
-        </IonReactRouter>
-      ) : (
-        <Spinner isFull={true} color='white'></Spinner>
-      )}
-      <Alert></Alert>
+      {intialized ? <RouterTab /> : <Spinner isFull={true} color='white' />}
+      <Alert />
     </IonApp>
   ))
 }

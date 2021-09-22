@@ -23,11 +23,6 @@ export const UserSearch: React.FC = () => {
     // $userSearch.setResultList($user.getSearchResultList.communityUsers)
   }
 
-  const randomImgNm = () => {
-    const ImgArr = [13,14,15,16,17,18,19]
-    return ImgArr[Math.floor(Math.random() * 7)] 
-  }
-
   return useObserver(() => (
     <>
       <IonPage>
@@ -120,7 +115,7 @@ export const UserSearch: React.FC = () => {
                   </IonItem>
                   <IonItem lines="none"> 
                     <IonAvatar slot="end">
-                      <IonImg src={index < 12 ? `/assets/img/${index + 1}.png` : `/assets/img/${randomImgNm}.png`}/>
+                      <IonImg src={`/assets/img/avatar.png`}/>
                     </IonAvatar>
                     <IonLabel>
                       <h2 className='inline'>{item.name}</h2> <h6 className='inline dark-gray'>{item.nickname}</h6>

@@ -27,37 +27,26 @@ export const Home: React.FC = () => {
   const { $ui, $auth, $user } = useStore()
   const [usersListToApprove, setUsersListToApprove] = useState<ICommunityUsers[] | undefined>()
   const [isShowApvCompleteAlert, setIsShowApvCompleteAlert] = useState<boolean>()
-  // const [curOpenIntroduceId, setCurOpenIntroduceId] = useState<number>()
 
   useIonViewWillEnter(() => {
-    console.log('-------2------ will enter!!');
-
-    // ui셋
     $ui.setIsHeaderBar(true)
   })
 
   useEffect(() => {
-    console.log('--------1---------use Effect!!')
-    // 마을 소모임 겟
-    //   $auth.getTownEvent()
-
     // 승인리스트 셋
     setUsersListToApprove(
       $auth.getCommunityInfo.users
         .filter((a) => !a.roles.includes("ROLE_ADMIN")) // admin 제외
-        .filter((a) => a.status !== 'APPROVAL') // approval 제외
+        .filter((a) => a.status !== 'APPROVAL') // APPROVAL 제외
     )
   }, [$auth.getCommunityInfo.users, $auth.getCommunityInfo.adminUsers])
 
   const changeStatus = (checkedYn: boolean, a: ICommunityUsers, i: number) => {
-    console.log('클릭하면!')
-    console.log(usersListToApprove)
-    console.log(isShowApvCompleteAlert)
-
     !checkedYn ? (a = { ...a, status: 'PENDING' }) : (a = { ...a, status: 'APPROVAL' })
     if (usersListToApprove) usersListToApprove[i] = a
   }
 
+  // 승인 버튼 클릭시
   const apvBtnClick = () => {
     const saveObj = usersListToApprove?.filter((a) => a.status !== 'PENDING')
     if (_.isEmpty(saveObj)) {
@@ -92,6 +81,7 @@ export const Home: React.FC = () => {
     }
   }
 
+  // 새로고침 클릭시
   // TODO: 중복되는 코드를 어떻게 합칠 수 있을까?
   const researchAndRerenderTable = async () => {
     await $auth.signInWithToken()
@@ -101,11 +91,6 @@ export const Home: React.FC = () => {
         .filter((a) => a.status !== 'APPROVAL') // approval 제외
     )
   }
-
-  // const randomImgNm = () => {
-  //   const ImgArr = [13,14,15,16,17,18,19]
-  //   return ImgArr[Math.floor(Math.random() * 7)] 
-  // }
 
   return useObserver(() => (
     <IonPage>
@@ -145,13 +130,6 @@ export const Home: React.FC = () => {
               <div className='apv-list-wrap' style={{ marginLeft: '-5px' }}>
               { usersListToApprove && usersListToApprove.map((item, index) => (
                 <>
-                  {/* <IonItem lines="none" style={{height:'25px'}}> 
-                    <IonIcon
-                      icon={curOpenIntroduceId === item.id ? removeOutline : addOutline}
-                      className='absolute right-0 top-0 mt10'
-                      onClick={() => curOpenIntroduceId !== item.id ? setCurOpenIntroduceId(item.id) : setCurOpenIntroduceId(0)}
-                    />
-                  </IonItem> */}
                   <IonItem lines="none"> 
                     <IonCheckbox
                       className='mr5'
@@ -166,11 +144,6 @@ export const Home: React.FC = () => {
                       </div>
                       <h4>{item.email}</h4>
                       <p style={{whiteSpace:'normal'}}>{item.introduce}</p>
-                      {/* { curOpenIntroduceId === item.id ? 
-                        <>
-                          <p>{item.email}</p>
-                        </> : null 
-                      } */}
                     </IonLabel>
                   </IonItem>
                 </>
@@ -178,8 +151,6 @@ export const Home: React.FC = () => {
               </div>
             )}
           </div>
-          {/* <br /> */}
-          {/* <hr className='gray-bar' /> */}
         </div>
       </IonContent>
     </IonPage>

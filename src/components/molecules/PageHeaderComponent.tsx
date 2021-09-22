@@ -6,6 +6,7 @@ import { chevronBack, closeOutline, home, person, personCircle } from 'ionicons/
 import { useObserver } from 'mobx-react-lite'
 import React, { FC } from 'react'
 import { useStore } from '../../hooks/use-store'
+import { TextHeader } from '../atoms/TextHeaderComponent'
 // import { route } from '../../services/route-service'
 
 interface IPageHeader {
@@ -55,10 +56,10 @@ export const PageHeader: FC<IPageHeader> = ({
               <IonMenuButton autoHide={false} color='dark'></IonMenuButton>
             </IonButtons>
           )}
-          <IonTitle style={{textAlign: 'center'}}>
+          <IonTitle>
             {pageTitle === '하마 ADMIN'? 
-            <img style={{width:'35px', paddingTop:'3px'}} src='/assets/img/hamalogo.png' alt='hamalogo' /> 
-            : <span>{pageTitle}</span>}
+              <img style={{width:'35px', paddingTop:'3px'}} src='/assets/img/hamalogo.png' alt='hamalogo' /> 
+              : <span><TextHeader className='ellipsis'>{pageTitle}</TextHeader></span>}
           </IonTitle>
           <IonButtons slot='end'>
             {homeBtn && (

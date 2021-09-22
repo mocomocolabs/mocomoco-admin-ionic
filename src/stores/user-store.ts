@@ -41,7 +41,7 @@ export class User {
     const inputEmailParam = !_.isEmpty(inputEmail) ? `user-email=${inputEmail}&` : '';
     const inputStatusParam = !_.isEmpty(inputStatus) ? `user-status=${inputStatus}` : '';
 
-    await api.get<ISearchResultDto>(`/v1/communities-users?community-id=${communityId}&is-use=true&${inputNicknameParam}${inputNameParam}${inputEmailParam}${inputStatusParam}`, {})
+    await api.get<ISearchResultDto>(`/v1/communities-users?community-id=${communityId}&is-use=true&limit=999&${inputNicknameParam}${inputNameParam}${inputEmailParam}${inputStatusParam}`, {})
       .then((searchResultList: ISearchResultDto) => this.setSearshResultList(searchResultList))
   }
 

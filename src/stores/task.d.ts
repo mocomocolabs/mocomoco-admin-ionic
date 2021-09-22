@@ -1,4 +1,5 @@
 import { Task as TaskType } from 'mobx-task'
+
 export type Task = TaskType<[], void>
 
 export type TaskByString = TaskType<[string], void>
