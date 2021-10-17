@@ -17,7 +17,7 @@ import { Footer } from './components/organisms/FooterComponent'
 import { useStore } from './hooks/use-store'
 
 export const RouterTab: FC = () => {
-  const { $ui } = useStore()
+  const { $ui, $auth } = useStore()
 
   return (
     <IonReactRouter history={route.history}>
@@ -39,6 +39,7 @@ export const RouterTab: FC = () => {
 
       <Observer>
         {() => (
+          $auth.isLogin ?
           <Footer hidden={!$ui.isBottomTab}>
             <>
               <NavLink key='home' to='/home' onClick={() => route.home()}>
@@ -52,6 +53,7 @@ export const RouterTab: FC = () => {
               </NavLink>
             </>
           </Footer>
+          : <></>
         )}
       </Observer>
     </IonReactRouter>
