@@ -4,12 +4,12 @@
 // created: 2021-03-10, 이지혜
 import { IonContent, IonHeader, IonPage, useIonViewWillEnter } from '@ionic/react'
 import { y } from '../utils/moment-util'
-import React from 'react'
+import { FC } from 'react'
 import { SignInEmail } from '../components/organisms/SignInEmailComponent'
 import { useStore } from '../hooks/use-store'
 import './SignIn.scss'
 
-export const SignIn: React.FC = () => {
+export const SignIn: FC = () => {
   const { $ui } = useStore()
 
   useIonViewWillEnter(() => {
@@ -23,11 +23,11 @@ export const SignIn: React.FC = () => {
           <img src='/assets/img/hamalogo.png' alt='hamalogo' />
         </IonHeader>
         <IonContent className='input-area'>
-          <SignInEmail useIn='signIn'></SignInEmail>
+          <SignInEmail></SignInEmail>
         </IonContent>
       </div>
       <div className='copyright'>
-        <p>COPYRIGHT {y(Date())} mocomocolaps, ALL RIGHTS RESERVED</p>
+        <p>COPYRIGHT {y(Date())} mocomocolabs, ALL RIGHTS RESERVED</p>
       </div>
     </IonPage>
   )

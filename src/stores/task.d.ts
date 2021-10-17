@@ -4,5 +4,12 @@ export type Task = TaskType<[], void>
 
 export type TaskByString = TaskType<[string], void>
 
-// TODO: generic으로 타입 정의할 수 있도록 작업 필요
+// eslint-disable-next-line
+export type TaskBy<T extends any> = TaskType<[T], void>
+
 export type TaskByNumber = TaskType<[number], void>
+// eslint-disable-next-line
+export type TaskByAs<T extends any, R extends any> = TaskType<[T], R>
+
+// eslint-disable-next-line
+export type TaskBy2As<T extends any, U extends any, R extends any> = TaskType<[T, U], R>

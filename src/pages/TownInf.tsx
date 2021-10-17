@@ -1,11 +1,12 @@
 import { IonContent, IonLabel, IonPage, IonThumbnail } from '@ionic/react'
 import { useObserver } from 'mobx-react-lite'
-import React, { useEffect, useState } from 'react'
+import { FC, useEffect, useState } from 'react'
 import { PageHeader } from '../components/molecules/PageHeaderComponent'
 import { useStore } from '../hooks/use-store'
+import { SIGN_UP_STATUS, VIEW_TYPE } from '../models/constant.d'
 import { langSwitcher } from '../utils/utils'
 
-export const TownInf: React.FC = () => {
+export const TownInf: FC = () => {
   const { $auth } = useStore()
   const [language, setLanguage] = useState<string | undefined>('ko_KR')
   useEffect(() => {
@@ -16,7 +17,7 @@ export const TownInf: React.FC = () => {
   }
   return useObserver(() => (
     <IonPage>
-      <PageHeader pageTitle='우리마을정보' menuBtn={true} homeBtn={true} userBtn={true} />
+      <PageHeader pageTitle='우리마을정보' viewType={VIEW_TYPE.MODAL}/>
       <IonContent>
         <div className='px-container my-4'>
           <div className='flex-center' slot='start'>
@@ -35,8 +36,8 @@ export const TownInf: React.FC = () => {
             <div className='mt-5 block flex'>
               <IonLabel>마을사람들</IonLabel>
               <IonLabel className='ml-auto mr-8'>
-                총 {$auth.getCommunityInfo.users?.filter(a => a.status === 'APPROVAL').length}명
-                (승인 대기: {$auth.getCommunityInfo.users?.filter(a => a.status !== 'APPROVAL').length}명)
+                총 {$auth.getCommunityInfo.users?.filter(a => a.status === SIGN_UP_STATUS.APPROVAL).length}명
+                (승인 대기: {$auth.getCommunityInfo.users?.filter(a => a.status !== SIGN_UP_STATUS.APPROVAL).length}명)
               </IonLabel>
             </div>
             <div className='mt-5 block flex'>

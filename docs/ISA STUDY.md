@@ -162,3 +162,9 @@ http://localhost:8080/api/v1/communities/1
    )
 ```
 
+## memo 
+// 로그인 되기 전: http.post
+
+// 로그인 이후: api.post
+// accessToken, refreshToken이 set이 되어야 api-service.setAuthoriationBy() 가 호출되고 그 이후에 api.get을 사용할 수 있음.
+

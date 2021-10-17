@@ -12,77 +12,28 @@ class RouteService {
     this.history.goBack()
   }
 
-  home() {
-    this.history.push('/home')
-  }
-
   signIn() {
     this.history.push('/sign-in')
   }
 
-  myInf() {
-    this.history.push('myInf')
-  }
-  changePwd() {
-    this.history.push('changePwd')
+  home() {
+    this.history.push('/home')
   }
 
-  settings() {
-    this.history.push('settings')
+  myPage() {
+    this.history.push('/my-page')
   }
+
+  search() {
+    this.history.push('search')
+  }
+
   townInf() {
     this.history.push('townInf')
-  }
-  townEvent() {
-    this.history.push('townEvent')
-  }
-  confirmPwd() {
-    this.history.push('confirmPwd')
-  }
-
-  //
-  signUp() {
-    this.history.push('/sign-up')
-  }
-
-  signUpForm() {
-    this.history.push('/sign-up/form')
-  }
-
-  signUpEmail() {
-    this.history.push('/sign-up/email')
-  }
-
-  signUpCommunity() {
-    this.history.push('/sign-up/community')
-  }
-
-  feed() {
-    this.history.push('/feed')
-  }
-
-  feedForm() {
-    this.history.push('/feed-write')
-  }
-
-  feedDetail(feedId: number, param?: { autoFocus?: boolean }) {
-    this.history.push(`/feed/${feedId}`, { autoFocus: param?.autoFocus })
-  }
-
-  tradeDetail(path: string, tradeId: number) {
-    this.history.push(`/trade/${path}/${tradeId}`)
   }
 
   profileDetail(userId: number) {
     this.history.push(`/users/${userId}`)
-  }
-
-  profileDetailEdit(userId: number) {
-    this.history.push(`/users/${userId}/edit`)
-  }
-
-  chatRoom(roomId: number) {
-    this.history.push(`/chat/${roomId}`)
   }
 
   get history() {

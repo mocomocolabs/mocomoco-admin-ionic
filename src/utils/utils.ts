@@ -1,4 +1,4 @@
-export const langSwitcher = (param: any): (string | undefined) => {
+export const langSwitcher = (param: string): (string | undefined) => {
     switch (param) {
       case 'ko_KR':
         return '한국어'

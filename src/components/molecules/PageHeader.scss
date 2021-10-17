@@ -1,0 +1,17 @@
+@import '../../theme/color';
+
+.hama-logo{
+  left: 0;
+  position: absolute;
+  top: 6px;
+  img{
+    width:28px;
+  }
+  span{
+    margin-left:5px;
+    font-weight: bold;
+    color:$hamaPurple;
+    top: 4px;
+    position: absolute;
+  }
+}

@@ -1,43 +1,27 @@
-import React, { FC } from 'react'
+import { FC, InputHTMLAttributes } from 'react'
+import { UseFormRegisterReturn } from 'react-hook-form'
+import './InputComponent.scss'
 
-export interface IInput {
+// Omit 'ref', to fix below warning
+// Warning: Function components cannot be given refs. Attempts to access this ref will fail.
+export interface IInput extends Omit<InputHTMLAttributes<HTMLInputElement>, 'ref' | 'onChange'> {
   className?: string
-  name?: string
-  type?: string
-  value?: string
-  defaultValue?: string
-  placeholder?: string
   onChange?: (v: string) => void
-  // eslint-disable-next-line
-  register?: any
-  disabled?: boolean
-  onKeyUpEnterFn?: Function
+  register?: UseFormRegisterReturn
 }
 
-export const Input: FC<IInput> = ({
-  className,
-  name,
-  type,
-  value,
-  defaultValue,
-  placeholder,
-  onChange,
-  register,
-  disabled,
-  onKeyUpEnterFn
-}) => {
+export const Input: FC<IInput> = ({ type, onChange, register, ...props }) => {
   return (
     <input
-      className={className}
       type={type || 'text'}
-      name={name}
-      value={value}
-      defaultValue={defaultValue}
-      placeholder={placeholder}
-      onChange={(e) => onChange && onChange(e.target.value!)}
-      ref={register}
-      disabled={disabled}
-      onKeyUp={(e) => e.key === 'Enter' && onKeyUpEnterFn !== undefined && onKeyUpEnterFn()}
-    ></input>
+      {...props}
+      {...register}
+      // onChange를 custom하게 사용할 것이므로, register 보다 늦게 설정해서
+      // register.onChange를 덮어써야(overwrite)해야 한다.
+      onChange={(e) => {
+        register?.onChange(e)
+        onChange && onChange(e.target.value!)
+      }}
+    />
   )
 }

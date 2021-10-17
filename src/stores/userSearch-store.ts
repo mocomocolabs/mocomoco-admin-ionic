@@ -1,19 +1,13 @@
-// description: 우리마을사람들 store
-// fileName: userSearch-store.ts
-// created: 2021-01-10, 이지혜
 import { action, computed, observable } from 'mobx'
 import { IResultList, ISearchObj } from '../models/userSearch'
 
 const initState = {
-  resultList: [],
+  resultList: {} as IResultList,
   searchObj: {} as ISearchObj,
 }
 
 export class UserSearch {
-  // @observable.struct don't notify if new value is equal to old value.
-  // Like observable.deep, except that any assigned value that
-  // is structurally equal to the current value will be ignored.
-  @observable.ref resultList: IResultList[] = initState.resultList
+  @observable.ref resultList: IResultList = initState.resultList
   @observable.ref searchObj: ISearchObj = initState.searchObj
 
   @computed
@@ -27,17 +21,17 @@ export class UserSearch {
   }
 
   @action
-  setResultList(param: any) {
-    this.resultList = param
+  setResultList(param: IResultList) {
+    this.resultList = param;
   }
 
   @action
-  setSearchName(param: any) {
+  setSearchName(param: string) {
     this.searchObj.name = param
   }
 
   @action
-  setSearchEmail(param: any) {
+  setSearchEmail(param: string) {
     this.searchObj.email = param
   }
 

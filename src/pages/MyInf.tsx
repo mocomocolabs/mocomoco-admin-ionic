@@ -1,7 +1,3 @@
-// description: 내 정보 화면
-// path: /myInf
-// fileName: MyInf.tsx
-// created: 2021-01-10, 이지혜
 import {
   IonAvatar,
   IonButton,
@@ -14,14 +10,15 @@ import {
   IonPage,
 } from '@ionic/react'
 import { useObserver } from 'mobx-react-lite'
-import React, { useEffect, useState } from 'react'
+import { FC, useEffect, useState } from 'react'
 import { TextXl } from '../components/atoms/TextXlComponent'
 import { PageHeader } from '../components/molecules/PageHeaderComponent'
 import { useStore } from '../hooks/use-store'
 import './MyInf.scss'
 import { langSwitcher } from '../utils/utils'
+import { VIEW_TYPE } from '../models/constant.d'
 
-export const MyInf: React.FC = () => {
+export const MyInf: FC = () => {
   const [language, setLanguage] = useState<string | undefined>('ko_KR')
   const { $auth, $ui } = useStore()
 
@@ -31,7 +28,7 @@ export const MyInf: React.FC = () => {
       header: '확인',
       message: '로그아웃 하시겠습니까?',
       onSuccess() {
-        $auth.logout()
+        $auth.logOut()
       },
     })
   }
@@ -45,7 +42,7 @@ export const MyInf: React.FC = () => {
 
   return useObserver(() => (
     <IonPage>
-      <PageHeader pageTitle='내 정보' backBtn={true} />
+      <PageHeader pageTitle='내 정보' viewType={VIEW_TYPE.PAGE} />
       <IonContent>
         <div className='px-container my-4'>
           <IonList lines='none'>
@@ -99,7 +96,6 @@ export const MyInf: React.FC = () => {
             </IonItemGroup>
             <IonItemGroup className='mt-5'>
               <IonLabel className='mother-menu'>관리마을정보</IonLabel>
-              {/* 내 권한 */}
               <IonItem className='block flex'>
                 <IonLabel>내 권한</IonLabel>
                 <span>
@@ -108,7 +104,6 @@ export const MyInf: React.FC = () => {
                   </IonLabel>
                 </span>
               </IonItem>
-              {/* 관리마을이름 */}
               <IonItem className='block flex'>
                 <IonLabel>마을이름</IonLabel>
                 <span>
@@ -116,15 +111,13 @@ export const MyInf: React.FC = () => {
                 </span>
               </IonItem>
             </IonItemGroup>
-            {/* 로그아웃 */}
             <IonButton expand='full' color='dark' className='mt-8' onClick={validate}>
               로그아웃
             </IonButton>
-            {/* 버전 */}
             <IonItem className='mb-8'>
               <IonLabel className='flex-center text-center'>
-                <span className='gray mr-1'>현재버전 : V0.0.1</span>
-                <span> / 최신버전 : V0.0.1</span>
+                <span className='gray mr-1'>현재버전 : V0.0.2</span>
+                <span> / 최신버전 : V0.0.2</span>
               </IonLabel>
             </IonItem>
           </IonList>

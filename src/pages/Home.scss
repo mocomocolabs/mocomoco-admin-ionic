@@ -1,13 +1,8 @@
-// description: 홈 화면 scss
-// fileName: Home.scss
-// created: 2021-01-08
-
 @import '../theme/color';
+$list-bg-color: #f5f5f5;
 
 .box {
   display: flex;
-  margin-left: 8px;
-  text-align: right;
   vertical-align: top;
   .badge {
     position: inherit;
@@ -39,6 +34,10 @@
     color:$hamaPurple;
   }
 }
+.apv-list-wrap{
+  background-color: $list-bg-color; 
+  margin-left: -5px;
+}
 .apv-date{
   margin-left: 3px;
   font-size: 12px;
@@ -47,4 +46,30 @@
   padding:0.5px 5px;
   border-radius:2px;
   transform: translateY(-2px);
+}
+.login-user-name{
+  position:absolute;
+  right: 4rem;
+  top: 2.5rem;
+  font-size: 18px;
+  font-weight: bold;
+  color: $hamaPurple
+}
+.maeul-name{
+  position:absolute;
+  right: 4rem;
+  top: 5rem;
+  font-size: 12px;
+  color: $hamaPurple
+}
+
+ion-item{
+  --ion-background-color:$list-bg-color;
+}
+
+.under-line{
+  width: 65%;
+  position: absolute;
+  right: 6rem;
+  border-bottom:#999 solid 1px;
 }

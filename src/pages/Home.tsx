@@ -1,7 +1,3 @@
-// description: 홈 화면
-// path: /home
-// fileName: Home.tsx
-// created: 2021-01-03, 이지혜
 import {
   IonButton,
   IonCheckbox,
@@ -14,41 +10,39 @@ import {
 } from '@ionic/react'
 import { refreshOutline } from 'ionicons/icons'
 import * as _ from 'lodash'
-import { useObserver } from 'mobx-react-lite'
-import { default as React, useEffect, useState } from 'react'
+import { Observer } from 'mobx-react-lite'
+import { FC, useEffect, useState } from 'react'
 import { TextXxl } from '../components/atoms/TextXxlComponent'
 import { PageHeader } from '../components/molecules/PageHeaderComponent'
+import { RoundSquareSection } from '../components/organisms/RoundSquareSectionComponent'
 import { useStore } from '../hooks/use-store'
-import { ICommunityUsers } from '../stores/auth-store.d'
+import { SIGN_UP_STATUS, USER_ROLE, VIEW_TYPE } from '../models/constant.d'
+import { ICommunityUsers } from '../stores/community-store.d'
 import { ymdhm } from '../utils/moment-util'
 import './Home.scss'
 
-export const Home: React.FC = () => {
+export const Home: FC = () => {
   const { $ui, $auth, $user } = useStore()
   const [usersListToApprove, setUsersListToApprove] = useState<ICommunityUsers[] | undefined>()
-  // const [isShowApvCompleteAlert, setIsShowApvCompleteAlert] = useState<boolean>()
 
   useIonViewWillEnter(() => {
     $ui.setIsHeaderBar(true)
+    
   })
 
-  useEffect(() => {
-    // 승인리스트 셋
-    setUsersListToApprove(
-      $auth.getCommunityInfo.users
-        .filter((a) => !a.roles.includes("ROLE_ADMIN")) // admin 제외
-        .filter((a) => a.status !== 'APPROVAL') // APPROVAL 제외
-    )
+  useEffect(() => { 
+    getCommunityInfo()
   }, [$auth.getCommunityInfo.users, $auth.getCommunityInfo.adminUsers])
 
   const changeStatus = (checkedYn: boolean, a: ICommunityUsers, i: number) => {
-    !checkedYn ? (a = { ...a, status: 'PENDING' }) : (a = { ...a, status: 'APPROVAL' })
+    !checkedYn ? (a = { ...a, status: SIGN_UP_STATUS.PENDING }) : (a = { ...a, status: SIGN_UP_STATUS.APPROVAL })
     if (usersListToApprove) usersListToApprove[i] = a
   }
 
   // 승인 버튼 클릭시
   const apvBtnClick = () => {
-    const saveObj = usersListToApprove?.filter((a) => a.status !== 'PENDING')
+    const saveObj = usersListToApprove?.filter((a) => a.status !== SIGN_UP_STATUS.PENDING);
+    
     if (_.isEmpty(saveObj)) {
       $ui.showAlert({
         isOpen: true,
@@ -64,95 +58,97 @@ export const Home: React.FC = () => {
         onSuccess() {
           return saveObj?.map(async (a) => {
             // 1. 사용자 정보 업데이트
-            await $user.updateCommunityUser(a.id, 'APPROVAL')
-            // 2. 성공 팝업 show
-            // setIsShowApvCompleteAlert(true)
-            // 3. 데이터 재조회
+            await $user.updateCommunityUser(a.id, SIGN_UP_STATUS.APPROVAL)
             await $auth.signInWithToken()
-            // 4. 테이블 재렌더링
-            setUsersListToApprove(
-              $auth.getCommunityInfo.users
-                .filter((a) => !a.roles.includes("ROLE_ADMIN")) // admin 제외
-                .filter((a) => a.status !== 'APPROVAL') // approval 제외
-            )
+            getCommunityInfo()
           })
         },
       })
     }
   }
 
-  // 새로고침 클릭시
-  // TODO: 중복되는 코드를 어떻게 합칠 수 있을까?
-  const researchAndRerenderTable = async () => {
-    await $auth.signInWithToken()
+  const getCommunityInfo = () => {
     setUsersListToApprove(
       $auth.getCommunityInfo.users
-        .filter((a) => !a.roles.includes("ROLE_ADMIN")) // admin 제외
-        .filter((a) => a.status !== 'APPROVAL') // approval 제외
+        .filter((a) => !a.roles.includes(USER_ROLE.ADMIN))
+        .filter((a) => a.status !== SIGN_UP_STATUS.APPROVAL) 
     )
   }
 
-  return useObserver(() => (
-    <IonPage>
-      <PageHeader pageTitle='하마 ADMIN' menuBtn={true} userBtn={true} />
-      <IonContent>
-        <div className='px-container'>
-          {/* <IonButtons slot='start'>
-            <IonButton style={{borderBottom:'1px solid #ccc', color: '#ccc'}} slot='end' color='dark' routerLink='/home'>
-              우리마을 조회
-            </IonButton>
-            <IonButton style={{borderBottom:'1px solid #ccc', color: '#ccc'}} slot='end' color='dark' routerLink='/home'>
-              우리마을정보
-            </IonButton>
-          </IonButtons> */}
-          <div style={{ marginTop: '20px', overflow: 'auto' }} className='apv-wrap'>
-            <div className='box'>
-              <TextXxl className='text-bold'>가입승인을 기다려요</TextXxl>
-              <strong className='badge'>{usersListToApprove?.length}</strong>
-              {usersListToApprove && usersListToApprove?.length < 1 ? (
-                <></>
-              ) : (
-                <IonButton className='apv-btn' color='#' size='small' onClick={apvBtnClick}>
-                  승인
-                </IonButton>
-              )}
-              <IonIcon
-                className='refresh-btn'
-                onClick={researchAndRerenderTable}
-                slot='icon-only'
-                size='large'
-                icon={refreshOutline}
-              ></IonIcon>
-            </div>
-            {usersListToApprove && usersListToApprove?.length < 1 ? (
-              <div style={{ marginLeft: '15px', fontSize: '15px', color: '#555' }}>쨕쨕쨕! 모두 승인 하셨네요!</div>
-            ) : (
-              <div className='apv-list-wrap' style={{ marginLeft: '-5px' }}>
-              { usersListToApprove && usersListToApprove.map((item, index) => (
-                <>
-                  <IonItem lines="none"> 
-                    <IonCheckbox
-                      className='mr5'
-                      checked={item.status === 'PENDING' ? false : true}
-                      color='light'
-                      onIonChange={(e) => changeStatus(e.detail.checked, item, index)}
-                    />
-                    <IonLabel style={{width:'100px'}}>
-                      <div>
-                        <h2 className='inline'>{item.name}</h2>
-                        <h4 className='inline' style={{textAlign: 'right', color:'#3f2e99'}}> {ymdhm(item.createdAt)} 신청</h4>
-                      </div>
-                      <h4>{item.email}</h4>
-                      <p style={{whiteSpace:'normal'}}>{item.introduce}</p>
-                    </IonLabel>
-                  </IonItem>
-                </>
-              ))}
+  const refresh = async() => {
+    await $auth.signInWithToken()
+    getCommunityInfo()
+  }
+
+  return (
+    <Observer>
+      {() => 
+        <IonPage>
+          <PageHeader pageTitle='Hama Geegi' noticeYn={true} viewType={VIEW_TYPE.PAGE} />
+          <IonContent>
+            
+            <RoundSquareSection bgColor='#FFF6DB'>  
+              <section>
+                <TextXxl className='text-bold'>안녕하세요!</TextXxl>
+                <div className='login-user-name'>{$auth.getAuthInfo?.name}</div>
+                <div className='maeul-name'>{$auth.getCommunityInfo?.name}의 하마지기</div>
+              </section>
+            </RoundSquareSection>
+            
+            <RoundSquareSection bgColor='#f5f5f5'>
+              <div>
+                <div className='apv-wrap'>
+                  <div className='box'>
+                    <TextXxl className='text-bold'>가입승인을 기다려요</TextXxl>
+                    <strong className='badge'>{usersListToApprove?.length}</strong>
+                    {usersListToApprove && usersListToApprove?.length < 1 ? (
+                      <></>
+                    ) : (
+                      <IonButton className='apv-btn' color='#' size='small' onClick={apvBtnClick}>
+                        승인
+                      </IonButton>
+                    )}
+                    <IonIcon
+                      className='refresh-btn'
+                      onClick={refresh}
+                      slot='icon-only'
+                      size='large'
+                      icon={refreshOutline}
+                    ></IonIcon>
+                  </div>
+
+                  {usersListToApprove && usersListToApprove?.length < 1 ? (
+                    <div style={{ marginLeft: '15px', fontSize: '15px', color: '#555' }}>쨕쨕쨕! 모두 승인 하셨네요!</div>
+                  ) : (
+                    <div className='apv-list-wrap'>
+                      { usersListToApprove && usersListToApprove.map((item, index) => (
+                        <>
+                          <IonItem key={index + item.id} lines="none" className="item-content" style={{width:'100%'}}>
+                            <IonCheckbox
+                              className='mr5'
+                              checked={item.status === SIGN_UP_STATUS.PENDING ? false : true}
+                              color='light'
+                              onIonChange={(e) => changeStatus(e.detail.checked, item, index)}
+                            />
+                            <IonLabel>
+                              <div>
+                                <h3 className='inline'>{item.name}</h3>
+                              </div>
+                              <h4 className='inline' style={{textAlign: 'right', fontSize:'12px', color:'#999'}}>{ymdhm(item.createdAt)} | {item.email}</h4>
+                              <p style={{whiteSpace:'normal', color:'#333'}}>{item.introduce}</p>
+                            </IonLabel>
+                          </IonItem>
+                          <span className='under-line' />
+                        </>
+                      ))}
+                    </div>
+                  )}
+                </div>
               </div>
-            )}
-          </div>
-        </div>
-      </IonContent>
-    </IonPage>
-  ))
+            </RoundSquareSection>
+          </IonContent>
+        </IonPage>
+      }
+    </Observer>
+  )
 }

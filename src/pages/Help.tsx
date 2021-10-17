@@ -4,14 +4,14 @@ import {
   IonPage,
 } from '@ionic/react'
 import { desktopOutline, logoGithub, logoGoogle, logoGooglePlaystore } from 'ionicons/icons'
-import React from 'react'
+import { FC } from 'react'
 import { PageHeader } from '../components/molecules/PageHeaderComponent'
+import { VIEW_TYPE } from '../models/constant.d'
 
-export const Help: React.FC = () => {
-
+export const Help: FC = () => {
   return (
     <IonPage>
-      <PageHeader pageTitle="Help" menuBtn={false} closeLeftBtn={true} homeBtn={true} userBtn={true}/>
+      <PageHeader pageTitle="공지" viewType={VIEW_TYPE.MODAL} backRouterUrl='/home'/>
       <br/>
       <IonContent className='text-center'>
         <IonIcon icon={logoGoogle} className='mr5'></IonIcon>

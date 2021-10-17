@@ -1,11 +1,9 @@
 import { Task as TaskType } from 'mobx-task'
 import { IUser } from './../models/user.d'
+import { ICommunity } from '../models/community'
 
 export type GetUserTask = TaskType<[number], void>
-
 export type SetUserTask = TaskType<[IUser], void>
-
-export type UpdateUserTask = TaskType<[number, IUser], boolean>
 
 export interface ISearchUserObj {
     communityId: number,
@@ -50,3 +48,25 @@ interface ISearchUser {
     updatedAt: string,
     updatedBy: string
 }
+
+
+
+export interface IAdminUsers {
+    id: number
+    email: string
+    name: string
+    nickname: string
+    fcmToken: string
+    profileUrl: string
+    status: string
+    isPublicMobile: boolean
+    isPublicEmail: boolean
+    communities: ICommunity[]
+    locale: string
+    roles: string
+    isUse: boolean
+    createdAt: string
+    updatedAt: string
+    createdBy: string
+    updatedBy: string
+  }

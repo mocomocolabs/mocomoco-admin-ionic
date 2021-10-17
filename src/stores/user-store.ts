@@ -6,7 +6,7 @@ import { api } from '../services/api-service'
 import { http } from '../utils/http-util'
 import { Task } from './task.d'
 import * as _ from 'lodash'
-import { GetUserTask, ISaveVO, ISearchResultDto, ISearchUserObj, SetUserTask, UpdateUserTask } from './user-store.d'
+import { GetUserTask, ISaveVO, ISearchResultDto, ISearchUserObj } from './user-store.d'
 
 const initState = {
   user: {} as IUser,
@@ -102,23 +102,6 @@ export class User {
       })
     )
   }) as GetUserTask
-
-  @task.resolved // resolved를 쓰면 처음에 pending상태가 아니라 resolved 상태로 시작함.
-  setUser = (async (newUser: IUser) => {
-    this.user = newUser
-  }) as SetUserTask
-
-  // TODO fix: type checking required for actual values inside data object
-  @task.resolved
-  updateUser = (async (userId: number, data: IUser) => {
-    const { success } = await http.patch<IUser, { success: boolean }>(`/users/${userId}`, data)
-
-    if (success) {
-      this.getUser(userId)
-    }
-
-    return success
-  }) as UpdateUserTask
 
   @computed
   get getSearchResultList() {
