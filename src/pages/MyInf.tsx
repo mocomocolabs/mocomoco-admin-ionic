@@ -111,13 +111,13 @@ export const MyInf: FC = () => {
                 </span>
               </IonItem>
             </IonItemGroup>
-            <IonButton expand='full' color='dark' className='mt-8' onClick={validate}>
+            <IonButton expand='full' className='logout-btn mt-8' onClick={validate}>
               로그아웃
             </IonButton>
             <IonItem className='mb-8'>
               <IonLabel className='flex-center text-center'>
-                <span className='gray mr-1'>현재버전 : V0.0.2</span>
-                <span> / 최신버전 : V0.0.2</span>
+                <span className='gray mr-1'>현재버전 : V0.0.3</span>
+                <span> / 최신버전 : V0.0.3</span>
               </IonLabel>
             </IonItem>
           </IonList>

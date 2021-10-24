@@ -15,6 +15,7 @@ import { home, search, person } from 'ionicons/icons'
 import { Observer } from 'mobx-react-lite'
 import { Footer } from './components/organisms/FooterComponent'
 import { useStore } from './hooks/use-store'
+import './RouterTab.scss';
 
 export const RouterTab: FC = () => {
   const { $ui, $auth } = useStore()
@@ -39,17 +40,17 @@ export const RouterTab: FC = () => {
 
       <Observer>
         {() => (
-          $auth.isLogin ?
+          $auth.isLogin && $auth.isAdmin ?
           <Footer hidden={!$ui.isBottomTab}>
             <>
               <NavLink key='home' to='/home' onClick={() => route.home()}>
-                <IonIcon slot='icon-only' icon={home} size='default' />
+                <IonIcon slot='icon-only' icon={home} size='24' className='nav-icon'/>
               </NavLink>
               <NavLink key='search' to='/search' onClick={() => route.search()}>
-                <IonIcon slot='icon-only' icon={search} size='default' />
+                <IonIcon slot='icon-only' icon={search} size='24' className='nav-icon'/>
               </NavLink>
               <NavLink key='my-page' to='/my-page' onClick={() => route.myPage()}>
-                <IonIcon slot='icon-only' icon={person} size='default' />
+                <IonIcon slot='icon-only' icon={person} size='24' className='nav-icon'/>
               </NavLink>
             </>
           </Footer>

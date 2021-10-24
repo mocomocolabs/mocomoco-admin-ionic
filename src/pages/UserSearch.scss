@@ -1,22 +1,21 @@
-// description: 마을 사람들 scss
-// fileName: UserSearch.scss
-// created: 2021-01-08 이지혜
-
 @import '../theme/color';
 
-.search-area-input{
-  input{
-    border:none;
+.search-area-input {
+  input {
+    border: none;
     border-bottom: 1px solid lightgray;
   }
-  .search-area-bottom-btn{
-    margin-top:15px;
+}
+.search-area-bottom-btn {
+  margin-top: 15px;
+  .search-btn {
+    --background: #3f2e99;
   }
 }
 
-.result-list-wrap{
+.result-list-wrap {
   // 검색 결과 count에서의 승인대기 스타일링
-  .result_cnt-pending-red {
+  .result-cnt-pending-red {
     color: white;
     background-color: red;
     padding: 1px 4px;
@@ -25,7 +24,7 @@
     margin-right: 0.2rem;
   }
   // 리스트에서의 '승인대기'
-  .pending-red-in-list{
+  .pending-red-in-list {
     display: inline;
     color: white;
     background-color: red;
@@ -33,7 +32,7 @@
     border-radius: 0.2rem;
   }
   // 리스트에서의 '하마지기'
-  .pending-admin-in-list{
+  .pending-admin-in-list {
     display: inline;
     color: white;
     background-color: $hamaPurple;

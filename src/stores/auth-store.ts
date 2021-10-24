@@ -6,9 +6,9 @@ import { api } from '../services/api-service'
 import { route } from '../services/route-service'
 import { storage } from '../services/storage-service'
 import { http } from '../utils/http-util'
+import { isOfType } from '../utils/type-util'
 import { IAuthUser, IAuthUserDto, SignInTask } from './auth-store.d'
 import { ICommunityInfoDto } from './community-store.d'
-import { isOfType } from '../utils/type-util'
 import { TaskBy } from './task'
 
 const inko = new Inko()
@@ -32,10 +32,17 @@ export class Auth {
 
   @action
   setIsLogin(isLogin: boolean) {
-    console.log(`💐💐 ${this.communityInfo.name}(ID: ${this.communityInfo.id})의 하마지기 ${isLogin ? '로그인' : '로그아웃'}`)
     this.isLogin = isLogin
     
     if(isLogin) route.home()
+    else route.signIn()
+  }
+
+  @action
+  setIsAdmin(isAdmin: boolean) {
+    this.isAdmin = isAdmin
+    
+    if(isAdmin) route.home()
     else route.signIn()
   }
 
@@ -109,12 +116,12 @@ export class Auth {
       .then((communityInfo: ICommunityInfoDto) => {
         if (communityInfo.users.find(a => a.id === id)?.roles.includes('ROLE_ADMIN')) {
           console.log('💐 세상에, 당신은 어드민이군요?!')
-          this.isAdmin = true
+          this.setIsAdmin(true)
           this.setCommunityInfo(communityInfo)
         } else {
           console.log('🙀 당신은 어드민이 아님 ')
+          this.setIsAdmin(false);
           route.signIn();
-          this.isAdmin = false
           return
         }
       })
@@ -132,7 +139,7 @@ export class Auth {
   // 유저셋: ID와 비번이 일치했을 시, 매 호출시 user 정보를 담고 로그인 상태 = true로 바꾼다.
   @action
   setUser(user: IAuthUser) {
-    const { atchFiles, isPublicMobile, isPublicEmail, mobile, description, id, email, name, status, nickname, profileUrl, communities, locale, roles, isUse } = user
+    const { profileAtchFiles, isPublicMobile, isPublicEmail, mobile, description, id, email, name, status, nickname, profileUrl, communities, locale, roles, isUse } = user
     console.log('!!!!!! 유저셋 $auth.setUser ====> ', user)
 
     this.user = {
@@ -146,7 +153,7 @@ export class Auth {
       isPublicMobile,
       roles,
       status,
-      atchFiles,
+      profileAtchFiles,
       isUse,
       profileUrl,
       locale,
@@ -155,7 +162,7 @@ export class Auth {
         name: v.name,
         adminUsers: v.adminUsers,
         users: v.users,
-        atchFiles: v.atchFiles,
+        profileAtchFiles: v.profileAtchFiles,
         isUse: v.isUse,
       })),
     }
@@ -179,7 +186,7 @@ export class Auth {
   @action
   setCommunityInfo(communityInfo: ICommunityInfoDto) {
     console.log('communityInfo:: ', communityInfo)
-    const { userCount, createdAt, name, locale, id, users, adminUsers, atchFiles, isUse } = communityInfo
+    const { userCount, createdAt, name, locale, id, users, adminUsers, profileAtchFiles, isUse } = communityInfo
     this.communityInfo = {
       id,
       name,
@@ -188,7 +195,7 @@ export class Auth {
       users,
       createdAt,
       adminUsers,
-      atchFiles,
+      profileAtchFiles,
       isUse
     }
   }

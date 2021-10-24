@@ -1,10 +1,6 @@
-// description: SignIn
-// path: /signIn
-// fileName: SignIn.tsx
-// created: 2021-03-10, 이지혜
-import { IonContent, IonHeader, IonPage, useIonViewWillEnter } from '@ionic/react'
+import { IonContent, IonHeader, IonPage } from '@ionic/react'
 import { y } from '../utils/moment-util'
-import { FC } from 'react'
+import { FC, useEffect } from 'react'
 import { SignInEmail } from '../components/organisms/SignInEmailComponent'
 import { useStore } from '../hooks/use-store'
 import './SignIn.scss'
@@ -12,8 +8,9 @@ import './SignIn.scss'
 export const SignIn: FC = () => {
   const { $ui } = useStore()
 
-  useIonViewWillEnter(() => {
+  useEffect(() => {
     $ui.setIsHeaderBar(false)
+    $ui.setIsBottomTab(false)
   })
 
   return (

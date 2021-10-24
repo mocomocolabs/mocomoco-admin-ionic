@@ -48,7 +48,7 @@ export const SignInEmail: FC = () => {
         $ui.showAlert({
           isOpen: true,
           header: '확인',
-          message: '어드민 유저가 아닙니다.',
+          message: '어드민 유저가 아니거나 혹은 서버 오류 입니다.',
           oneBtn: true,
         })
       } else route.home()
@@ -78,7 +78,7 @@ export const SignInEmail: FC = () => {
             required: '패스워드를 입력해주세요',
             minLength: { value: 6, message: '6자 이상 입력해주세요' },
           })}
-        ></InputPassword>
+        />
         <ValidationMessage isShow={errors.password} message={errors?.password?.message}></ValidationMessage>
   
         {/* captcha */}
@@ -95,7 +95,7 @@ export const SignInEmail: FC = () => {
             required: '보안 문자를 입력해주세요.',
             minLength: { value: 6, message: '6자를 입력해주세요' },
           })}
-        ></InputNormal>
+        />
         <ValidationMessage isShow={errors.captcha} message={errors?.captcha?.message}></ValidationMessage>
   
         {$auth.signIn.match({

@@ -17,12 +17,12 @@ export const TownInf: FC = () => {
   }
   return useObserver(() => (
     <IonPage>
-      <PageHeader pageTitle='우리마을정보' viewType={VIEW_TYPE.MODAL}/>
+      <PageHeader pageTitle='우리마을정보' viewType={VIEW_TYPE.MODAL} />
       <IonContent>
         <div className='px-container my-4'>
           <div className='flex-center' slot='start'>
             <IonThumbnail style={{ width: '100%', height: '400px' }}>
-              <img src={$auth.getCommunityInfo.atchFiles[0].url} alt='프로필이미지' />
+              <img src={$auth.getCommunityInfo.profileAtchFiles[0].url} alt='프로필이미지' />
             </IonThumbnail>
           </div>
           <div className='flex-center' slot='end'>
@@ -36,14 +36,16 @@ export const TownInf: FC = () => {
             <div className='mt-5 block flex'>
               <IonLabel>마을사람들</IonLabel>
               <IonLabel className='ml-auto mr-8'>
-                총 {$auth.getCommunityInfo.users?.filter(a => a.status === SIGN_UP_STATUS.APPROVAL).length}명
+              총 {$auth.getCommunityInfo.users?.filter(a => a.status === SIGN_UP_STATUS.APPROVAL).length}명
                 (승인 대기: {$auth.getCommunityInfo.users?.filter(a => a.status !== SIGN_UP_STATUS.APPROVAL).length}명)
               </IonLabel>
             </div>
             <div className='mt-5 block flex'>
               <IonLabel>마을관리자</IonLabel>
               <IonLabel className='ml-auto mr-8'>
-                {$auth.getCommunityInfo.users.filter(a => a.roles.includes("ROLE_ADMIN")).map(a => a.name)}
+                {$auth.getCommunityInfo.users
+                  .filter((a) => a.roles.includes('ROLE_ADMIN'))
+                  .map((a) => a.name)}
               </IonLabel>
             </div>
           </div>

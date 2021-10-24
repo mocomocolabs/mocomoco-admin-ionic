@@ -5,8 +5,7 @@ import {
   IonIcon,
   IonItem,
   IonLabel,
-  IonPage,
-  useIonViewWillEnter,
+  IonPage
 } from '@ionic/react'
 import { refreshOutline } from 'ionicons/icons'
 import * as _ from 'lodash'
@@ -17,6 +16,7 @@ import { PageHeader } from '../components/molecules/PageHeaderComponent'
 import { RoundSquareSection } from '../components/organisms/RoundSquareSectionComponent'
 import { useStore } from '../hooks/use-store'
 import { SIGN_UP_STATUS, USER_ROLE, VIEW_TYPE } from '../models/constant.d'
+import { route } from '../services/route-service'
 import { ICommunityUsers } from '../stores/community-store.d'
 import { ymdhm } from '../utils/moment-util'
 import './Home.scss'
@@ -25,13 +25,17 @@ export const Home: FC = () => {
   const { $ui, $auth, $user } = useStore()
   const [usersListToApprove, setUsersListToApprove] = useState<ICommunityUsers[] | undefined>()
 
-  useIonViewWillEnter(() => {
+  useEffect(() => {
     $ui.setIsHeaderBar(true)
-    
+    $ui.setIsBottomTab(true)
   })
 
-  useEffect(() => { 
-    getCommunityInfo()
+  useEffect(() => {
+    if($auth.getIsAdmin && $auth.getIsLogin) getCommunityInfo();
+    else {
+      route.signIn();
+      return;
+    }
   }, [$auth.getCommunityInfo.users, $auth.getCommunityInfo.adminUsers])
 
   const changeStatus = (checkedYn: boolean, a: ICommunityUsers, i: number) => {
@@ -69,7 +73,7 @@ export const Home: FC = () => {
 
   const getCommunityInfo = () => {
     setUsersListToApprove(
-      $auth.getCommunityInfo.users
+      $auth.getCommunityInfo?.users
         .filter((a) => !a.roles.includes(USER_ROLE.ADMIN))
         .filter((a) => a.status !== SIGN_UP_STATUS.APPROVAL) 
     )
@@ -84,7 +88,7 @@ export const Home: FC = () => {
     <Observer>
       {() => 
         <IonPage>
-          <PageHeader pageTitle='Hama Geegi' noticeYn={true} viewType={VIEW_TYPE.PAGE} />
+          <PageHeader pageTitle='관리하마' noticeYn={true} viewType={VIEW_TYPE.PAGE} />
           <IonContent>
             
             <RoundSquareSection bgColor='#FFF6DB'>  

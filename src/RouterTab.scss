@@ -1,0 +1,15 @@
+@import './theme/variable';
+@import './theme/functional';
+@import './theme/color';
+
+.active-style {
+  @extend .icon-primary;
+}
+
+.no-active-style {
+  @extend .icon-gray;
+}
+
+.nav-icon{
+  color: $hamaPurple; 
+}

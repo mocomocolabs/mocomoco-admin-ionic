@@ -1,6 +1,6 @@
 import { Task as TaskType } from 'mobx-task'
+import { SIGN_UP_STATUS, USER_ROLE } from '../models/constant.d'
 import { IFileDto } from './common/file.d'
-import { USER_ROLE, SIGN_UP_STATUS } from '../models/constant.d'
 import { ICommunityDto } from './community-store'
 
 export type SignInTask = TaskType<[string, string], void>
@@ -17,7 +17,7 @@ interface IUserDto {
   roles: USER_ROLE
   status: SIGN_UP_STATUS
   communities: ICommunityDto[]
-  atchFiles: IFileDto[]
+  profileAtchFiles: IFileDto[]
   isUse: boolean
   profileUrl: string
   locale: string
@@ -49,7 +49,7 @@ export interface IAuthUser extends Pick<IAuthUserDto,
   'mobile' |
   'isPublicEmail' |
   'isPublicMobile' |
-  'atchFiles'
+  'profileAtchFiles'
 >{}
 
 

@@ -1,10 +1,10 @@
-// description: 내 정보 화면 scss
-// fileName: MyInf.scss
-// created: 2021-05-30, 이지혜
 @import '../theme/color';
 .mother-menu{
     border-bottom: #e3e3e3 1px solid;
     padding:5px 10px;
     font-size:12px !important;
     font-weight:bold;
+}
+.logout-btn{
+    --background: #3f2e99;
 }

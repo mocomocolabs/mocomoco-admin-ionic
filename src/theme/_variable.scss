@@ -1,8 +1,38 @@
+// color
+$primary: var(--ion-color-primary);
+$primary-rgb: var(--ion-color-primary-rgb);
+$m-primary: var(--ion-color-primary-shade);
+$s-primary: var(--ion-color-primary-tint);
+
+$secondary: var(--ion-color-secondary);
+$secondary-rgb: var(--ion-color-secondary-rgb);
+$m-secondary: var(--ion-color-secondary-shade);
+$s-secondary: var(--ion-color-secondary-tint);
+
+$black: var(--ion-color-dark);
+
+$gray: var(--ion-color-medium);
+$gray-rgb: var(--ion-color-medium-rgb);
+$d-gray: var(--ion-color-medium-shade);
+$s-gray: var(--ion-color-medium-tint);
+
+$red: var(--ion-color-danger);
+
+$white: #ffffff;
+
+$textcolor: var(--ion-text-color);
+$textprimary: var(--ion-color-textprimary);
+$texthashtag: rgba(var(--ion-color-texthashtag-rgb), 0.7);
+
+$border-color: var(--ion-border-color);
+$box-shadow-color: var(--ion-box-shadow-color);
+
 $padding-container: 2rem;
 %px-container {
   padding-left: $padding-container;
   padding-right: $padding-container;
 }
+$padding-bottom-extra-space: 6rem;
 
 $text-xxs-size: 1rem;
 $text-xs-size: 1.2rem;
@@ -13,33 +43,41 @@ $text-xl-size: 2rem;
 $text-xxl-size: 2.2rem;
 $text-xxxl-size: 2.4rem;
 
+%text-xxs {
+  font-size: $text-xxs-size;
+  line-height: 160%;
+}
 %text-xs {
   font-size: $text-xs-size;
-  line-height: 1rem;
+  line-height: 140%;
 }
 %text-sm {
   font-size: $text-sm-size;
-  line-height: 2rem;
+  line-height: 140%;
+  letter-spacing: 0%;
 }
 %text-base {
   font-size: $text-base-size;
-  line-height: 2rem;
+  line-height: 170%;
+  letter-spacing: -0.5%;
 }
 %text-lg {
   font-size: $text-lg-size;
-  line-height: 2rem;
+  line-height: 100%;
+  letter-spacing: -1%;
 }
 %text-xl {
   font-size: $text-xl-size;
-  line-height: 3rem;
+  line-height: normal;
+  letter-spacing: -1%;
 }
 %text-xxl {
   font-size: $text-xxl-size;
-  line-height: 3.5rem;
+  line-height: normal;
 }
 %text-xxxl {
   font-size: $text-xxxl-size;
-  line-height: 4.6rem;
+  line-height: normal;
 }
 
 %ellipsis {
@@ -54,18 +92,3 @@ $text-xxxl-size: 2.4rem;
   background-position: center;
   background-repeat: no-repeat;
 }
-
-.mt5 {
-  margin-top: 5px !important;
-}
-.mr5 {
-  margin-right: 5px !important;
-}
-.mb5 {
-  margin-bottom: 5px !important;
-}
-.ml5 {
-  margin-left: 5px !important;
-}
-
-$border-color: var(--ion-border-color);

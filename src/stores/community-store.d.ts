@@ -1,11 +1,11 @@
-import { SIGN_UP_STATUS, USER_ROLE } from '../models/constant.d';
-import { IAdminUsers } from './user-store.d';
-import { IFileDto } from './common/file.d';
 import { ICommunity } from '../models/community';
+import { SIGN_UP_STATUS, USER_ROLE } from '../models/constant.d';
+import { IFileDto } from './common/file.d';
+import { IAdminUsers } from './user-store.d';
 
 export interface ICommunityInfoDto {
     adminUsers: IAdminUsers[]
-    atchFiles: IFileDto[]
+    profileAtchFiles: IFileDto[]
     createdAt: string
     id: number
     isUse: boolean
@@ -19,7 +19,7 @@ export interface ICommunityInfoDto {
   }
   
   interface ICommunityUsers {
-    atchFiles: []
+    profileAtchFiles: []
     communities: ICommunity[]
     createdAt: string
     createdBy: string
@@ -47,6 +47,6 @@ export interface ICommunityDto {
     name: string
     adminUsers: number[]
     users: []
-    atchFiles: IFileDto[]
+    profileAtchFiles: IFileDto[]
     isUse: boolean
 }
