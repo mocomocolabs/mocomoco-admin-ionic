@@ -1,7 +1,7 @@
 @import '../theme/color';
 $list-bg-color: #f5f5f5;
 
-.box {
+.tit-box {
   display: flex;
   vertical-align: top;
   .badge {
@@ -20,56 +20,74 @@ $list-bg-color: #f5f5f5;
     background-color: $hamaYellow;
     cursor: pointer;
   }
+}
+.refresh-btn{
+  position:absolute;
+  right:0;
+  top:-30px;
+  cursor: pointer;
+  color:$hamaPurple;
+}
+.no-apv-list-txt{
+  margin-left: 15px;
+  font-size: 15px;
+  color: #555;
+}
+.apv-btn-wrap{
+  margin-top:10px;
+  .del-btn{
+    width: 55px;
+    border-radius: 2px;
+    color: #fff;
+    background-color: #999 !important;
+  }
   .apv-btn{
-    margin-left:auto;
+    width: 55px;
+    color: #fff;
     background-color: $hamaPurple !important;
     border-radius: 2px;
-    width:55px;
-  }
-  .refresh-btn{
-    height: 25px;
-    margin-left:5px;
-    cursor: pointer;
-    margin-top:5px;
-    color:$hamaPurple;
   }
 }
 .apv-list-wrap{
   background-color: $list-bg-color; 
   margin-left: -5px;
+  .apv-list-dtl{
+    h4{
+      text-align: right;
+      font-size: 12px;
+      color:#999;
+    }
+    p{
+      white-space: normal;
+      color:#333;
+    }
+  }
+  .under-line{
+    width: 65%;
+    position: absolute;
+    right: 6rem;
+    border-bottom:#999 solid 1px;
+  }
 }
-.apv-date{
-  margin-left: 3px;
-  font-size: 12px;
-  color: #E5303C;
-  background-color: #F5F5F5;
-  padding:0.5px 5px;
-  border-radius:2px;
-  transform: translateY(-2px);
-}
-.login-user-name{
-  position:absolute;
-  right: 4rem;
-  top: 2.5rem;
-  font-size: 18px;
-  font-weight: bold;
-  color: $hamaPurple
-}
-.maeul-name{
-  position:absolute;
-  right: 4rem;
-  top: 5rem;
-  font-size: 12px;
-  color: $hamaPurple
+
+.hello-box{
+  .login-user-name{
+    position:absolute;
+    right: 4rem;
+    top: 2.5rem;
+    font-size: 18px;
+    font-weight: bold;
+    color: $hamaPurple
+  }
+  .maeul-name{
+    position:absolute;
+    right: 4rem;
+    top: 5rem;
+    font-size: 12px;
+    color: $hamaPurple
+  }
 }
 
 ion-item{
   --ion-background-color:$list-bg-color;
-}
-
-.under-line{
-  width: 65%;
-  position: absolute;
-  right: 6rem;
-  border-bottom:#999 solid 1px;
 }

@@ -1,5 +1,6 @@
 import {
   IonButton,
+  IonButtons,
   IonCheckbox,
   IonContent,
   IonIcon,
@@ -41,6 +42,10 @@ export const Home: FC = () => {
   const changeStatus = (checkedYn: boolean, a: ICommunityUsers, i: number) => {
     !checkedYn ? (a = { ...a, status: SIGN_UP_STATUS.PENDING }) : (a = { ...a, status: SIGN_UP_STATUS.APPROVAL })
     if (usersListToApprove) usersListToApprove[i] = a
+  }
+
+  const delBtnClick = () => {
+    alert('삭제 기능은 준비중입니다.')
   }
 
   // 승인 버튼 클릭시
@@ -92,62 +97,70 @@ export const Home: FC = () => {
           <IonContent>
             
             <RoundSquareSection bgColor='#FFF6DB'>  
-              <section>
+              <section className='hello-box'>
                 <TextXxl className='text-bold'>안녕하세요!</TextXxl>
                 <div className='login-user-name'>{$auth.getAuthInfo?.name}</div>
-                <div className='maeul-name'>{$auth.getCommunityInfo?.name}의 하마지기</div>
+                <div className='maeul-name'>{$auth.getCommunityInfo?.name} 하마지기</div>
               </section>
             </RoundSquareSection>
             
             <RoundSquareSection bgColor='#f5f5f5'>
-              <div>
-                <div className='apv-wrap'>
-                  <div className='box'>
-                    <TextXxl className='text-bold'>가입승인을 기다려요</TextXxl>
-                    <strong className='badge'>{usersListToApprove?.length}</strong>
-                    {usersListToApprove && usersListToApprove?.length < 1 ? (
-                      <></>
-                    ) : (
-                      <IonButton className='apv-btn' color='#' size='small' onClick={apvBtnClick}>
-                        승인
-                      </IonButton>
-                    )}
+              <div className='apv-wrap'>
+                <div className='tit-box'>
+                  <TextXxl className='text-bold'>가입승인을 기다려요</TextXxl>
+                  <strong className='badge'>{usersListToApprove?.length}</strong>
+                </div>
+                  <IonButtons>
                     <IonIcon
                       className='refresh-btn'
                       onClick={refresh}
                       slot='icon-only'
-                      size='large'
+                      size='24'
                       icon={refreshOutline}
-                    ></IonIcon>
-                  </div>
-
+                    />
+                  </IonButtons>
+                <div className="apv-btn-wrap">
                   {usersListToApprove && usersListToApprove?.length < 1 ? (
-                    <div style={{ marginLeft: '15px', fontSize: '15px', color: '#555' }}>쨕쨕쨕! 모두 승인 하셨네요!</div>
+                    <></>
                   ) : (
-                    <div className='apv-list-wrap'>
-                      { usersListToApprove && usersListToApprove.map((item, index) => (
-                        <>
-                          <IonItem key={index + item.id} lines="none" className="item-content" style={{width:'100%'}}>
-                            <IonCheckbox
-                              className='mr5'
-                              checked={item.status === SIGN_UP_STATUS.PENDING ? false : true}
-                              color='light'
-                              onIonChange={(e) => changeStatus(e.detail.checked, item, index)}
-                            />
-                            <IonLabel>
-                              <div>
-                                <h3 className='inline'>{item.name}</h3>
-                              </div>
-                              <h4 className='inline' style={{textAlign: 'right', fontSize:'12px', color:'#999'}}>{ymdhm(item.createdAt)} | {item.email}</h4>
-                              <p style={{whiteSpace:'normal', color:'#333'}}>{item.introduce}</p>
-                            </IonLabel>
-                          </IonItem>
-                          <span className='under-line' />
-                        </>
-                      ))}
-                    </div>
+                    <IonButtons>
+                      <IonButton className='del-btn' color='#' size='small' onClick={delBtnClick}>
+                        삭제
+                      </IonButton>
+                      <IonButton className='apv-btn' color='#' size='small' onClick={apvBtnClick}>
+                        승인
+                      </IonButton>
+                    </IonButtons>
                   )}
                 </div>
+
+                {usersListToApprove && usersListToApprove?.length === 0 ? (
+                  <div className="no-apv-list-txt">쨕쨕쨕! 모두 승인 하셨네요!</div>
+                ) : (
+                  <div className='apv-list-wrap'>
+                    { usersListToApprove && usersListToApprove.map((item, index) => (
+                      <>
+                        <IonItem key={index + item.id} lines="none" className="item-content" style={{width:'100%'}}>
+                          <IonCheckbox
+                            className='mr5'
+                            checked={item.status === SIGN_UP_STATUS.PENDING ? false : true}
+                            color='light'
+                            onIonChange={(e) => changeStatus(e.detail.checked, item, index)}
+                          />
+                          <IonLabel className='apv-list-dtl'>
+                            <div>
+                              <h3 className='inline'>{item.name}</h3>
+                            </div>
+                            <h4 className='inline'>{ymdhm(item.createdAt)}</h4>
+                            <h4 className='inline'>{item.email}</h4>
+                            <p>{item.introduce}</p>
+                          </IonLabel>
+                        </IonItem>
+                        <span className='under-line' />
+                      </>
+                    ))}
+                  </div>
+                )}
               </div>
             </RoundSquareSection>
           </IonContent>

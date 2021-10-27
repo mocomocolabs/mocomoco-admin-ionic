@@ -25,7 +25,7 @@ $textprimary: var(--ion-color-textprimary);
 $texthashtag: rgba(var(--ion-color-texthashtag-rgb), 0.7);
 
 $border-color: var(--ion-border-color);
-$box-shadow-color: var(--ion-box-shadow-color);
+$box-shadow-color: var(--ion-box-shadow-color); // 화면에서 안보임.
 
 $padding-container: 2rem;
 %px-container {
