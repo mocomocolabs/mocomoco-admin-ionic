@@ -2,7 +2,7 @@
 // fileName: PageHeader.tsx
 // created: 2021-01-09, 이지혜
 import { IonButton, IonButtons, IonHeader, IonIcon, IonTitle, IonToolbar } from '@ionic/react'
-import { chevronBack, closeOutline, home,  notifications } from 'ionicons/icons'
+import { chevronBack, closeOutline, home } from 'ionicons/icons'
 import { Observer } from 'mobx-react-lite'
 import { FC } from 'react'
 import { useStore } from '../../hooks/use-store'
