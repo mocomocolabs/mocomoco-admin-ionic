@@ -9,6 +9,7 @@ import { useStore } from '../../hooks/use-store'
 import { VIEW_TYPE } from '../../models/constant.d'
 import { TextHeader } from '../atoms/TextHeaderComponent'
 import './PageHeader.scss'
+
 interface IPageHeader {
   pageTitle: string
   viewType: VIEW_TYPE
