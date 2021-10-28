@@ -3,15 +3,15 @@
 .hama-logo{
   left: 0;
   position: absolute;
-  top: -14px;
+  top: 7px;
   img{
     width:28px;
   }
-  span{
+  .page-tit {
     margin-left:5px;
     font-weight: bold;
     color:$hamaPurple;
-    top: 4px;
-    position: absolute;
-  }
+    top: 5px;
+    position: absolute;     
+  } 
 }

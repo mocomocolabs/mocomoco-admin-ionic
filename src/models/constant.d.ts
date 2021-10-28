@@ -7,6 +7,7 @@ export enum USER_ROLE {
 export enum SIGN_UP_STATUS {
     PENDING = 'PENDING',
     APPROVAL = 'APPROVAL',
+    DISAPPROVAL = 'DISAPPROVAL'
 }
 
 export enum VIEW_TYPE {

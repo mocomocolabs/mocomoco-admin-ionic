@@ -44,30 +44,26 @@ export const Home: FC = () => {
     if (usersListToApprove) usersListToApprove[i] = a
   }
 
-  const delBtnClick = () => {
-    alert('삭제 기능은 준비중입니다.')
-  }
-
   // 승인 버튼 클릭시
-  const apvBtnClick = () => {
+  const apvOrCnclBtnClick = (action: string) => {
     const saveObj = usersListToApprove?.filter((a) => a.status !== SIGN_UP_STATUS.PENDING);
     
     if (_.isEmpty(saveObj)) {
       $ui.showAlert({
         isOpen: true,
         header: '확인',
-        message: '승인할 사용자에 체크해 주세요.',
+        message: '사용자에 체크해 주세요.',
         oneBtn: true,
       })
     } else {
       $ui.showAlert({
         isOpen: true,
         header: '확인',
-        message: '승인하시겠습니까?',
+        message: `[${action === SIGN_UP_STATUS.APPROVAL ? '승인' : '승인 거부'}] 진행 하시겠습니까?`,
         onSuccess() {
           return saveObj?.map(async (a) => {
             // 1. 사용자 정보 업데이트
-            await $user.updateCommunityUser(a.id, SIGN_UP_STATUS.APPROVAL)
+            await $user.updateCommunityUser(a.id, action)
             await $auth.signInWithToken()
             getCommunityInfo()
           })
@@ -80,11 +76,12 @@ export const Home: FC = () => {
     setUsersListToApprove(
       $auth.getCommunityInfo?.users
         .filter((a) => !a.roles.includes(USER_ROLE.ADMIN))
-        .filter((a) => a.status !== SIGN_UP_STATUS.APPROVAL) 
+        .filter((a) => a.status === SIGN_UP_STATUS.PENDING) 
     )
   }
 
   const refresh = async() => {
+    setUsersListToApprove([])
     await $auth.signInWithToken()
     getCommunityInfo()
   }
@@ -124,10 +121,10 @@ export const Home: FC = () => {
                     <></>
                   ) : (
                     <IonButtons>
-                      <IonButton className='del-btn' color='#' size='small' onClick={delBtnClick}>
-                        삭제
+                      <IonButton className='del-btn' color='#' size='small' onClick={() => apvOrCnclBtnClick(SIGN_UP_STATUS.DISAPPROVAL)}>
+                        승인 거부
                       </IonButton>
-                      <IonButton className='apv-btn' color='#' size='small' onClick={apvBtnClick}>
+                      <IonButton className='apv-btn' color='#' size='small' onClick={() => apvOrCnclBtnClick(SIGN_UP_STATUS.APPROVAL)}>
                         승인
                       </IonButton>
                     </IonButtons>
@@ -142,7 +139,6 @@ export const Home: FC = () => {
                       <>
                         <IonItem key={index + item.id} lines="none" className="item-content" style={{width:'100%'}}>
                           <IonCheckbox
-                            className='mr5'
                             checked={item.status === SIGN_UP_STATUS.PENDING ? false : true}
                             color='light'
                             onIonChange={(e) => changeStatus(e.detail.checked, item, index)}

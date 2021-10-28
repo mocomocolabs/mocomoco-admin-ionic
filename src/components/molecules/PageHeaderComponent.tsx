@@ -46,25 +46,26 @@ export const PageHeader: FC<IPageHeader> = ({
               </IonButtons>
             )}
 
-            {/* 뒤로가는 버튼 */}
-            {viewType === VIEW_TYPE.MODAL && (
-              <IonButtons slot='start'>
-                <IonButton slot='end' color='dark' routerLink={backRouterUrl}>
-                  <IonIcon slot='icon-only' icon={chevronBack} size='default' />
-                </IonButton>
-              </IonButtons>
-            )}
-
             {/* 화면명 */}
             <IonTitle>
                 <span className='hama-logo'>
                   {viewType === VIEW_TYPE.PAGE ? 
+                  <span>
                     <img src='/assets/img/hamalogo.png' alt='hamalogo'/> 
-                    : <></>
+                    <TextHeader className='ellipsis page-tit inline'>{ pageTitle }</TextHeader>
+                  </span> 
+                    : <>
+                        <IonButtons slot='start'>
+                          <IonButton slot='end' color='dark' routerLink={backRouterUrl}>
+                            <IonIcon slot='icon-only' icon={chevronBack} size='default' />
+                          </IonButton>
+                          <TextHeader className='ellipsis'>{ pageTitle }</TextHeader>
+                        </IonButtons>
+                      </>
                   }
-                  <span><TextHeader className='ellipsis'>{ pageTitle }</TextHeader></span>
+                  
                 </span>
-            </IonTitle>
+            </IonTitle> 
             <IonButtons slot='end'>
               {homeBtn && (
                 <IonButton slot='end' color='dark' routerLink='/home'>
