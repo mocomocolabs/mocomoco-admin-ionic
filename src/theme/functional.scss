@@ -1421,7 +1421,8 @@
 
 /** shadow */
 .shadow-sm {
-  box-shadow: 0px -1px 2px $box-shadow-color;
+  // box-shadow: 0px -1px 2px $box-shadow-color;
+  box-shadow: 0px 1px 20px $box-shadow-color;
 }
 .shadow {
   box-shadow: 0px 3px 12px 1px $box-shadow-color;

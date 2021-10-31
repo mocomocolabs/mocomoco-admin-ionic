@@ -7,6 +7,7 @@ import { http } from '../utils/http-util'
 import { Task } from './task.d'
 import * as _ from 'lodash'
 import { GetUserTask, ISaveVO, ISearchResultDto, ISearchUserObj } from './user-store.d'
+import { SIGN_UP_STATUS } from '../models/constant.d'
 
 const initState = {
   user: {} as IUser,
@@ -48,10 +49,12 @@ export class User {
   @action
   setSearshResultList(searchResultList: ISearchResultDto) {
     const { count, communityUsers } = searchResultList;
-
+    
     this.resultList = { 
-      count, 
+      count: count - communityUsers.map(a => a.user)
+                      .filter(a => a.status !== SIGN_UP_STATUS.DISAPPROVAL).length, 
       userList: communityUsers.map(a => a.user)
+                  .filter(a => a.status !== SIGN_UP_STATUS.DISAPPROVAL)
     };
   }
 
