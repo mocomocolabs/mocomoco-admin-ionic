@@ -51,9 +51,11 @@ export class User {
     const { count, communityUsers } = searchResultList;
     
     this.resultList = { 
-      count: count - communityUsers.map(a => a.user)
-                      .filter(a => a.status !== SIGN_UP_STATUS.DISAPPROVAL).length, 
-      userList: communityUsers.map(a => a.user)
+      count: count - communityUsers
+                      .map(a => a.user)
+                      .filter(a => a.status == SIGN_UP_STATUS.DISAPPROVAL).length, 
+      userList: communityUsers
+                  .map(a => a.user)
                   .filter(a => a.status !== SIGN_UP_STATUS.DISAPPROVAL)
     };
   }
